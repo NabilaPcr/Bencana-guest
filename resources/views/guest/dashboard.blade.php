@@ -211,31 +211,31 @@
         <h2>Kegiatan Kami</h2>
         <div class="event-grid">
             <div class="event-card">
-                <img src="{{ asset('assets/img/pedesaan.jpeg') }}" alt="Posko Bencana">
+                <img src="{{ asset('assets/img/posko.jpeg') }}" alt="Posko Bencana">
                 <h3>Posko Bencana</h3>
                 <p>Lokasi dimana para pengungsi dapat beristirahat dan diobati oleh paramedis.</p>
             </div>
             <div class="event-card">
-                <img src="{{ asset('assets/img/event2.jpg') }}" alt="Donasi Bencana">
+                <img src="{{ asset('assets/img/donasi.jpeg') }}" alt="Donasi Bencana">
                 <h3>Donasi Bencana</h3>
                 <p>Program pengumpulan dana untuk membantu para korban memenuhi kebutuhannya pasca bencana.</p>
             </div>
              <div class="event-card">
-                <img src="{{ asset('assets/img/event2.jpg') }}" alt="Donasi Bencana">
+                <img src="{{ asset('assets/img/logistik.jpeg') }}" alt="Logistik Bencana">
                 <h3>Logistik Bencana</h3>
                 <p>Daftar bantuan donasi untuk para korban bencana.</p>
             </div>
             <div class="event-card">
-                <img src="{{ asset('assets/img/event2.jpg') }}" alt="Donasi Bencana">
+                <img src="{{ asset('assets/img/distribusi.jpeg') }}" alt="Distribusi Bencana">
                 <h3>Distribusi Bencana</h3>
                 <p>Pengantaran bantuan donasi untuk para korban bencana.</p>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
+
     <footer>
-        <p>&copy; {{ date('Y') }} CharityCare. Semua Hak Dilindungi.</p>
+        <p>&copy; {{ date('Y') }} BinaDesa. Semua akan aman .</p>
     </footer>
 </body>
 </html>
