@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -279,22 +279,23 @@
     display: inline-block;
     background: #56a65a;
     color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 6px 16px; /* Lebar dikurangi */
+    border-radius: 6px;
     font-weight: 500;
     text-decoration: none;
     transition: all 0.3s ease;
-    margin-top: 15px;
+    margin-top: 10px;
     text-align: center;
-    width: 100%;
+    width: auto;
+    font-size: 0.85rem;
+    min-width: 120px; /* Atur lebar minimum */
 }
 
 .event-btn:hover {
     background: #48904d;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(86, 166, 90, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(86, 166, 90, 0.3);
 }
-
 /* Update event card untuk accommodate tombol */
 .event-card {
     background-color: white;
@@ -425,6 +426,7 @@
                 <li><a href="/" class="active">Beranda</a></li>
                 <li><a href="#tentang">Tentang</a></li>
                 <li><a href="#kegiatan">Kegiatan</a></li>
+                 <li><a href="/warga" class="active">Data Warga</a></li>
                 <li><a href="#kontak">Kontak</a></li>
                 <!-- Di file HTML Anda -->
                 <li><a href="{{ url('/auth') }}" class="btn-login">
@@ -485,6 +487,28 @@
             </div>
         </div>
     </section>
+
+<!-- Warga -->
+<section id="warga" class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center mb-4">
+                <h2 class="fw-bold text-dark">Laporan warga yang terdampak oleh bencana!</h2>
+                <p class="lead text-muted">silahkan isi form berikut untuk mengisi informasi warga.</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4 text-center">
+                <div class="d-grid">
+                    <a href="{{ route('warga.index') }}" class="btn btn-primary btn-lg py-3 fw-bold">
+                        <i class="fas fa-clipboard-list me-2"></i>
+                        📌 Isi Form Laporan Warga
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- KONTAK -->
     <section id="kontak">
@@ -555,4 +579,7 @@
     </script>
 </body>
 
-</html>
+</html> --}}
+
+
+

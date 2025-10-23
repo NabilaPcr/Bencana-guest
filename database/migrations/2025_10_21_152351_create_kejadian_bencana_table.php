@@ -6,13 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('kejadian_bencana', function (Blueprint $table) {
-            $table->increments('kejadian_id');
+            $table->id('kejadian_id');
             $table->string('jenis_bencana', 100);
             $table->date('tanggal');
             $table->text('lokasi_text');
@@ -24,10 +21,8 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+
+    public function down()
     {
         Schema::dropIfExists('kejadian_bencana');
     }

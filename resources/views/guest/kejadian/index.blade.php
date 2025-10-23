@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,7 +30,7 @@
         /* ===== NAVBAR ===== */
         header {
             background-color: #ffffff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
             padding: 0;
             position: sticky;
             top: 0;
@@ -199,7 +198,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: #24af5a;
+            background: #3498db;
             color: white;
             padding: 12px 24px;
             border-radius: 10px;
@@ -210,7 +209,7 @@
         }
 
         .btn-add:hover {
-            background: #24af5a;
+            background: #2980b9;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
         }
@@ -226,14 +225,14 @@
             background: white;
             border-radius: 16px;
             padding: 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             transition: transform 0.3s, box-shadow 0.3s;
             border-left: 4px solid #56a65a;
         }
 
         .kejadian-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.12);
         }
 
         .kejadian-card h3 {
@@ -306,79 +305,81 @@
         /* ===== CARD ACTIONS ===== */
         .card-actions {
             display: flex;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #f0f0f0;
         }
 
-        /* Semua tombol dapat lebar yang sama */
-        .card-actions a,
-        .card-actions button {
-            flex: 1;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            text-align: center;
-            border: none;
-            cursor: pointer;
+        .action-buttons {
+            display: flex;
+            gap: 10px;
         }
 
         /* Tombol Detail */
         .btn-detail {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             background: #56a65a;
             color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
         }
 
         .btn-detail:hover {
             background: #48904d;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(86, 166, 90, 0.3);
         }
 
         /* Tombol Edit */
         .btn-edit {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             background: #f39c12;
             color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
         }
 
         .btn-edit:hover {
             background: #e67e22;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(243, 156, 18, 0.3);
         }
 
         /* Tombol Hapus */
         .btn-delete {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             background: #e74c3c;
             color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
         }
 
         .btn-delete:hover {
             background: #c0392b;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
         }
 
         .delete-form {
-            flex: 1;
             margin: 0;
-        }
-
-        /* Responsive untuk tombol */
-        @media (max-width: 768px) {
-            .card-actions {
-                flex-direction: column;
-                gap: 8px;
-            }
         }
 
         /* Empty State */
@@ -427,7 +428,7 @@
                 padding-top: 40px;
                 gap: 25px;
                 transition: left 0.4s ease;
-                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
             }
 
             .nav-links.active {
@@ -501,7 +502,6 @@
         }
     </style>
 </head>
-
 <body>
     <!-- NAVBAR -->
     <header>
@@ -518,14 +518,14 @@
             </div>
 
             <ul class="nav-links" id="nav-links">
-                <li><a href="/">Beranda</a></li>
+                <li><a href="/dashboard">Beranda</a></li>
                 <li><a href="#tentang">Tentang</a></li>
                 <li><a href="#kegiatan">Kegiatan</a></li>
                 <li><a href="#kontak">Kontak</a></li>
                 <li><a href="{{ url('/auth') }}" class="btn-login">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Masuk
-                    </a></li>
+                    <i class="fas fa-sign-in-alt"></i>
+                    Masuk
+                </a></li>
             </ul>
         </nav>
     </header>
@@ -544,61 +544,61 @@
             </div>
         </div>
 
-        @if ($kejadian->count() > 0)
+        @if($kejadian->count() > 0)
             <div class="kejadian-grid">
-                @foreach ($kejadian as $item)
-                    <div class="kejadian-card">
-                        <h3><i class="fas fa-bolt"></i> {{ $item->jenis_bencana }}</h3>
+                @foreach($kejadian as $item)
+                <div class="kejadian-card">
+                    <h3><i class="fas fa-bolt"></i> {{ $item->jenis_bencana }}</h3>
 
-                        <div class="kejadian-info">
-                            <p>
-                                <i class="fas fa-map-marker-alt"></i>
-                                <strong>Lokasi:</strong> {{ $item->lokasi_text }}
-                                @if ($item->rt || $item->rw)
-                                    (RT {{ $item->rt }}/RW {{ $item->rw }})
-                                @endif
-                            </p>
-                            <p>
-                                <i class="fas fa-calendar"></i>
-                                <strong>Tanggal:</strong> {{ $item->tanggal->format('d M Y') }}
-                            </p>
-                            <p>
-                                <i class="fas fa-fire"></i>
-                                <strong>Dampak:</strong> {{ $item->dampak }}
-                            </p>
-                            <p>
-                                <i class="fas fa-info-circle"></i>
-                                <strong>Status:</strong>
-                                <span class="status-{{ str_replace(' ', '-', $item->status_kejadian) }}">
-                                    {{ $item->status_kejadian }}
-                                </span>
-                            </p>
-                            @if ($item->keterangan)
-                                <p>
-                                    <i class="fas fa-clipboard"></i>
-                                    <strong>Keterangan:</strong> {{ $item->keterangan }}
-                                </p>
+                    <div class="kejadian-info">
+                        <p>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <strong>Lokasi:</strong> {{ $item->lokasi_text }}
+                            @if($item->rt || $item->rw)
+                                (RT {{ $item->rt }}/RW {{ $item->rw }})
                             @endif
-                        </div>
+                        </p>
+                        <p>
+                            <i class="fas fa-calendar"></i>
+                            <strong>Tanggal:</strong> {{ $item->tanggal->format('d M Y') }}
+                        </p>
+                        <p>
+                            <i class="fas fa-fire"></i>
+                            <strong>Dampak:</strong> {{ $item->dampak }}
+                        </p>
+                        <p>
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Status:</strong>
+                            <span class="status-{{ str_replace(' ', '-', $item->status_kejadian) }}">
+                                {{ $item->status_kejadian }}
+                            </span>
+                        </p>
+                        @if($item->keterangan)
+                        <p>
+                            <i class="fas fa-clipboard"></i>
+                            <strong>Keterangan:</strong> {{ $item->keterangan }}
+                        </p>
+                        @endif
+                    </div>
 
-                        <div class="card-actions">
-                            <a href="{{ route('kejadian.show', $item->kejadian_id) }}" class="btn-detail">
-                                <i class="fas fa-eye"></i> Detail
-                            </a>
+                    <div class="card-actions">
+                        <a href="{{ route('kejadian.show', $item->kejadian_id) }}" class="btn-detail">
+                            <i class="fas fa-eye"></i> Lihat Detail
+                        </a>
+                        <div class="action-buttons">
                             <a href="{{ route('kejadian.edit', $item->kejadian_id) }}" class="btn-edit">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
-                            <form action="{{ route('kejadian.destroy', $item->kejadian_id) }}" method="POST"
-                                class="delete-form">
+                            <form action="{{ route('kejadian.destroy', $item->kejadian_id) }}" method="POST" class="delete-form">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn-delete"
-                                    onclick="return confirm('Apakah Anda yakin ingin menghapus kejadian ini?')">
+                                <button type="submit" class="btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus kejadian ini?')">
                                     <i class="fas fa-trash"></i> Hapus
                                 </button>
                             </form>
                         </div>
                     </div>
+                </div>
                 @endforeach
             </div>
         @else
@@ -642,10 +642,10 @@
                     e.preventDefault();
 
                     const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
+                    if(targetId === '#') return;
 
                     const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
+                    if(targetElement) {
                         window.scrollTo({
                             top: targetElement.offsetTop - 80,
                             behavior: 'smooth'
@@ -657,7 +657,7 @@
             // Header scroll effect
             window.addEventListener('scroll', function() {
                 const header = document.querySelector('header');
-                if (window.scrollY > 50) {
+                if(window.scrollY > 50) {
                     header.style.padding = '0';
                     header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
                 } else {
@@ -668,5 +668,4 @@
         });
     </script>
 </body>
-
 </html>

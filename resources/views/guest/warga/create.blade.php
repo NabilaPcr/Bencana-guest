@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Kejadian Bencana - BinaDesa</title>
+    <title>Form Laporan Warga - BinaDesa</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -55,15 +55,6 @@
             color: #2e6d38;
         }
 
-        .navbar .logo i {
-            font-size: 2rem;
-            color: #56a65a;
-        }
-
-        .navbar .logo span {
-            color: #7ac27b;
-        }
-
         .nav-links {
             display: flex;
             list-style: none;
@@ -72,31 +63,30 @@
         }
 
         .nav-links a {
+            color: #2b2b2b;
             font-weight: 500;
-            color: #2e6d38;
-            transition: 0.3s;
+            transition: color 0.3s;
         }
 
         .nav-links a:hover {
-            color: #56a65a;
+            color: #2e6d38;
         }
 
         .btn-login {
-            background: #56a65a;
+            background: #2e6d38;
             color: white !important;
-            padding: 10px 22px;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            padding: 8px 20px;
+            border-radius: 6px;
+            transition: background 0.3s;
         }
 
         .btn-login:hover {
-            background: #48904d;
+            background: #245a2d;
         }
 
         /* ===== MAIN CONTENT ===== */
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 40px 20px;
         }
@@ -110,16 +100,11 @@
             font-weight: 500;
         }
 
-        .back-link:hover {
-            color: #48904d;
-        }
-
         .form-card {
             background: white;
             border-radius: 16px;
             padding: 40px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border-left: 6px solid #f39c12;
         }
 
         .form-header {
@@ -131,10 +116,6 @@
             color: #2e6d38;
             font-size: 2.2rem;
             margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
         }
 
         .form-header p {
@@ -172,7 +153,7 @@
 
         .form-group textarea {
             resize: vertical;
-            min-height: 100px;
+            min-height: 80px;
         }
 
         .form-row {
@@ -182,7 +163,7 @@
         }
 
         .btn-submit {
-            background: #f39c12;
+            background: #56a65a;
             color: white;
             padding: 15px 30px;
             border: none;
@@ -193,48 +174,19 @@
             transition: all 0.3s ease;
             width: 100%;
             margin-top: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
         }
 
         .btn-submit:hover {
-            background: #e67e22;
+            background: #48904d;
             transform: translateY(-2px);
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .btn-cancel {
-            background: #6c757d;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            flex: 1;
-        }
-
-        .btn-cancel:hover {
-            background: #5a6268;
-            transform: translateY(-2px);
-        }
-
-        .btn-submit-full {
-            flex: 2;
+        .section-title {
+            color: #2e6d38;
+            font-size: 1.3rem;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
         }
 
         /* ===== FOOTER ===== */
@@ -265,8 +217,13 @@
                 gap: 0;
             }
 
-            .action-buttons {
+            .nav-links {
+                gap: 15px;
+            }
+
+            .navbar {
                 flex-direction: column;
+                gap: 15px;
             }
         }
     </style>
@@ -291,88 +248,120 @@
         </nav>
     </header>
 
-    <!-- MAIN CONTENT -->
+     <!-- MAIN CONTENT -->
     <div class="container">
-        <a href="{{ route('kejadian.index') }}" class="back-link">
+        <a href="{{ route('warga.index') }}" class="back-link">
             <i class="fas fa-arrow-left"></i>
-            Kembali ke Daftar Kejadian
+            Kembali ke Daftar Warga
         </a>
 
         <div class="form-card">
             <div class="form-header">
-                <h1><i class="fas fa-edit"></i> Edit Kejadian Bencana</h1>
-                <p>Perbarui data kejadian bencana berikut</p>
+                <h1><i class="fas fa-user-plus"></i> Form Laporan Warga</h1>
+                <p>Laporan warga yang terdampak oleh bencana! Silahkan isi form berikut untuk mengisi informasi warga.</p>
             </div>
 
-            <form action="{{ route('kejadian.update', $kejadian->kejadian_id) }}" method="POST">
+            <form action="{{ route('warga.store') }}" method="POST">
                 @csrf
-                @method('PUT')
 
-                <div class="form-group">
-                    <label for="jenis_bencana">Jenis Bencana *</label>
-                    <input type="text" id="jenis_bencana" name="jenis_bencana" required
-                           value="{{ old('jenis_bencana', $kejadian->jenis_bencana) }}"
-                           placeholder="Contoh: Banjir, Gempa Bumi, Kebakaran">
-                </div>
+                <h3 class="section-title"><i class="fas fa-user-circle"></i> Data Pribadi</h3>
 
-                <div class="form-group">
-                    <label for="tanggal">Tanggal Kejadian *</label>
-                    <input type="date" id="tanggal" name="tanggal" required
-                           value="{{ old('tanggal', $kejadian->tanggal->format('Y-m-d')) }}">
-                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nama">Nama Lengkap *</label>
+                        <input type="text" id="nama" name="nama" required
+                               placeholder="Masukkan nama lengkap">
+                    </div>
 
-                <div class="form-group">
-                    <label for="lokasi_text">Lokasi Kejadian *</label>
-                    <textarea id="lokasi_text" name="lokasi_text" required
-                              placeholder="Deskripsikan lokasi kejadian dengan jelas">{{ old('lokasi_text', $kejadian->lokasi_text) }}</textarea>
+                    <div class="form-group">
+                        <label for="no_ktp">No KTP *</label>
+                        <input type="text" id="no_ktp" name="no_ktp" required
+                               placeholder="Masukkan No KTP">
+                    </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="rt">RT</label>
-                        <input type="text" id="rt" name="rt"
-                               value="{{ old('rt', $kejadian->rt) }}"
-                               placeholder="Contoh: 05">
+                        <label for="jenis_kelamin">Jenis Kelamin *</label>
+                        <select id="jenis_kelamin" name="jenis_kelamin" required>
+                            <option value="">Pilih Jenis Kelamin</option>
+                            <option value="L">Laki-laki</option>
+                            <option value="P">Perempuan</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="rw">RW</label>
-                        <input type="text" id="rw" name="rw"
-                               value="{{ old('rw', $kejadian->rw) }}"
-                               placeholder="Contoh: 02">
+                        <label for="agama">Agama *</label>
+                        <input type="text" id="agama" name="agama" required
+                               placeholder="Masukkan agama">
+                    </div>
+                </div>
+
+                <h3 class="section-title"><i class="fas fa-address-card"></i> Data Kontak & Status</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pekerjaan">Pekerjaan *</label>
+                        <input type="text" id="pekerjaan" name="pekerjaan" required
+                               placeholder="Masukkan pekerjaan">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telp">No Telepon *</label>
+                        <input type="tel" id="telp" name="telp" required
+                               placeholder="Masukkan nomor telepon">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="status_dampak">Status Dampak *</label>
+                        <select id="status_dampak" name="status_dampak" required>
+                            <option value="">Pilih Status Dampak</option>
+                            <option value="korban">Korban</option>
+                            <option value="pengungsi">Pengungsi</option>
+                            <option value="relawan">Relawan</option>
+                            <option value="warga_biasa">Warga Biasa</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="dampak">Dampak yang Terjadi *</label>
-                    <textarea id="dampak" name="dampak" required
-                              placeholder="Deskripsikan dampak yang terjadi, contoh: 50 rumah terendam, 200 warga mengungsi">{{ old('dampak', $kejadian->dampak) }}</textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="status_kejadian">Status Kejadian *</label>
-                    <select id="status_kejadian" name="status_kejadian" required>
-                        <option value="">Pilih Status</option>
-                        <option value="aktif" {{ old('status_kejadian', $kejadian->status_kejadian) == 'aktif' ? 'selected' : '' }}>Aktif</option>
-                        <option value="dalam penanganan" {{ old('status_kejadian', $kejadian->status_kejadian) == 'dalam penanganan' ? 'selected' : '' }}>Dalam Penanganan</option>
-                        <option value="selesai" {{ old('status_kejadian', $kejadian->status_kejadian) == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                    <label for="status_kesehatan">Status Kesehatan *</label>
+                    <select id="status_kesehatan" name="status_kesehatan" required>
+                        <option value="">Pilih Status Kesehatan</option>
+                        <option value="sehat">Sehat</option>
+                        <option value="luka_ringan">Luka Ringan</option>
+                        <option value="luka_berat">Luka Berat</option>
+                        <option value="meninggal">Meninggal</option>
                     </select>
                 </div>
 
+                <h3 class="section-title"><i class="fas fa-home"></i> Alamat</h3>
+
                 <div class="form-group">
-                    <label for="keterangan">Keterangan Tambahan</label>
-                    <textarea id="keterangan" name="keterangan"
-                              placeholder="Informasi tambahan tentang kejadian ini">{{ old('keterangan', $kejadian->keterangan) }}</textarea>
+                    <label for="alamat">Alamat Lengkap *</label>
+                    <textarea id="alamat" name="alamat" required
+                              placeholder="Masukkan alamat lengkap"></textarea>
                 </div>
 
-                <div class="action-buttons">
-                    <a href="{{ route('kejadian.index') }}" class="btn-cancel">
-                        <i class="fas fa-times"></i> Batal
-                    </a>
-                    <button type="submit" class="btn-submit btn-submit-full">
-                        <i class="fas fa-save"></i> Update Data Kejadian
-                    </button>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="rt">RT *</label>
+                        <input type="text" id="rt" name="rt" required
+                               placeholder="Masukkan RT">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rw">RW *</label>
+                        <input type="text" id="rw" name="rw" required
+                               placeholder="Masukkan RW">
+                    </div>
                 </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-paper-plane"></i> Kirim Laporan Warga
+                </button>
             </form>
         </div>
     </div>
@@ -381,5 +370,11 @@
     <footer>
         <p>&copy; {{ date('Y') }} BinaDesa. Semua akan aman.</p>
     </footer>
+
+    <script>
+        // Set max date untuk tanggal lahir (hari ini)
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('tanggal_lahir').max = today;
+    </script>
 </body>
 </html>
