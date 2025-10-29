@@ -66,12 +66,12 @@
     <div class="container">
         <h1>Selamat Datang di Website ini 🌾</h1>
 
-      
+
         @if(session('pesan'))
             <p>{{ session('pesan') }}</p>
+            <p>Anda telah berhasil login ke sistem Kebencanaan & Tanggap Darurat Desa!.</p>
         @endif
 
-        <p>Anda telah berhasil login ke sistem Kebencanaan & Tanggap Darurat Desa!.</p>
 
         <a href="/auth" class="btn-logout">Keluar</a>
     </div>

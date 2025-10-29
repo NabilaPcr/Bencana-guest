@@ -33,7 +33,7 @@
             background-color: #fff;
             padding: 30px 40px;
             border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
             width: 350px;
             opacity: 0;
             animation: fadeIn 1.2s ease forwards 0.5s;
@@ -74,6 +74,7 @@
             border: 1px solid #ccc;
             border-radius: 8px;
             font-size: 14px;
+            box-sizing: border-box;
         }
 
         button {
@@ -139,12 +140,13 @@
         }
     </style>
 </head>
+
 <body>
     <div class="left"></div>
 
     <div class="right">
         <div class="login-container">
-            <h1>Selamat Datang di Website Kebencanaan & Tanggap Darurat!🌾</h1>
+            <h1>Selamat Datang di Website Kebencanaan & Tanggap Darurat!</h1>
             <p class="welcome-text">Silakan masuk untuk melanjutkan</p>
 
             {{-- Pesan sukses atau error --}}
@@ -161,13 +163,13 @@
                 </div>
             @endif
 
-            <form action="/auth/login" method="POST">
+            <form action="{{ route('auth.login') }}" method="POST">
                 @csrf
-                <label>Username</label>
-                <input type="text" name="username" placeholder="Masukkan username">
+                <label>Email</label>
+                <input type="email" name="Email" placeholder="Masukkan Email" required>
 
                 <label>Password</label>
-                <input type="password" name="password" placeholder="Masukkan password">
+                <input type="password" name="password" placeholder="Masukkan password" required>
 
                 <button type="submit">Masuk</button>
             </form>

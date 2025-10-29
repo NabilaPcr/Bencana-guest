@@ -11,7 +11,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-       return view('layout.guest.app');
+       return view('guest.dashboard');
     }
 
     /**
