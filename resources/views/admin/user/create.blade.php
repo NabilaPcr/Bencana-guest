@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Data Warga - BinaDesa</title>
+    <title>Tambah User - BinaDesa</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -96,7 +96,7 @@
 
         /* ===== MAIN CONTENT ===== */
         .container {
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
             padding: 40px 20px;
         }
@@ -119,7 +119,7 @@
             border-radius: 16px;
             padding: 40px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border-left: 6px solid #f39c12;
+            border-left: 6px solid #24af5a;
         }
 
         .form-header {
@@ -153,8 +153,7 @@
         }
 
         .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group select {
             width: 100%;
             padding: 12px 15px;
             border: 2px solid #e0e0e0;
@@ -164,15 +163,9 @@
         }
 
         .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
+        .form-group select:focus {
             outline: none;
             border-color: #56a65a;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
         }
 
         .form-row {
@@ -182,7 +175,7 @@
         }
 
         .btn-submit {
-            background: #f39c12;
+            background: #24af5a;
             color: white;
             padding: 15px 30px;
             border: none;
@@ -200,7 +193,7 @@
         }
 
         .btn-submit:hover {
-            background: #e67e22;
+            background: #1e8d4a;
             transform: translateY(-2px);
         }
 
@@ -294,140 +287,63 @@
 
     <!-- MAIN CONTENT -->
     <div class="container">
-        <a href="{{ route('warga.index') }}" class="back-link">
+        <a href="{{ route('users.index') }}" class="back-link">
             <i class="fas fa-arrow-left"></i>
-            Kembali ke Data Warga
+            Kembali ke Data User
         </a>
 
         <div class="form-card">
             <div class="form-header">
-                <h1><i class="fas fa-edit"></i> Edit Data Warga</h1>
-                <p>Perbarui data warga berikut</p>
+                <h1><i class="fas fa-user-plus"></i> Tambah User Baru</h1>
+                <p>Tambahkan user baru untuk akses sistem BinaDesa</p>
             </div>
 
-            <form action="{{ route('warga.update', $warga->warga_id) }}" method="POST">
+            <form action="{{ route('users.store') }}" method="POST">
                 @csrf
-                @method('PUT')
 
                 <div class="form-group">
-                    <label for="no_ktp">Nomor KTP *</label>
-                    <input type="text" id="no_ktp" name="no_ktp" required
-                           value="{{ old('no_ktp', $warga->no_ktp) }}"
-                           placeholder="Masukkan nomor KTP">
-                </div>
-
-                <div class="form-group">
-                    <label for="nama">Nama Lengkap *</label>
-                    <input type="text" id="nama" name="nama" required
-                           value="{{ old('nama', $warga->nama) }}"
+                    <label for="name">Nama Lengkap *</label>
+                    <input type="text" id="name" name="name" required
+                           value="{{ old('name') }}"
                            placeholder="Masukkan nama lengkap">
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="jenis_kelamin">Jenis Kelamin *</label>
-                        <select id="jenis_kelamin" name="jenis_kelamin" required>
-                            <option value="">Pilih Jenis Kelamin</option>
-                            <option value="L" {{ old('jenis_kelamin', $warga->jenis_kelamin) == 'L' ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="P" {{ old('jenis_kelamin', $warga->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="agama">Agama *</label>
-                        <input type="text" id="agama" name="agama" required
-                               value="{{ old('agama', $warga->agama) }}"
-                               placeholder="Contoh: Islam, Kristen, dll">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="pekerjaan">Pekerjaan *</label>
-                        <input type="text" id="pekerjaan" name="pekerjaan" required
-                               value="{{ old('pekerjaan', $warga->pekerjaan) }}"
-                               placeholder="Contoh: Wiraswasta, PNS, dll">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="telp">Nomor Telepon *</label>
-                        <input type="text" id="telp" name="telp" required
-                               value="{{ old('telp', $warga->telp) }}"
-                               placeholder="Contoh: 081234567890">
-                    </div>
-                </div>
-
-                {{-- <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email"
-                           value="{{ old('email', $warga->email) }}"
-                           placeholder="Contoh: contoh@email.com">
-                </div> --}}
-
-                <div class="form-group">
-                    <label for="alamat">Alamat Lengkap *</label>
-                    <textarea id="alamat" name="alamat" required
-                              placeholder="Masukkan alamat lengkap">{{ old('alamat', $warga->alamat) }}</textarea>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="rt">RT *</label>
-                        <input type="text" id="rt" name="rt" required
-                               value="{{ old('rt', $warga->rt) }}"
-                               placeholder="Contoh: 05">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="rw">RW *</label>
-                        <input type="text" id="rw" name="rw" required
-                               value="{{ old('rw', $warga->rw) }}"
-                               placeholder="Contoh: 02">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="status_dampak">Status Dampak *</label>
-                        <select id="status_dampak" name="status_dampak" required>
-                            <option value="">Pilih Status</option>
-                            <option value="korban" {{ old('status_dampak', $warga->status_dampak) == 'korban' ? 'selected' : '' }}>Korban</option>
-                            <option value="pengungsi" {{ old('status_dampak', $warga->status_dampak) == 'pengungsi' ? 'selected' : '' }}>Pengungsi</option>
-                            <option value="relawan" {{ old('status_dampak', $warga->status_dampak) == 'relawan' ? 'selected' : '' }}>Relawan</option>
-                            <option value="warga_normal" {{ old('status_dampak', $warga->status_dampak) == 'warga_normal' ? 'selected' : '' }}>Warga Normal</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="status_kesehatan">Status Kesehatan *</label>
-                        <select id="status_kesehatan" name="status_kesehatan" required>
-                            <option value="">Pilih Status</option>
-                            <option value="sehat" {{ old('status_kesehatan', $warga->status_kesehatan) == 'sehat' ? 'selected' : '' }}>Sehat</option>
-                            <option value="luka_ringan" {{ old('status_kesehatan', $warga->status_kesehatan) == 'luka_ringan' ? 'selected' : '' }}>Luka Ringan</option>
-                            <option value="luka_berat" {{ old('status_kesehatan', $warga->status_kesehatan) == 'luka_berat' ? 'selected' : '' }}>Luka Berat</option>
-                            <option value="meninggal" {{ old('status_kesehatan', $warga->status_kesehatan) == 'meninggal' ? 'selected' : '' }}>Meninggal</option>
-                        </select>
-                    </div>
+                    @error('name')
+                        <div style="color: #e74c3c; font-size: 0.875rem; margin-top: 5px;">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">
-                    <label for="kebutuhan_khusus">Kebutuhan Khusus</label>
-                    <textarea id="kebutuhan_khusus" name="kebutuhan_khusus"
-                              placeholder="Contoh: Butuh obat diabetes, makanan khusus, dll">{{ old('kebutuhan_khusus', $warga->kebutuhan_khusus) }}</textarea>
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required
+                           value="{{ old('email') }}"
+                           placeholder="Masukkan alamat email">
+                    @error('email')
+                        <div style="color: #e74c3c; font-size: 0.875rem; margin-top: 5px;">{{ $message }}</div>
+                    @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="keterangan">Keterangan Tambahan</label>
-                    <textarea id="keterangan" name="keterangan"
-                              placeholder="Informasi tambahan tentang warga">{{ old('keterangan', $warga->keterangan) }}</textarea>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input type="password" id="password" name="password" required
+                               placeholder="Masukkan password">
+                        @error('password')
+                            <div style="color: #e74c3c; font-size: 0.875rem; margin-top: 5px;">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password_confirmation">Konfirmasi Password *</label>
+                        <input type="password" id="password_confirmation" name="password_confirmation" required
+                               placeholder="Konfirmasi password">
+                    </div>
                 </div>
 
                 <div class="action-buttons">
-                    <a href="{{ route('warga.index') }}" class="btn-cancel">
+                    <a href="{{ route('users.index') }}" class="btn-cancel">
                         <i class="fas fa-times"></i> Batal
                     </a>
                     <button type="submit" class="btn-submit btn-submit-full">
-                        <i class="fas fa-save"></i> Update Data Warga
+                        <i class="fas fa-save"></i> Simpan User
                     </button>
                 </div>
             </form>
@@ -438,5 +354,24 @@
     <footer>
         <p>&copy; {{ date('Y') }} BinaDesa. Semua akan aman.</p>
     </footer>
+
+    <script>
+        // Validasi password match
+        document.addEventListener('DOMContentLoaded', function() {
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('password_confirmation');
+
+            function validatePassword() {
+                if (password.value !== confirmPassword.value) {
+                    confirmPassword.setCustomValidity('Password tidak cocok');
+                } else {
+                    confirmPassword.setCustomValidity('');
+                }
+            }
+
+            password.addEventListener('change', validatePassword);
+            confirmPassword.addEventListener('keyup', validatePassword);
+        });
+    </script>
 </body>
 </html>

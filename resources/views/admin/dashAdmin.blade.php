@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charity Dashboard</title>
+    <title>BinaDesa - Admin Dashboard</title>
 
     <!-- CSS Libraries -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -12,9 +12,9 @@
 
     <style>
         :root {
-            --primary: #FF6B6B;
+            --primary: #56a65a;
             --secondary: #4ECDC4;
-            --dark: #292B2C;
+            --dark: #2e6d38;
             --light: #F7F7F7;
             --success: #28a745;
         }
@@ -50,6 +50,8 @@
         .sidebar-header {
             padding: 20px;
             background: rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .sidebar-menu {
@@ -78,15 +80,18 @@
 
         .sidebar-menu a i {
             margin-right: 10px;
+            width: 20px;
+            text-align: center;
         }
 
         .top-navbar {
             background: white;
-            padding: 15px;
+            padding: 15px 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 999;
+            border-bottom: 1px solid #e9ecef;
         }
 
         .content-area {
@@ -99,6 +104,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             margin-bottom: 20px;
             overflow: hidden;
+            border: 1px solid #e9ecef;
         }
 
         .card-header {
@@ -106,31 +112,34 @@
             background: var(--dark);
             color: white;
             border-bottom: 0;
+            font-weight: 600;
         }
 
         .card-body {
             padding: 20px;
         }
 
-        /* Charity Template Styles */
+        /* BinaDesa Styles */
         .btn-custom {
             background: var(--primary);
             border: none;
             color: white;
             padding: 10px 20px;
-            border-radius: 30px;
+            border-radius: 8px;
             transition: all 0.3s;
+            font-weight: 500;
         }
 
         .btn-custom:hover {
-            background: #e55c5c;
+            background: #48904d;
             color: white;
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(86, 166, 90, 0.3);
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
         }
 
         .section-header p {
@@ -144,169 +153,20 @@
             color: var(--dark);
         }
 
-        .carousel-item {
-            position: relative;
-            height: 500px;
-        }
-
-        .carousel-img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .carousel-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
-            z-index: 2;
-            width: 80%;
-        }
-
-        .carousel-text h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-        }
-
-        .carousel-text p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-        }
-
-        .service-item, .causes-item, .team-item, .blog-item, .event-item {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s;
-            margin-bottom: 30px;
-        }
-
-        .service-item:hover, .causes-item:hover, .team-item:hover, .blog-item:hover, .event-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .service-icon i {
-            font-size: 30px;
-            color: white;
-        }
-
-        .facts {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://via.placeholder.com/1920x600');
-            background-size: cover;
-            background-attachment: fixed;
-            padding: 100px 0;
-            color: white;
-            text-align: center;
-        }
-
-        .facts-item i {
-            font-size: 50px;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-
-        .facts-text h3 {
-            font-size: 40px;
-            font-weight: 700;
-        }
-
-        .donate, .volunteer {
-            background-size: cover;
-            background-attachment: fixed;
-            padding: 100px 0;
-            color: white;
-        }
-
-        .donate {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://via.placeholder.com/1920x600');
-        }
-
-        .volunteer {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://via.placeholder.com/1920x600');
-        }
-
-        .testimonial-item {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            margin: 15px;
-        }
-
-        .testimonial-profile {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .testimonial-profile img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 15px;
-        }
-
-        .footer {
-            background: var(--dark);
-            color: white;
-            padding: 60px 0 0;
-        }
-
-        .footer h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer h2::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 2px;
-            background: var(--primary);
-        }
-
-        .copyright {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 20px 0;
-            margin-top: 40px;
-        }
-
         /* Dashboard Stats */
         .stat-card {
             background: white;
             border-radius: 10px;
-            padding: 20px;
+            padding: 25px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             text-align: center;
             margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
         }
 
         .stat-icon {
@@ -326,7 +186,7 @@
         }
 
         .stat-number {
-            font-size: 30px;
+            font-size: 32px;
             font-weight: 700;
             color: var(--dark);
             margin-bottom: 5px;
@@ -335,11 +195,33 @@
         .stat-label {
             color: #6c757d;
             font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Table Styles */
+        .table th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid var(--primary);
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background-color: var(--primary);
+        }
+
+        /* Quick Actions */
+        .quick-actions .btn {
+            margin: 5px;
+            padding: 12px 20px;
+            font-weight: 500;
         }
 
         /* Toggle for mobile */
         #sidebarToggle {
             display: none;
+            background: var(--primary);
+            border: none;
         }
 
         @media (max-width: 768px) {
@@ -362,10 +244,6 @@
             #sidebarToggle {
                 display: block;
             }
-
-            .carousel-text h1 {
-                font-size: 2rem;
-            }
         }
     </style>
 </head>
@@ -374,19 +252,20 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <h3>Charity Dashboard</h3>
+                <h3><i class="fas fa-hands-helping"></i> BinaDesa</h3>
+                <small class="text-muted">Admin Panel</small>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
-                <li><a href="#"><i class="fas fa-info-circle"></i> About Us</a></li>
-                <li><a href="#"><i class="fas fa-hand-holding-heart"></i> Causes</a></li>
-                <li><a href="#"><i class="fas fa-calendar-alt"></i> Events</a></li>
-                <li><a href="#"><i class="fas fa-blog"></i> Blog</a></li>
-                <li><a href="#"><i class="fas fa-users"></i> Our Team</a></li>
-                <li><a href="#"><i class="fas fa-donate"></i> Donations</a></li>
-                <li><a href="#"><i class="fas fa-user-plus"></i> Volunteers</a></li>
-                <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="{{ url('/kejadian') }}"><i class="fas fa-exclamation-triangle"></i> Data Kejadian</a></li>
+                <li><a href="{{ url('/warga') }}"><i class="fas fa-users"></i> Data Warga</a></li>
+                <li><a href="#"><i class="fas fa-map-marker-alt"></i> Posko Bencana</a></li>
+                <li><a href="#"><i class="fas fa-box"></i> Logistik</a></li>
+                <li><a href="#"><i class="fas fa-truck"></i> Distribusi</a></li>
+                <li><a href="#"><i class="fas fa-donate"></i> Donasi</a></li>
+                <li><a href="#"><i class="fas fa-chart-bar"></i> Laporan</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Pengaturan</a></li>
+                <li><a href="{{ url('/') }}"><i class="fas fa-globe"></i> Kembali ke Website</a></li>
             </ul>
         </div>
 
@@ -394,19 +273,19 @@
         <div class="main-content">
             <!-- Top Navbar -->
             <div class="top-navbar d-flex justify-content-between align-items-center">
-                <button id="sidebarToggle" class="btn btn-primary">
+                <button id="sidebarToggle" class="btn btn-custom">
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="d-flex align-items-center">
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user-circle"></i> Admin User
+                        <button class="btn btn-custom dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i> Admin BinaDesa
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profile</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a>
+                            <a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Pengaturan</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            <a class="dropdown-item text-danger" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
                         </div>
                     </div>
                 </div>
@@ -419,19 +298,10 @@
                     <div class="col-md-3">
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <i class="fas fa-donate"></i>
+                                <i class="fas fa-exclamation-triangle"></i>
                             </div>
-                            <div class="stat-number">$24,580</div>
-                            <div class="stat-label">Total Donations</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-hand-holding-usd"></i>
-                            </div>
-                            <div class="stat-number">$50,000</div>
-                            <div class="stat-label">Fundraising Goal</div>
+                            <div class="stat-number">15</div>
+                            <div class="stat-label">Kejadian Bencana</div>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -440,290 +310,171 @@
                                 <i class="fas fa-users"></i>
                             </div>
                             <div class="stat-number">248</div>
-                            <div class="stat-label">Active Volunteers</div>
+                            <div class="stat-label">Warga Terdampak</div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <i class="fas fa-calendar-check"></i>
+                                <i class="fas fa-box"></i>
                             </div>
-                            <div class="stat-number">12</div>
-                            <div class="stat-label">Upcoming Events</div>
+                            <div class="stat-number">1,250</div>
+                            <div class="stat-label">Paket Logistik</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-donate"></i>
+                            </div>
+                            <div class="stat-number">Rp 125Jt</div>
+                            <div class="stat-label">Total Donasi</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Charity Template Content -->
-
-                <!-- Carousel Start -->
+                <!-- Quick Actions -->
                 <div class="dashboard-card">
                     <div class="card-header">
-                        <h4 class="mb-0">Our Mission</h4>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="carousel">
-                            <div class="carousel-item">
-                                <div class="carousel-img" style="background-image: url('https://via.placeholder.com/1920x800');"></div>
-                                <div class="carousel-text">
-                                    <h1>Let's be kind for children</h1>
-                                    <p>Lorem ipsum dolor sit amet elit. Phasellus ut mollis mauris. Vivamus egestas eleifend dui ac consequat at lectus in malesuada</p>
-                                    <div class="carousel-btn">
-                                        <a class="btn btn-custom" href="">Donate Now</a>
-                                        <a class="btn btn-custom" href="">Watch Video</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Carousel End -->
-
-                <!-- About Start -->
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <h4 class="mb-0">About Our Organization</h4>
+                        <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
                     </div>
                     <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-lg-6">
-                                <div class="about-img" style="height: 400px; background: url('https://via.placeholder.com/600x400') center/cover;"></div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="section-header">
-                                    <p>Learn About Us</p>
-                                    <h2>Worldwide non-profit charity organization</h2>
-                                </div>
-                                <div class="about-tab">
-                                    <ul class="nav nav-pills nav-justified">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" data-toggle="pill" href="#tab-content-1">About</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="pill" href="#tab-content-2">Mission</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="pill" href="#tab-content-3">Vision</a>
-                                        </li>
-                                    </ul>
+                        <div class="quick-actions text-center">
+                            <a href="{{ url('/kejadian/create') }}" class="btn btn-custom">
+                                <i class="fas fa-plus me-2"></i>Tambah Kejadian
+                            </a>
+                            <a href="{{ url('/warga/create') }}" class="btn btn-custom">
+                                <i class="fas fa-user-plus me-2"></i>Tambah Warga
+                            </a>
+                            <a href="#" class="btn btn-custom">
+                                <i class="fas fa-box me-2"></i>Kelola Logistik
+                            </a>
+                            <a href="#" class="btn btn-custom">
+                                <i class="fas fa-file-alt me-2"></i>Buat Laporan
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-                                    <div class="tab-content mt-4">
-                                        <div id="tab-content-1" class="container tab-pane active">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae pellentesque turpis. Donec in hendrerit dui, vel blandit massa. Ut vestibulum suscipit cursus. Cras quis porta nulla, ut placerat risus.
-                                        </div>
-                                        <div id="tab-content-2" class="container tab-pane fade">
-                                            Sed tincidunt, magna ut vehicula volutpat, turpis diam condimentum justo, posuere congue turpis massa in mi. Proin ornare at massa at fermentum. Nunc aliquet sed nisi iaculis ornare.
-                                        </div>
-                                        <div id="tab-content-3" class="container tab-pane fade">
-                                            Aliquam dolor odio, mollis sed feugiat sit amet, feugiat ut sapien. Nunc eu dignissim lorem. Suspendisse at hendrerit enim. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-                                        </div>
+                <!-- Recent Activities -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="fas fa-history me-2"></i>Aktivitas Terbaru</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Waktu</th>
+                                                <th>Aktivitas</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>10:30</td>
+                                                <td>Laporan banjir di Jakarta Selatan</td>
+                                                <td><span class="badge badge-success">Selesai</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>09:15</td>
+                                                <td>Distribusi logistik ke posko Cilandak</td>
+                                                <td><span class="badge badge-warning">Proses</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>08:45</td>
+                                                <td>Pendaftaran warga baru terdampak gempa</td>
+                                                <td><span class="badge badge-success">Selesai</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Kemarin</td>
+                                                <td>Verifikasi data donasi bulanan</td>
+                                                <td><span class="badge badge-secondary">Pending</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Statistik Cepat</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <small class="text-muted">Kejadian Aktif</small>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-warning" style="width: 60%"></div>
                                     </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Logistik Tersedia</small>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-success" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Donasi Terkumpul</small>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-primary" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 text-center">
+                                    <a href="#" class="btn btn-custom btn-sm">
+                                        <i class="fas fa-chart-bar me-2"></i>Lihat Detail Laporan
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- About End -->
 
-                <!-- Service Start -->
+                <!-- Recent Kejadian -->
                 <div class="dashboard-card">
                     <div class="card-header">
-                        <h4 class="mb-0">What We Do</h4>
+                        <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Kejadian Bencana Terbaru</h5>
                     </div>
                     <div class="card-body">
-                        <div class="section-header text-center">
-                            <p>What We Do?</p>
-                            <h2>We believe that we can save more lifes with you</h2>
-                        </div>
                         <div class="row">
-                            <div class="col-lg-4 col-md-6">
-                                <div class="service-item">
-                                    <div class="service-icon">
-                                        <i class="fas fa-utensils"></i>
-                                    </div>
-                                    <div class="service-text text-center p-4">
-                                        <h3>Healthy Food</h3>
-                                        <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="service-item">
-                                    <div class="service-icon">
-                                        <i class="fas fa-tint"></i>
-                                    </div>
-                                    <div class="service-text text-center p-4">
-                                        <h3>Pure Water</h3>
-                                        <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
+                            <div class="col-md-4">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Banjir Jakarta</h6>
+                                        <p class="card-text text-muted small">Lokasi: Jakarta Selatan</p>
+                                        <p class="card-text"><small class="text-muted">25 Warga terdampak</small></p>
+                                        <a href="{{ url('/kejadian') }}" class="btn btn-custom btn-sm">Kelola</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="service-item">
-                                    <div class="service-icon">
-                                        <i class="fas fa-heartbeat"></i>
+                            <div class="col-md-4">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Gempa Bogor</h6>
+                                        <p class="card-text text-muted small">Lokasi: Bogor Barat</p>
+                                        <p class="card-text"><small class="text-muted">15 Warga terdampak</small></p>
+                                        <a href="{{ url('/kejadian') }}" class="btn btn-custom btn-sm">Kelola</a>
                                     </div>
-                                    <div class="service-text text-center p-4">
-                                        <h3>Health Care</h3>
-                                        <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Kebakaran Depok</h6>
+                                        <p class="card-text text-muted small">Lokasi: Depok Timur</p>
+                                        <p class="card-text"><small class="text-muted">8 Warga terdampak</small></p>
+                                        <a href="{{ url('/kejadian') }}" class="btn btn-custom btn-sm">Kelola</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Service End -->
-
-                <!-- Causes Start -->
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <h4 class="mb-0">Popular Causes</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="section-header text-center">
-                            <p>Popular Causes</p>
-                            <h2>Let's know about charity causes around the world</h2>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6">
-                                <div class="causes-item">
-                                    <div class="causes-img" style="height: 200px; background: url('https://via.placeholder.com/400x300') center/cover;"></div>
-                                    <div class="causes-progress p-3">
-                                        <div class="progress mb-2">
-                                            <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                                                <span>85%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress-text d-flex justify-content-between">
-                                            <p><strong>Raised:</strong> $100000</p>
-                                            <p><strong>Goal:</strong> $50000</p>
-                                        </div>
-                                    </div>
-                                    <div class="causes-text p-3">
-                                        <h3>Lorem ipsum dolor sit</h3>
-                                        <p>Lorem ipsum dolor sit amet elit. Phasell nec pretium mi. Curabit facilis ornare velit non vulputa</p>
-                                    </div>
-                                    <div class="causes-btn p-3 text-center">
-                                        <a class="btn btn-custom">Learn More</a>
-                                        <a class="btn btn-custom">Donate Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="causes-item">
-                                    <div class="causes-img" style="height: 200px; background: url('https://via.placeholder.com/400x300') center/cover;"></div>
-                                    <div class="causes-progress p-3">
-                                        <div class="progress mb-2">
-                                            <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
-                                                <span>65%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress-text d-flex justify-content-between">
-                                            <p><strong>Raised:</strong> $65000</p>
-                                            <p><strong>Goal:</strong> $100000</p>
-                                        </div>
-                                    </div>
-                                    <div class="causes-text p-3">
-                                        <h3>Lorem ipsum dolor sit</h3>
-                                        <p>Lorem ipsum dolor sit amet elit. Phasell nec pretium mi. Curabit facilis ornare velit non vulputa</p>
-                                    </div>
-                                    <div class="causes-btn p-3 text-center">
-                                        <a class="btn btn-custom">Learn More</a>
-                                        <a class="btn btn-custom">Donate Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="causes-item">
-                                    <div class="causes-img" style="height: 200px; background: url('https://via.placeholder.com/400x300') center/cover;"></div>
-                                    <div class="causes-progress p-3">
-                                        <div class="progress mb-2">
-                                            <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
-                                                <span>45%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress-text d-flex justify-content-between">
-                                            <p><strong>Raised:</strong> $45000</p>
-                                            <p><strong>Goal:</strong> $100000</p>
-                                        </div>
-                                    </div>
-                                    <div class="causes-text p-3">
-                                        <h3>Lorem ipsum dolor sit</h3>
-                                        <p>Lorem ipsum dolor sit amet elit. Phasell nec pretium mi. Curabit facilis ornare velit non vulputa</p>
-                                    </div>
-                                    <div class="causes-btn p-3 text-center">
-                                        <a class="btn btn-custom">Learn More</a>
-                                        <a class="btn btn-custom">Donate Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Causes End -->
-
-                <!-- Footer Start -->
-                <div class="footer">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="footer-contact">
-                                    <h2>Our Head Office</h2>
-                                    <p><i class="fa fa-map-marker-alt"></i>123 Street, New York, USA</p>
-                                    <p><i class="fa fa-phone-alt"></i>+012 345 67890</p>
-                                    <p><i class="fa fa-envelope"></i>info@example.com</p>
-                                    <div class="footer-social">
-                                        <a class="btn btn-custom" href=""><i class="fab fa-twitter"></i></a>
-                                        <a class="btn btn-custom" href=""><i class="fab fa-facebook-f"></i></a>
-                                        <a class="btn btn-custom" href=""><i class="fab fa-youtube"></i></a>
-                                        <a class="btn btn-custom" href=""><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="footer-link">
-                                    <h2>Popular Links</h2>
-                                    <a href="">About Us</a>
-                                    <a href="">Contact Us</a>
-                                    <a href="">Popular Causes</a>
-                                    <a href="">Upcoming Events</a>
-                                    <a href="">Latest Blog</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="footer-link">
-                                    <h2>Useful Links</h2>
-                                    <a href="">Terms of use</a>
-                                    <a href="">Privacy policy</a>
-                                    <a href="">Cookies</a>
-                                    <a href="">Help</a>
-                                    <a href="">FQAs</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="footer-newsletter">
-                                    <h2>Newsletter</h2>
-                                    <form>
-                                        <input class="form-control" placeholder="Email goes here">
-                                        <button class="btn btn-custom mt-2">Submit</button>
-                                        <label class="mt-2">Don't worry, we don't spam!</label>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container copyright">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p>&copy; <a href="#">Charity Dashboard</a>, All Right Reserved.</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p>Designed By Charity Organization</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Footer End -->
             </div>
         </div>
     </div>
@@ -742,13 +493,6 @@
         // Initialize tooltips
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
-        })
-
-        // Tab functionality
-        $(document).ready(function(){
-            $(".nav-pills a").click(function(){
-                $(this).tab('show');
-            });
         });
     </script>
 </body>
