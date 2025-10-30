@@ -1,5 +1,17 @@
-@extends('layout.dashboard.app')
-@section('content')
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    {{-- START CSS  --}}
+    @include('layout.dashboard.css')
+    {{-- END CSS  --}}
+</head>
+
+<body>
+    <!-- START Navbar -->
+    @include('layout.dashboard.header')
+    {{-- END NAVBAR  --}}
+
     <!-- Main Content-->
     <section class="hero-section">
         <div class="container">
@@ -177,5 +189,15 @@
         </div>
     </div>
     {{-- END MAIN CONTENT  --}}
-    @endsection
 
+
+    <!-- Footer -->
+    @include('layout.dashboard.footer')
+    {{-- END FOOTER  --}}
+
+        {{-- START JS  --}}
+   @include('layout.dashboard.js')
+    {{-- END JS  --}}
+</body>
+
+</html>
