@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    {{-- Start CSS  --}}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Kejadian - BinaDesa</title>
@@ -282,6 +283,7 @@
             }
         }
     </style>
+    {{-- END CSS --}}
 </head>
 <body>
     <!-- NAVBAR -->
@@ -302,6 +304,7 @@
             </ul>
         </nav>
     </header>
+    {{-- END NAVBAR  --}}
 
     <!-- MAIN CONTENT -->
     <div class="container">
@@ -375,10 +378,12 @@
             </div>
         </div>
     </div>
+    {{-- END FOOTER  --}}
 
     <!-- FOOTER -->
     <footer>
         <p>&copy; {{ date('Y') }} BinaDesa. Semua akan aman.</p>
     </footer>
+    {{-- END FOOTER  --}}
 </body>
 </html>
