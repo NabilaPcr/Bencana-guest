@@ -164,7 +164,7 @@
                         <i class="fas fa-phone"></i>
                     </div>
                     <h3>Telepon</h3>
-                    <p>+62 123 456 789</p>
+                    <p>+62 852-7838-6609</p>
                 </div>
                 <div class="contact-card">
                     <div class="contact-icon">
@@ -176,6 +176,15 @@
             </div>
         </div>
     </div>
+
+    {{-- <a href="https://wa.me/6282384588294"
+       class="whatsapp-float"
+       target="_blank"
+       title="Hubungi kami via WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a> --}}
+
+
     {{-- END MAIN CONTENT  --}}
     @endsection
 
