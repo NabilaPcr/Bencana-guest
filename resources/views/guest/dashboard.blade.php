@@ -177,14 +177,6 @@
         </div>
     </div>
 
-    {{-- <a href="https://wa.me/6282384588294"
-       class="whatsapp-float"
-       target="_blank"
-       title="Hubungi kami via WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a> --}}
-
-
     {{-- END MAIN CONTENT  --}}
     @endsection
 
