@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KejadianController;
 use App\Http\Controllers\WargaController;
+use App\Http\Controllers\UserController;
 
 
 Route::get('/', function () {
@@ -54,8 +55,8 @@ Route::prefix('warga')->group(function () {
 });
 
 //route users
-// routes/web.php
-use App\Http\Controllers\UserController;
+
+
 
 // User Routes
 Route::get('/users', [UserController::class, 'index'])->name('users.index');

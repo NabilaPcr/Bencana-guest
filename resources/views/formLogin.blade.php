@@ -118,8 +118,10 @@
             font-size: 16px;
         }
 
+        /* TAMBAHKAN INPUT TYPE EMAIL */
         input[type="text"],
-        input[type="password"] {
+        input[type="password"],
+        input[type="email"] {  /* ✅ TAMBAH INI */
             width: 100%;
             padding: 12px 15px 12px 45px;
             border: 2px solid #e0e0e0;
@@ -132,7 +134,8 @@
         }
 
         input[type="text"]:focus,
-        input[type="password"]:focus {
+        input[type="password"]:focus,
+        input[type="email"]:focus {  /* ✅ TAMBAH INI */
             outline: none;
             border-color: #2e7d32;
             background: #fff;
@@ -140,7 +143,8 @@
         }
 
         input[type="text"]::placeholder,
-        input[type="password"]::placeholder {
+        input[type="password"]::placeholder,
+        input[type="email"]::placeholder {  /* ✅ TAMBAH INI */
             color: #9e9e9e;
         }
 
@@ -227,21 +231,6 @@
             font-size: 0.9rem;
             color: #666;
             margin-top: 5px;
-        }
-
-        .password-requirements {
-            background: #e3f2fd;
-            color: #1976d2;
-            font-size: 12px;
-            margin-top: 5px;
-            padding: 10px;
-            border-radius: 6px;
-            border-left: 3px solid #1976d2;
-        }
-
-        .password-requirements ul {
-            margin: 0;
-            padding-left: 15px;
         }
 
         @keyframes slideInLeft {
@@ -333,10 +322,10 @@
             <form action="/auth/login" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label>Username</label>
+                    <label>Email</label>
                     <div class="input-with-icon">
-                        <i class="fas fa-user"></i>
-                        <input type="text" name="username" placeholder="Masukkan username Anda" required value="{{ old('username') }}">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" name="email" placeholder="Masukkan email Anda" required value="{{ old('email') }}">
                     </div>
                 </div>
 
@@ -346,13 +335,6 @@
                         <i class="fas fa-lock"></i>
                         <input type="password" name="password" placeholder="Masukkan password Anda" required>
                     </div>
-                    {{-- <div class="password-requirements">
-                        <strong>Requirements:</strong>
-                        <ul>
-                            <li>Minimal 3 karakter</li>
-                            <li>Harus mengandung huruf kapital</li>
-                        </ul>
-                    </div> --}}
                 </div>
 
                 <button type="submit">

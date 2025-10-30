@@ -13,6 +13,7 @@ class UserController extends Controller
         $users = User::all(); // Diubah dari get() ke all()
         return view('admin.user.index', compact('users')); // View path diubah
     }
+    
 
     public function create()
     {

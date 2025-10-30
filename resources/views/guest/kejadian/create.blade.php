@@ -281,9 +281,11 @@
         <p>&copy; {{ date('Y') }} BinaDesa. Semua akan aman.</p>
     </footer>
 
+    {{-- START JS --}}
     <script>
         // Set default date to today
         document.getElementById('tanggal').valueAsDate = new Date();
     </script>
+    {{-- END JS  --}}
 </body>
 </html>

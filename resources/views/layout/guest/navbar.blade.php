@@ -22,7 +22,7 @@
                         <a href="#kontak" class="nav-link">Kontak</a>
                     </li>
                      <li class="nav-item">
-                        <a href="" class="nav-link">User</a>
+                        <a href="/users" class="nav-link">User</a>
                     </li>
 
                     <li class="nav-item">
