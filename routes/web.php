@@ -2,14 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KejadianController;
-use App\Http\Controllers\WargaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RegisController;
+use App\Http\Controllers\WargaController;
+use App\Http\Controllers\KejadianController;
+use App\Http\Controllers\DashboardController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('guest.dashboard');
 });
 
 
@@ -17,9 +18,11 @@ Route::get('/auth', [AuthController::class, 'index']);
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/formLogin', [AuthController::class, 'index']);
-Route::get('/berhasil', function () {
-    return view('berhasil');
-});
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/register', [RegisController::class, 'index'])->name('register');
+Route::post('/auth/register', [RegisController::class, 'store']);
+
+
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
 -> name('guest.dashboard');

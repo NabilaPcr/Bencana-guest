@@ -189,14 +189,17 @@
         </div>
     </div>
     {{-- END MAIN CONTENT  --}}
-
+    <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20ingin%20bertanya." class="whatsapp-float"
+        target="_blank" title="Hubungi kami di WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <!-- Footer -->
     @include('layout.dashboard.footer')
     {{-- END FOOTER  --}}
 
-        {{-- START JS  --}}
-   @include('layout.dashboard.js')
+    {{-- START JS  --}}
+    @include('layout.dashboard.js')
     {{-- END JS  --}}
 </body>
 

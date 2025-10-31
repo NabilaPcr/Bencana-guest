@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class AuthController extends Controller {
     public function index()
     {
-    return view('formlogin');
+    return view('pages.auth.formlogin');
+
     }
     public function login(Request $request)
     {
@@ -19,7 +22,7 @@ class AuthController extends Controller {
             'password' => 'required',
         ]);
 
-        // Cek apakah email ada di database
+        // Cek email ada di database
         $user = User::where('email', $request->email)->first();
 
         // Jika email ditemukan, cek password dengan Hash::check
@@ -33,6 +36,15 @@ class AuthController extends Controller {
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ])->withInput($request->only('email'));
+    }
+     public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/auth')->with('pesan', 'Anda telah logout.');
     }
 
 

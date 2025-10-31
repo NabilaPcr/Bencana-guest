@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - BinaDesa</title>
+    <title>Registrasi - BinaDesa</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -44,7 +44,7 @@
             backdrop-filter: blur(10px);
         }
 
-        .login-container {
+        .register-container {
             background: rgba(255, 255, 255, 0.95);
             padding: 40px;
             border-radius: 20px;
@@ -59,7 +59,7 @@
             overflow: hidden;
         }
 
-        .login-container::before {
+        .register-container::before {
             content: '';
             position: absolute;
             top: 0;
@@ -77,19 +77,12 @@
             font-weight: 600;
         }
 
-        p.welcome-text {
+        p.info-text {
             text-align: center;
             color: #666;
             font-size: 14px;
             margin-bottom: 30px;
             line-height: 1.5;
-        }
-
-        h2 {
-            text-align: center;
-            color: #2e7d32;
-            margin-bottom: 30px;
-            font-weight: 500;
         }
 
         .form-group {
@@ -118,10 +111,9 @@
             font-size: 16px;
         }
 
-        /* TAMBAHKAN INPUT TYPE EMAIL */
         input[type="text"],
-        input[type="password"],
-        input[type="email"] {  /* ✅ TAMBAH INI */
+        input[type="email"],
+        input[type="password"] {
             width: 100%;
             padding: 12px 15px 12px 45px;
             border: 2px solid #e0e0e0;
@@ -133,19 +125,11 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        input[type="text"]:focus,
-        input[type="password"]:focus,
-        input[type="email"]:focus {  /* ✅ TAMBAH INI */
+        input:focus {
             outline: none;
             border-color: #2e7d32;
             background: #fff;
             box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
-        }
-
-        input[type="text"]::placeholder,
-        input[type="password"]::placeholder,
-        input[type="email"]::placeholder {  /* ✅ TAMBAH INI */
-            color: #9e9e9e;
         }
 
         button {
@@ -184,10 +168,6 @@
             left: 100%;
         }
 
-        button:active {
-            transform: translateY(0);
-        }
-
         .error {
             background: #ffebee;
             color: #d32f2f;
@@ -197,17 +177,6 @@
             padding: 12px;
             border-radius: 8px;
             border-left: 4px solid #d32f2f;
-        }
-
-        .message {
-            background: #e8f5e8;
-            color: #2e7d32;
-            font-size: 13px;
-            margin-bottom: 15px;
-            text-align: center;
-            padding: 12px;
-            border-radius: 8px;
-            border-left: 4px solid #2e7d32;
         }
 
         .brand {
@@ -233,58 +202,45 @@
             margin-top: 5px;
         }
 
+        .login-link {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .login-link a {
+            color: #2e7d32;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .login-link a:hover {
+            color: #43a047;
+            text-decoration: underline;
+        }
+
         @keyframes slideInLeft {
-            from {
-                transform: translateX(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-
-            .left {
-                flex: 0.4;
-            }
-
-            .right {
-                flex: 0.6;
-            }
-
-            .login-container {
-                width: 90%;
-                max-width: 350px;
-                padding: 30px 25px;
-            }
+            body { flex-direction: column; }
+            .left { flex: 0.4; }
+            .right { flex: 0.6; }
+            .register-container { width: 90%; max-width: 350px; padding: 30px 25px; }
         }
     </style>
 </head>
@@ -293,7 +249,7 @@
     <div class="left"></div>
 
     <div class="right">
-        <div class="login-container">
+        <div class="register-container">
             <div class="brand">
                 <div class="brand-logo">
                     <i class="fas fa-hands-helping"></i>
@@ -302,13 +258,8 @@
                 <div class="brand-subtext">Sistem Kebencanaan & Tanggap Darurat</div>
             </div>
 
-            <h1>Selamat Datang!</h1>
-            <p class="welcome-text">Silakan masuk ke akun Anda untuk melanjutkan</p>
-
-            {{-- Pesan sukses atau error --}}
-            @if(session('pesan'))
-                <p class="message">{{ session('pesan') }}</p>
-            @endif
+            <h1>Buat Akun Baru</h1>
+            <p class="info-text">Isi data di bawah ini untuk membuat akun Anda</p>
 
             {{-- Tampilkan error validasi --}}
             @if ($errors->any())
@@ -319,8 +270,16 @@
                 </div>
             @endif
 
-            <form action="/auth/login" method="POST">
+            <form action="/auth/register" method="POST">
                 @csrf
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="name" placeholder="Masukkan nama lengkap Anda" required value="{{ old('name') }}">
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>Email</label>
                     <div class="input-with-icon">
@@ -333,15 +292,27 @@
                     <label>Password</label>
                     <div class="input-with-icon">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name="password" placeholder="Masukkan password Anda" required>
+                        <input type="password" name="password" placeholder="Masukkan password" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Konfirmasi Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="password_confirmation" placeholder="Ulangi password" required>
                     </div>
                 </div>
 
                 <button type="submit">
-                    <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>
-                    Masuk
+                    <i class="fas fa-user-plus" style="margin-right: 8px;"></i>
+                    Daftar
                 </button>
             </form>
+
+            <div class="login-link">
+                Sudah memiliki akun? <a href="/auth">Silakan login</a>
+            </div>
         </div>
     </div>
 </body>

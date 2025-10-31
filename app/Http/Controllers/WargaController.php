@@ -10,13 +10,13 @@ class WargaController extends Controller
     public function index()
     {
         $warga = Warga::orderBy('created_at', 'desc')->get();
-        return view('guest.warga.index', compact('warga'));
+        return view('pages.warga.index', compact('warga'));
     }
 
     public function create()
     {
         // Tidak perlu ambil data kejadian
-        return view('guest.warga.create');
+        return view('pages.warga.create');
     }
 
     public function store(Request $request)
@@ -56,13 +56,13 @@ class WargaController extends Controller
     public function show($id)
     {
         $warga = Warga::findOrFail($id);
-        return view('guest.warga.show', compact('warga'));
+        return view('pages.warga.show', compact('warga'));
     }
 
     public function edit($id)
     {
         $warga = Warga::findOrFail($id);
-        return view('guest.warga.edit', compact('warga'));
+        return view('pages.warga.edit', compact('warga'));
     }
 
     public function update(Request $request, $id)
@@ -90,7 +90,7 @@ class WargaController extends Controller
             'pekerjaan' => $request->pekerjaan,
             'telp' => $request->telp,
             'status_dampak' => $request->status_dampak,
-            
+
             'alamat' => $request->alamat,
             'rt' => $request->rt,
             'rw' => $request->rw,

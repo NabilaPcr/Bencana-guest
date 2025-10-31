@@ -11,13 +11,13 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all(); // Diubah dari get() ke all()
-        return view('admin.user.index', compact('users')); // View path diubah
+        return view('pages.user.index', compact('users')); // View path diubah
     }
-    
+
 
     public function create()
     {
-        return view('admin.user.create'); // View path diubah
+        return view('pages.user.create'); // View path diubah
     }
 
     public function store(Request $request)
@@ -43,13 +43,13 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.user.show', compact('user')); // View path diubah
+        return view('pages.user.show', compact('user')); // View path diubah
     }
 
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.user.edit', compact('user')); // View path diubah
+        return view('pages.user.edit', compact('user')); // View path diubah
     }
 
     public function update(Request $request, $id)

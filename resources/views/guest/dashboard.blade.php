@@ -176,6 +176,10 @@
             </div>
         </div>
     </div>
+     <a href="https://wa.me/6282384588294?text=Halo%20Admin,%20saya%20ingin%20bertanya." class="whatsapp-float"
+        target="_blank" title="Hubungi kami di WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     {{-- END MAIN CONTENT  --}}
     @endsection

@@ -10,17 +10,17 @@ class KejadianController extends Controller
     public function index()
     {
         $kejadian = KejadianBencana::orderBy('tanggal', 'desc')->get();
-        return view('guest.kejadian.index', compact('kejadian'));
+        return view('pages.kejadian.index', compact('kejadian'));
     }
 
     public function show($id)
     {
         $kejadian = KejadianBencana::findOrFail($id);
-        return view('guest.kejadian.show', compact('kejadian'));
+        return view('pages.kejadian.show', compact('kejadian'));
     }
     public function create()
 {
-    return view('guest.kejadian.create');
+    return view('pages.kejadian.create');
 }
 
 public function store(Request $request)
@@ -42,7 +42,7 @@ public function store(Request $request)
 public function edit($id)
 {
     $kejadian = KejadianBencana::findOrFail($id);
-    return view('guest.kejadian.edit', compact('kejadian'));
+    return view('pages.kejadian.edit', compact('kejadian'));
 }
 
 public function update(Request $request, $id)

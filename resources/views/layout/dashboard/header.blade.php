@@ -7,7 +7,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#tentang">Tentang</a>
+                        <a class="nav-link active" href="/tentang">Tentang</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#kegiatan">Kegiatan</a>
@@ -18,12 +18,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#kontak">Kontak</a>
                     </li>
+
                     <li class="nav-item ms-2">
-                        <a class="nav-link" href="{{ url ('/users')}}">User</a>
+                        <a class="nav-link btn-login" href="/register">Masuk</a>
                     </li>
-                    <li class="nav-item ms-2">
-                        <a class="nav-link btn-login" href="#">Masuk</a>
+
+                     <li class="nav-item ms-2">
+                        <a class="nav-link btn-login" href="/logout">logout</a>
                     </li>
+
 
 
                 </ul>
