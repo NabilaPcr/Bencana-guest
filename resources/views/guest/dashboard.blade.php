@@ -98,7 +98,7 @@
                     <img src="{{ asset('assets/img/posko.jpeg') }}" alt="Posko Bencana">
                     <h3>Posko Bencana</h3>
                     <p>Lokasi dimana para pengungsi dapat beristirahat dan diobati oleh paramedis.</p>
-                    <a href="#" class="event-btn">
+                    <a href="{{ url('/posko') }}" class="event-btn">
                         Lihat Posko
                     </a>
                 </div>

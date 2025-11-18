@@ -7,6 +7,8 @@ use App\Http\Controllers\RegisController;
 use App\Http\Controllers\WargaController;
 use App\Http\Controllers\KejadianController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PoskoController;
+
 
 
 Route::get('/', function () {
@@ -70,4 +72,11 @@ Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edi
 Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
-
+//ROUTE POSKO
+Route::get('/posko', [PoskoController::class, 'index'])->name('posko.index');
+Route::get('/posko/create', [PoskoController::class, 'create'])->name('posko.create');
+Route::post('/posko', [PoskoController::class, 'store'])->name('posko.store');
+Route::get('/posko/{id}', [PoskoController::class, 'show'])->name('posko.show');
+Route::get('/posko/{id}/edit', [PoskoController::class, 'edit'])->name('posko.edit');
+Route::put('/posko/{id}', [PoskoController::class, 'update'])->name('posko.update');
+Route::delete('/posko/{id}', [PoskoController::class, 'destroy'])->name('posko.destroy');
