@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
         Schema::create('warga', function (Blueprint $table) {
@@ -23,7 +20,14 @@ return new class extends Migration
 
             // Tambahan untuk kebencanaan
             $table->enum('status_dampak', ['korban', 'pengungsi', 'relawan', 'warga_normal'])->default('warga_normal');
-            $table->foreignId('kejadian_id')->nullable()->constrained('kejadian_bencana')->onDelete('cascade');
+
+            // Foreign key ke kejadian_bencana.kejadian_id
+            // $table->unsignedBigInteger('kejadian_id')->nullable();
+            // $table->foreign('kejadian_id')
+            //       ->references('kejadian_id')
+            //       ->on('kejadian_bencana')
+            //       ->onDelete('cascade');
+
             $table->text('alamat');
             $table->string('rt', 10);
             $table->string('rw', 10);
@@ -35,7 +39,7 @@ return new class extends Migration
         });
     }
 
-   public function down()
+    public function down()
     {
         Schema::dropIfExists('warga');
     }
