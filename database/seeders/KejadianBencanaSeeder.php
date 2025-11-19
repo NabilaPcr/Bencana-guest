@@ -10,8 +10,8 @@ class KejadianBencanaSeeder extends Seeder
 {
     public function run()
     {
-        // Hapus semua data sebelum insert baru
-        DB::table('kejadian_bencana')->truncate();
+        // Safe delete (tidak merusak foreign key)
+        DB::table('kejadian_bencana')->delete();
 
         $faker = Faker::create('id_ID');
 
@@ -47,7 +47,6 @@ class KejadianBencanaSeeder extends Seeder
                     'dalam penanganan'
                 ]),
 
-                // Keterangan dikosongkan
                 'keterangan' => null,
 
                 'created_at' => now(),

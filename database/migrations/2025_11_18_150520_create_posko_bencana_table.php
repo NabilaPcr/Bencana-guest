@@ -6,30 +6,34 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-      public function up()
+    public function up(): void
     {
         Schema::create('posko_bencana', function (Blueprint $table) {
-            $table->string('posko_id')->primary();
-            $table->string('kejadian_id');
-            $table->string('nama');
+            $table->id('posko_id');
+
+            // FK ke kejadian_bencana
+            $table->unsignedBigInteger('kejadian_id');
+
+            $table->string('nama', 150);
             $table->text('alamat');
-            $table->string('foto')->nullable();
-            $table->string('kontak');
-            $table->string('penanggung_jawab');
-            $table->string('media')->nullable();
+            $table->string('kontak', 50)->nullable();
+            $table->string('penanggung_jawab', 100);
+
             $table->timestamps();
 
-        //     // Foreign key constraint
-        //     $table->foreign('kejadian_id')
-        //           ->references('kejadian_id')
-        //           ->on('kejadian_bencana')
-        //           ->onDelete('cascade');
-         });
-        }
+            $table->foreign('kejadian_id')
+                ->references('kejadian_id')
+                ->on('kejadian_bencana')
+                ->onDelete('cascade');
+        });
+    }
 
-        public function down()
+    public function down(): void
     {
+        Schema::table('posko_bencana', function (Blueprint $table) {
+            $table->dropForeign(['kejadian_id']);
+        });
+
         Schema::dropIfExists('posko_bencana');
     }
-}
-;
+};

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +8,7 @@ class KejadianBencana extends Model
 {
     use HasFactory;
 
-    protected $table = 'kejadian_bencana';
+    protected $table      = 'kejadian_bencana';
     protected $primaryKey = 'kejadian_id';
 
     protected $fillable = [
@@ -20,10 +19,15 @@ class KejadianBencana extends Model
         'rw',
         'dampak',
         'status_kejadian',
-        'keterangan'
+        'keterangan',
     ];
 
     protected $casts = [
-        'tanggal' => 'date'
+        'tanggal' => 'date',
     ];
+    
+    public function posko()
+    {
+        return $this->hasMany(PoskoBencana::class, 'kejadian_id', 'kejadian_id');
+    }
 }
