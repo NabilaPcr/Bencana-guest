@@ -1,24 +1,42 @@
 <?php
 
-namespace Database\Seeders;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-
-class PoskoBencanaSeeder extends Seeder
+return new class extends Migration
 {
-    public function run(): void
+    public function up(): void
     {
-        DB::table('posko_bencana')->insert([
-            [
-                'kejadian_id' => 4,
-                'nama' => 'Posko Ville',
-                'alamat' => 'Dk. R.M. Said No. 421, Tegal 62509, Kaltim',
-                'kontak' => '08147605806',
-                'penanggung_jawab' => 'Gasti Suryatmi',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        ]);
+        Schema::create('posko_bencana', function (Blueprint $table) {
+
+            // Primary key auto increment dengan nama custom
+            $table->bigIncrements('posko_id');
+
+            // FK ke kejadian_bencana
+            $table->unsignedBigInteger('kejadian_id');
+
+            $table->string('nama', 150);
+            $table->text('alamat');
+            $table->string('kontak', 50)->nullable();
+            $table->string('penanggung_jawab', 100);
+
+            $table->timestamps();
+
+            // Relasi FK
+            $table->foreign('kejadian_id')
+                ->references('kejadian_id')
+                ->on('kejadian_bencana')
+                ->onDelete('cascade');
+        });
     }
-}
+
+    public function down(): void
+    {
+        Schema::table('posko_bencana', function (Blueprint $table) {
+            $table->dropForeign(['kejadian_id']);
+        });
+
+        Schema::dropIfExists('posko_bencana');
+    }
+};
