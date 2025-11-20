@@ -30,7 +30,7 @@ class PoskoController extends Controller
             'foto'             => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'kontak'           => 'required|string|max:20',
             'penanggung_jawab' => 'required|string|max:255',
-            'media'            => 'nullable|string',
+            // 'media'            => 'nullable|string',
         ]);
 
         $fotoPath = null;
@@ -46,10 +46,10 @@ class PoskoController extends Controller
             'foto'             => $fotoPath,
             'kontak'           => $request->kontak,
             'penanggung_jawab' => $request->penanggung_jawab,
-            'media'            => $request->media,
+            // 'media'            => $request->media,
         ]);
 
-        return redirect()->route('posko-bencana.index')
+        return redirect()->route('posko.index')
             ->with('success', 'Posko bencana berhasil ditambahkan.');
     }
 
@@ -76,7 +76,7 @@ class PoskoController extends Controller
             'foto'             => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'kontak'           => 'required|string|max:20',
             'penanggung_jawab' => 'required|string|max:255',
-            'media'            => 'nullable|string',
+            // 'media'            => 'nullable|string',
         ]);
 
         $posko = PoskoBencana::findOrFail($id);
@@ -92,10 +92,10 @@ class PoskoController extends Controller
             'alamat'           => $request->alamat,
             'kontak'           => $request->kontak,
             'penanggung_jawab' => $request->penanggung_jawab,
-            'media'            => $request->media,
+            // 'media'            => $request->media,
         ]);
 
-        return redirect()->route('posko-bencana.index')
+        return redirect()->route('posko.index')
             ->with('success', 'Posko bencana berhasil diupdate.');
     }
 
@@ -104,7 +104,7 @@ class PoskoController extends Controller
         $posko = PoskoBencana::findOrFail($id);
         $posko->delete();
 
-        return redirect()->route('posko-bencana.index')
+        return redirect()->route('posko.index')
             ->with('success', 'Posko bencana berhasil dihapus.');
     }
 }

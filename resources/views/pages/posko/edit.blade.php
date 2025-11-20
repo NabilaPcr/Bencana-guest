@@ -8,12 +8,12 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Edit Posko Bencana</h4>
-                    <a href="{{ route('posko-bencana.index') }}" class="btn btn-secondary btn-sm">
+                    <a href="{{ route('posko.index') }}" class="btn btn-secondary btn-sm">
                         <i class="fas fa-arrow-left"></i> Kembali
                     </a>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('posko-bencana.update', $posko->posko_id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('posko.update', $posko->posko_id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -104,7 +104,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="media">Media</label>
                                     <input type="text" class="form-control @error('media') is-invalid @enderror"
@@ -115,10 +115,10 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="foto">Foto Posko</label>
 
                             @if($posko->foto)
@@ -146,13 +146,13 @@
                             <small class="form-text text-muted">
                                 Format: JPG, PNG, GIF. Maksimal 2MB.
                             </small>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group mt-4">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save"></i> Update Posko
                             </button>
-                            <a href="{{ route('posko-bencana.index') }}" class="btn btn-light">
+                            <a href="{{ route('posko.index') }}" class="btn btn-light">
                                 <i class="fas fa-times"></i> Batal
                             </a>
                         </div>

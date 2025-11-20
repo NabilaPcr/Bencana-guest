@@ -16,7 +16,7 @@ class PoskoBencana extends Model
         'foto',
         'kontak',
         'penanggung_jawab',
-        'media',
+        // 'media',
     ];
 
     // Relasi ke tabel kejadian_bencana

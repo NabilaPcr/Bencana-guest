@@ -67,18 +67,18 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="media">Media</label>
                 <input type="text" id="media" name="media"
                        value="{{ old('media') }}"
                        placeholder="Contoh: Instagram, Facebook, dll">
-            </div>
+            </div> --}}
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="foto">Foto Posko</label>
                 <input type="file" id="foto" name="foto" accept="image/*">
                 <small class="form-text">Format: JPG, PNG, GIF. Maksimal 2MB.</small>
-            </div>
+            </div> --}}
 
             <button type="submit" class="btn-submit">
                 <i class="fas fa-save"></i> Simpan Data Posko

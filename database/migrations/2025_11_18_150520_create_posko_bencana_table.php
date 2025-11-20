@@ -1,39 +1,28 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace Database\Seeders;
 
-return new class extends Migration
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
+
+class PoskoBencanaSeeder extends Seeder
 {
-    public function up(): void
+    public function run(): void
     {
-        Schema::create('posko_bencana', function (Blueprint $table) {
-            $table->id('posko_id');
+        $faker = Faker::create('id_ID');
 
-            // FK ke kejadian_bencana
-            $table->unsignedBigInteger('kejadian_id');
-
-            $table->string('nama', 150);
-            $table->text('alamat');
-            $table->string('kontak', 50)->nullable();
-            $table->string('penanggung_jawab', 100);
-
-            $table->timestamps();
-
-            $table->foreign('kejadian_id')
-                ->references('kejadian_id')
-                ->on('kejadian_bencana')
-                ->onDelete('cascade');
-        });
+        // Misalkan kamu punya 10 posko untuk beberapa kejadian
+        for ($i = 1; $i <= 10; $i++) {
+            DB::table('posko_bencana')->insert([
+                'kejadian_id' => $faker->numberBetween(1, 10), // sesuaikan jumlah kejadian yang ada
+                'nama' => 'Posko ' . $faker->city,
+                'alamat' => $faker->address,
+                'kontak' => $faker->phoneNumber,
+                'penanggung_jawab' => $faker->name,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
-
-    public function down(): void
-    {
-        Schema::table('posko_bencana', function (Blueprint $table) {
-            $table->dropForeign(['kejadian_id']);
-        });
-
-        Schema::dropIfExists('posko_bencana');
-    }
-};
+}
