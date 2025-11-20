@@ -10,10 +10,10 @@ return new class extends Migration
     {
         Schema::create('posko_bencana', function (Blueprint $table) {
 
-            // Primary key auto increment dengan nama custom
+            // PRIMARY KEY auto increment
             $table->bigIncrements('posko_id');
 
-            // FK ke kejadian_bencana
+            // FK
             $table->unsignedBigInteger('kejadian_id');
 
             $table->string('nama', 150);
@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->timestamps();
 
-            // Relasi FK
+            // FOREIGN KEY
             $table->foreign('kejadian_id')
                 ->references('kejadian_id')
                 ->on('kejadian_bencana')
@@ -33,10 +33,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('posko_bencana', function (Blueprint $table) {
-            $table->dropForeign(['kejadian_id']);
-        });
-
         Schema::dropIfExists('posko_bencana');
     }
 };
