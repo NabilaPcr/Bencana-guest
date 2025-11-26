@@ -26,9 +26,5 @@ class Warga extends Model
         'status_kesehatan'
     ];
 
-    // HAPUS RELASI KE KEJADIAN
-    // public function kejadian()
-    // {
-    //     return $this->belongsTo(KejadianBencana::class, 'kejadian_id', 'kejadian_id');
-    // }
+
 }

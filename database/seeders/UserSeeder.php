@@ -25,8 +25,8 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        // Tambahan: buat 5 user dummy menggunakan faker (opsional)
-        for ($i = 0; $i < 5; $i++) {
+
+        for ($i = 1; $i <= 100; $i++) {
             DB::table('users')->insert([
                 'name'       => $faker->name(),
                 'email'      => $faker->unique()->safeEmail(),

@@ -8,11 +8,41 @@ use Illuminate\Http\Request;
 
 class PoskoController extends Controller
 {
-    public function index()
-    {
-        $poskoBencana = PoskoBencana::with('kejadian')->get();
-        return view('pages.posko.index', compact('poskoBencana'));
+  public function index(Request $request)
+{
+    $query = PoskoBencana::with('kejadian');
+
+    // Search functionality
+    if ($request->has('search') && $request->search != '') {
+        $search = $request->search;
+        $query->where(function($q) use ($search) {
+            $q->where('nama', 'like', '%' . $search . '%')
+              ->orWhere('penanggung_jawab', 'like', '%' . $search . '%')
+              ->orWhere('alamat', 'like', '%' . $search . '%')
+              ->orWhere('kontak', 'like', '%' . $search . '%')
+              ->orWhereHas('kejadian', function($q) use ($search) {
+                  $q->where('jenis_bencana', 'like', '%' . $search . '%')
+                    ->orWhere('lokasi_text', 'like', '%' . $search . '%');
+              });
+        });
     }
+
+    // Filter by jenis bencana (bukan kejadian_id)
+    if ($request->has('jenis_bencana') && $request->jenis_bencana != '') {
+        $query->whereHas('kejadian', function($q) use ($request) {
+            $q->where('jenis_bencana', $request->jenis_bencana);
+        });
+    }
+
+    $poskoBencana = $query->paginate(10);
+
+    // Ambil semua jenis bencana yang UNIK
+    $jenisBencanaList = KejadianBencana::distinct()
+        ->pluck('jenis_bencana')
+        ->sort();
+
+    return view('pages.posko.index', compact('poskoBencana', 'jenisBencanaList'));
+}
 
     public function create()
     {
@@ -27,23 +57,23 @@ class PoskoController extends Controller
             'kejadian_id'      => 'required|exists:kejadian_bencana,kejadian_id',
             'nama'             => 'required|string|max:255',
             'alamat'           => 'required|string',
-            'foto'             => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'foto'             => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'kontak'           => 'required|string|max:20',
             'penanggung_jawab' => 'required|string|max:255',
             // 'media'            => 'nullable|string',
         ]);
 
-        $fotoPath = null;
-        if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('posko_fotos', 'public');
-        }
+        // $fotoPath = null;
+        // if ($request->hasFile('foto')) {
+        //     $fotoPath = $request->file('foto')->store('posko_fotos', 'public');
+        // }
 
         PoskoBencana::create([
             'posko_id'         => $request->posko_id,
             'kejadian_id'      => $request->kejadian_id,
             'nama'             => $request->nama,
             'alamat'           => $request->alamat,
-            'foto'             => $fotoPath,
+            // 'foto'             => $fotoPath,
             'kontak'           => $request->kontak,
             'penanggung_jawab' => $request->penanggung_jawab,
             // 'media'            => $request->media,
@@ -73,7 +103,7 @@ class PoskoController extends Controller
             'kejadian_id'      => 'required|exists:kejadian_bencana,kejadian_id',
             'nama'             => 'required|string|max:255',
             'alamat'           => 'required|string',
-            'foto'             => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'foto'             => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'kontak'           => 'required|string|max:20',
             'penanggung_jawab' => 'required|string|max:255',
             // 'media'            => 'nullable|string',

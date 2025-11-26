@@ -1,51 +1,176 @@
 @extends('layout.guest.app')
 @section('content')
+<!-- MAIN CONTENT -->
 <div class="container">
-    <h2>Daftar Posko Bencana</h2>
+    <div class="page-header">
+        <div class="header-text">
+            <h1><i class="fas fa-first-aid"></i> Data Posko</h1>
+            <p>Data posko bantuan dan lokasi penanggung jawab</p>
+        </div>
+        <a href="{{ route('posko.create') }}" class="btn-add">
+            <i class="fas fa-plus"></i> Tambah Posko
+        </a>
+    </div>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+    <!-- Search and Filter Section -->
+    <div class="filter-section">
+        <form action="{{ route('posko.index') }}" method="GET" class="filter-form">
+            <div class="form-row">
+                <!-- Search Input -->
+                <div class="form-group">
+                    <label for="search">Pencarian</label>
+                    <input type="text" id="search" name="search"
+                           value="{{ request('search') }}"
+                           placeholder="Cari nama posko, penanggung jawab, atau lokasi...">
+                </div>
+
+                <!-- Filter Jenis Bencana -->
+                <div class="form-group">
+                    <label for="jenis_bencana">Jenis Bencana</label>
+                    <select id="jenis_bencana" name="jenis_bencana">
+                        <option value="">Semua Bencana</option>
+                        @foreach($jenisBencanaList as $jenisBencana)
+                            <option value="{{ $jenisBencana }}"
+                                {{ request('jenis_bencana') == $jenisBencana ? 'selected' : '' }}>
+                                {{ $jenisBencana }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="form-group">
+                    <button type="submit" class="btn-filter">
+                        <i class="fas fa-search"></i> Terapkan
+                    </button>
+                    <a href="{{ route('posko.index') }}" class="btn-reset">
+                        <i class="fas fa-redo"></i> Reset
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Info hasil pencarian -->
+    @if(request()->has('search') && request('search') != '')
+    <div class="search-info">
+        <p><i class="fas fa-info-circle"></i> Menampilkan hasil pencarian untuk: <strong>"{{ request('search') }}"</strong></p>
+    </div>
     @endif
 
-    <a href="{{ route('posko.create') }}" class="btn btn-primary mb-3">Tambah Posko</a>
+    <!-- Info filter aktif -->
+    @if(request()->has('jenis_bencana') && request('jenis_bencana') != '')
+    <div class="filter-info">
+        <p><i class="fas fa-filter"></i> Filter aktif:
+            <span class="filter-tag">Jenis Bencana: {{ request('jenis_bencana') }}</span>
+        </p>
+    </div>
+    @endif
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID Posko</th>
-                <th>Nama Posko</th>
-                <th>Jenis Bencana</th>
-                <th>Lokasi Kejadian</th>
-                <th>Alamat Posko</th>
-                <th>Penanggung Jawab</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
+    <!-- Header dengan Pagination di Atas -->
+    <div class="table-header-with-pagination">
+        <div class="data-info">
+            <p>Menampilkan <strong>{{ $poskoBencana->count() }}</strong> dari <strong>{{ $poskoBencana->total() }}</strong> data posko</p>
+        </div>
+
+        @if($poskoBencana->hasPages())
+        <div class="top-pagination">
+            <div class="pagination-nav">
+                @if(!$poskoBencana->onFirstPage())
+                    <a href="{{ $poskoBencana->previousPageUrl() }}" class="page-btn prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                @else
+                    <span class="page-btn disabled">
+                        <i class="fas fa-chevron-left"></i>
+                    </span>
+                @endif
+
+                <span class="page-info">Halaman {{ $poskoBencana->currentPage() }} dari {{ $poskoBencana->lastPage() }}</span>
+
+                @if($poskoBencana->hasMorePages())
+                    <a href="{{ $poskoBencana->nextPageUrl() }}" class="page-btn next">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                @else
+                    <span class="page-btn disabled">
+                        <i class="fas fa-chevron-right"></i>
+                    </span>
+                @endif
+            </div>
+        </div>
+        @endif
+    </div>
+
+    @if($poskoBencana->count() > 0)
+        <div class="warga-grid">
             @foreach($poskoBencana as $posko)
-            <tr>
-                <td>{{ $posko->posko_id }}</td>
-                <td>{{ $posko->nama }}</td>
-                <td>{{ $posko->kejadianBencana->jenis_bencana ?? 'N/A' }}</td> {{-- Diubah --}}
-                <td>{{ $posko->kejadianBencana->lokasi_text ?? 'N/A' }}
-                    @if($posko->kejadianBencana)
-                        RT {{ $posko->kejadianBencana->rt }}/RW {{ $posko->kejadianBencana->rw }}
-                    @endif
-                </td> {{-- Diubah --}}
-                <td>{{ $posko->alamat }}</td>
-                <td>{{ $posko->penanggung_jawab }}</td>
-                <td>
-                    <a href="{{ route('posko.show', $posko->posko_id) }}" class="btn btn-info btn-sm">Detail</a>
-                    <a href="{{ route('posko.edit', $posko->posko_id) }}" class="btn btn-warning btn-sm">Edit</a>
-                    <form action="{{ route('posko.destroy', $posko->posko_id) }}" method="POST" style="display:inline">
+            <div class="warga-card">
+                <h3><i class="fas fa-first-aid"></i> {{ $posko->nama }}</h3>
+
+                <div class="warga-info">
+                    <p>
+                        <i class="fas fa-id-card"></i>
+                        <strong>ID Posko:</strong> {{ $posko->posko_id }}
+                    </p>
+                    <p>
+                        <i class="fas fa-user"></i>
+                        <strong>Penanggung Jawab:</strong> {{ $posko->penanggung_jawab }}
+                    </p>
+                    <p>
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>Jenis Bencana:</strong> {{ $posko->kejadian->jenis_bencana ?? 'N/A' }}
+                    </p>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <strong>Lokasi Kejadian:</strong> {{ $posko->kejadian->lokasi_text ?? 'N/A' }}
+                        @if($posko->kejadian)
+                            RT {{ $posko->kejadian->rt }}/RW {{ $posko->kejadian->rw }}
+                        @endif
+                    </p>
+                    <p>
+                        <i class="fas fa-home"></i>
+                        <strong>Alamat Posko:</strong> {{ $posko->alamat }}
+                    </p>
+                    <p>
+                        <i class="fas fa-phone"></i>
+                        <strong>Kontak:</strong> {{ $posko->kontak }}
+                    </p>
+                </div>
+
+                <div class="card-actions">
+                    <a href="{{ route('posko.show', $posko->posko_id) }}" class="btn-detail">
+                        <i class="fas fa-eye"></i> Detail
+                    </a>
+                    <a href="{{ route('posko.edit', $posko->posko_id) }}" class="btn-edit">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <form action="{{ route('posko.destroy', $posko->posko_id) }}" method="POST" class="delete-form">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                        <button type="submit" class="btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus data posko ini?')">
+                            <i class="fas fa-trash"></i> Hapus
+                        </button>
                     </form>
-                </td>
-            </tr>
+                </div>
+            </div>
             @endforeach
-        </tbody>
-    </table>
+        </div>
+
+    @else
+        <div class="empty-state">
+            <i class="fas fa-first-aid"></i>
+            <h3>Belum Ada Data Posko</h3>
+            <p>
+                @if(request()->has('search') || request()->has('jenis_bencana'))
+                    Tidak ditemukan data posko dengan filter yang dipilih.
+                    <a href="{{ route('posko.index') }}">Tampilkan semua data</a>
+                @else
+                    Silakan tambah data posko pertama Anda
+                @endif
+            </p>
+        </div>
+    @endif
 </div>
+
 @endsection

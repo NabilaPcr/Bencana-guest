@@ -13,7 +13,7 @@ class PoskoBencana extends Model
         'kejadian_id',
         'nama',
         'alamat',
-        'foto',
+        // 'foto',
         'kontak',
         'penanggung_jawab',
         // 'media',

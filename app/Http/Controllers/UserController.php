@@ -8,11 +8,24 @@ use Illuminate\Support\Facades\Hash; // Jangan lupa import Hash
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $users = User::all(); // Diubah dari get() ke all()
-        return view('pages.user.index', compact('users')); // View path diubah
+   public function index(Request $request)
+{
+    $query = User::query();
+
+    // SEARCH - Mencari berdasarkan nama, email
+    if ($request->has('search') && $request->search != '') {
+        $search = $request->search;
+        $query->where(function($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%");
+        });
     }
+
+    // PAGINATION - 10 data per halaman
+    $users = $query->orderBy('created_at', 'desc')->paginate(5);
+
+    return view('pages.user.index', compact('users'));
+}
 
 
     public function create()

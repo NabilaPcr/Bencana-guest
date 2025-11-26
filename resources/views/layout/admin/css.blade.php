@@ -1,8 +1,8 @@
 <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data User - BinaDesa</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data User - BinaDesa</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 
 
@@ -29,7 +29,7 @@
     /* ===== NAVBAR ===== */
     header {
         background-color: #ffffff;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
         padding: 0;
         position: sticky;
         top: 0;
@@ -165,7 +165,7 @@
         background: white;
         border-radius: 16px;
         padding: 40px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         border-left: 6px solid #f39c12;
     }
 
@@ -308,7 +308,7 @@
         background: white;
         border-radius: 16px;
         padding: 30px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         overflow: hidden;
     }
 
@@ -329,10 +329,26 @@
     }
 
     /* Atur lebar kolom */
-    .users-table th:nth-child(1) { width: 20%; } /* NAME */
-    .users-table th:nth-child(2) { width: 35%; } /* EMAIL */
-    .users-table th:nth-child(3) { width: 30%; } /* PASSWORD */
-    .users-table th:nth-child(4) { width: 15%; } /* ACTION */
+    .users-table th:nth-child(1) {
+        width: 20%;
+    }
+
+    /* NAME */
+    .users-table th:nth-child(2) {
+        width: 35%;
+    }
+
+    /* EMAIL */
+    .users-table th:nth-child(3) {
+        width: 30%;
+    }
+
+    /* PASSWORD */
+    .users-table th:nth-child(4) {
+        width: 15%;
+    }
+
+    /* ACTION */
 
     .users-table td {
         padding: 15px 20px;
@@ -441,10 +457,21 @@
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 992px) {
-        .users-table th:nth-child(1) { width: 25%; }
-        .users-table th:nth-child(2) { width: 35%; }
-        .users-table th:nth-child(3) { width: 25%; }
-        .users-table th:nth-child(4) { width: 15%; }
+        .users-table th:nth-child(1) {
+            width: 25%;
+        }
+
+        .users-table th:nth-child(2) {
+            width: 35%;
+        }
+
+        .users-table th:nth-child(3) {
+            width: 25%;
+        }
+
+        .users-table th:nth-child(4) {
+            width: 15%;
+        }
 
         .password-hash {
             font-size: 0.75rem;
@@ -452,7 +479,9 @@
     }
 
     @media (max-width: 768px) {
-        .container, .container-form {
+
+        .container,
+        .container-form {
             padding: 20px 15px;
         }
 
@@ -479,10 +508,21 @@
             min-width: 700px;
         }
 
-        .users-table th:nth-child(1) { width: 20%; }
-        .users-table th:nth-child(2) { width: 30%; }
-        .users-table th:nth-child(3) { width: 30%; }
-        .users-table th:nth-child(4) { width: 20%; }
+        .users-table th:nth-child(1) {
+            width: 20%;
+        }
+
+        .users-table th:nth-child(2) {
+            width: 30%;
+        }
+
+        .users-table th:nth-child(3) {
+            width: 30%;
+        }
+
+        .users-table th:nth-child(4) {
+            width: 20%;
+        }
 
         .table-action-buttons {
             flex-direction: column;
@@ -527,9 +567,105 @@
             min-width: 600px;
         }
 
-        .users-table th:nth-child(1) { width: 25%; }
-        .users-table th:nth-child(2) { width: 35%; }
-        .users-table th:nth-child(3) { width: 20%; }
-        .users-table th:nth-child(4) { width: 20%; }
+        .users-table th:nth-child(1) {
+            width: 25%;
+        }
+
+        .users-table th:nth-child(2) {
+            width: 35%;
+        }
+
+        .users-table th:nth-child(3) {
+            width: 20%;
+        }
+
+        .users-table th:nth-child(4) {
+            width: 20%;
+        }
+
+
+        /* Table Header with Pagination */
+        .table-header-with-pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .data-info {
+            font-size: 14px;
+            color: #495057;
+        }
+
+        .data-info strong {
+            color: #007bff;
+        }
+
+        /* Top Pagination */
+        .top-pagination .pagination-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .top-pagination .page-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid #007bff;
+        }
+
+        .top-pagination .page-btn:hover:not(.disabled) {
+            background: #0056b3;
+            border-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-pagination .page-btn.disabled {
+            background: #f8f9fa;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .page-info {
+            font-size: 14px;
+            font-weight: 600;
+            color: #495057;
+            background: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .table-header-with-pagination {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .top-pagination .pagination-nav {
+                justify-content: center;
+            }
+        }
+
+
     }
 </style>

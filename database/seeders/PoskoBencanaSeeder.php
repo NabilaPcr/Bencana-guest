@@ -12,9 +12,17 @@ class PoskoBencanaSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        for ($i = 1; $i <= 10; $i++) {
+        // Ambil semua kejadian_id yang tersedia
+        $kejadianIds = DB::table('kejadian_bencana')->pluck('kejadian_id')->toArray();
+
+        if (empty($kejadianIds)) {
+            $this->command->info('⚠️  Tidak ada data kejadian_bencana! Jalankan KejadianBencanaSeeder terlebih dahulu.');
+            return;
+        }
+
+        for ($i = 1; $i <= 100; $i++) {
             DB::table('posko_bencana')->insert([
-                'kejadian_id'       => $faker->numberBetween(1, 20),
+                'kejadian_id'       => $faker->randomElement($kejadianIds),
                 'nama'              => 'Posko ' . $faker->companySuffix(),
                 'alamat'            => $faker->address(),
                 'kontak'            => $faker->phoneNumber(),
@@ -23,5 +31,7 @@ class PoskoBencanaSeeder extends Seeder
                 'updated_at'        => now(),
             ]);
         }
+
+        // $this->command->info("✅ 50 data PoskoBencana berhasil dibuat!");
     }
 }

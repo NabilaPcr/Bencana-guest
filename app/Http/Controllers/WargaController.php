@@ -7,16 +7,39 @@ use Illuminate\Http\Request;
 
 class WargaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $warga = Warga::orderBy('created_at', 'desc')->get();
-        return view('pages.warga.index', compact('warga'));
-    }
+        $query = Warga::query();
 
-    public function create()
-    {
-        // Tidak perlu ambil data kejadian
-        return view('pages.warga.create');
+        // SEARCH - Mencari berdasarkan nama, NIK, atau alamat
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('no_ktp', 'like', "%{$search}%")
+                  ->orWhere('alamat', 'like', "%{$search}%")
+                  ->orWhere('telp', 'like', "%{$search}%");
+            });
+        }
+
+        // FILTER - Filter berdasarkan jenis kelamin
+        if ($request->has('jenis_kelamin') && $request->jenis_kelamin != '') {
+            $query->where('jenis_kelamin', $request->jenis_kelamin);
+        }
+
+
+        // SORTING - Default urutkan terbaru
+        $sort = $request->get('sort', 'created_at');
+        $order = $request->get('order', 'desc');
+        $query->orderBy($sort, $order);
+
+        // PAGINATION - 12 data per halaman (sesuai grid layout)
+        $warga = $query->paginate(12);
+
+        // Untuk menjaga filter saat pindah halaman
+        $warga->appends($request->all());
+
+        return view('pages.warga.index', compact('warga'));
     }
 
     public function store(Request $request)
