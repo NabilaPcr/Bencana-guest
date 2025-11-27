@@ -63,41 +63,6 @@
     </div>
     @endif
 
-    <!-- Header dengan Pagination di Atas -->
-    <div class="table-header-with-pagination">
-        <div class="data-info">
-            <p>Menampilkan <strong>{{ $warga->count() }}</strong> dari <strong>{{ $warga->total() }}</strong> data warga</p>
-        </div>
-
-        @if($warga->hasPages())
-        <div class="top-pagination">
-            <div class="pagination-nav">
-                @if(!$warga->onFirstPage())
-                    <a href="{{ $warga->previousPageUrl() }}" class="page-btn prev">
-                        <i class="fas fa-chevron-left"></i>
-                    </a>
-                @else
-                    <span class="page-btn disabled">
-                        <i class="fas fa-chevron-left"></i>
-                    </span>
-                @endif
-
-                <span class="page-info">Halaman {{ $warga->currentPage() }} dari {{ $warga->lastPage() }}</span>
-
-                @if($warga->hasMorePages())
-                    <a href="{{ $warga->nextPageUrl() }}" class="page-btn next">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                @else
-                    <span class="page-btn disabled">
-                        <i class="fas fa-chevron-right"></i>
-                    </span>
-                @endif
-            </div>
-        </div>
-        @endif
-    </div>
-
     @if($warga->count() > 0)
         <div class="warga-grid">
             @foreach($warga as $item)
@@ -144,7 +109,30 @@
             @endforeach
         </div>
 
-        <!-- Pagination di bawah dihapus -->
+        <!-- INFO DATA DAN PAGINATION DI BAWAH -->
+        <div class="table-header-with-pagination" style="margin-top: 30px;">
+            <div class="data-info">
+                <p>Menampilkan <strong>{{ $warga->count() }}</strong> dari <strong>{{ $warga->total() }}</strong> data warga</p>
+            </div>
+
+            @if($warga->hasPages())
+            <div class="bottom-pagination">
+                <div class="pagination-simple">
+                    @if(!$warga->onFirstPage())
+                        <a href="{{ $warga->previousPageUrl() }}" class="btn-prev">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </a>
+                    @endif
+
+                    @if($warga->hasMorePages())
+                        <a href="{{ $warga->nextPageUrl() }}" class="btn-next">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </a>
+                    @endif
+                </div>
+            </div>
+            @endif
+        </div>
 
     @else
         <div class="empty-state">

@@ -67,41 +67,6 @@
     </div>
     @endif
 
-    <!-- Header dengan Pagination di Atas -->
-    <div class="table-header-with-pagination">
-        <div class="data-info">
-            <p>Menampilkan <strong>{{ $poskoBencana->count() }}</strong> dari <strong>{{ $poskoBencana->total() }}</strong> data posko</p>
-        </div>
-
-        @if($poskoBencana->hasPages())
-        <div class="top-pagination">
-            <div class="pagination-nav">
-                @if(!$poskoBencana->onFirstPage())
-                    <a href="{{ $poskoBencana->previousPageUrl() }}" class="page-btn prev">
-                        <i class="fas fa-chevron-left"></i>
-                    </a>
-                @else
-                    <span class="page-btn disabled">
-                        <i class="fas fa-chevron-left"></i>
-                    </span>
-                @endif
-
-                <span class="page-info">Halaman {{ $poskoBencana->currentPage() }} dari {{ $poskoBencana->lastPage() }}</span>
-
-                @if($poskoBencana->hasMorePages())
-                    <a href="{{ $poskoBencana->nextPageUrl() }}" class="page-btn next">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                @else
-                    <span class="page-btn disabled">
-                        <i class="fas fa-chevron-right"></i>
-                    </span>
-                @endif
-            </div>
-        </div>
-        @endif
-    </div>
-
     @if($poskoBencana->count() > 0)
         <div class="warga-grid">
             @foreach($poskoBencana as $posko)
@@ -155,6 +120,31 @@
                 </div>
             </div>
             @endforeach
+        </div>
+
+        <!-- INFO DATA DAN PAGINATION DI BAWAH -->
+        <div class="table-header-with-pagination" style="margin-top: 30px;">
+            <div class="data-info">
+                <p>Menampilkan <strong>{{ $poskoBencana->count() }}</strong> dari <strong>{{ $poskoBencana->total() }}</strong> data posko</p>
+            </div>
+
+            @if($poskoBencana->hasPages())
+            <div class="bottom-pagination">
+                <div class="pagination-simple">
+                    @if(!$poskoBencana->onFirstPage())
+                        <a href="{{ $poskoBencana->previousPageUrl() }}" class="btn-prev">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </a>
+                    @endif
+
+                    @if($poskoBencana->hasMorePages())
+                        <a href="{{ $poskoBencana->nextPageUrl() }}" class="btn-next">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </a>
+                    @endif
+                </div>
+            </div>
+            @endif
         </div>
 
     @else

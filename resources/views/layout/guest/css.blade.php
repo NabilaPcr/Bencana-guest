@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -637,10 +638,21 @@
             line-height: 1.3;
         }
 
-        .health-sehat { color: #27ae60; }
-        .health-luka_ringan { color: var(--warning); }
-        .health-luka_berat { color: var(--danger); }
-        .health-meninggal { color: #7f8c8d; }
+        .health-sehat {
+            color: #27ae60;
+        }
+
+        .health-luka_ringan {
+            color: var(--warning);
+        }
+
+        .health-luka_berat {
+            color: var(--danger);
+        }
+
+        .health-meninggal {
+            color: #7f8c8d;
+        }
 
         /* ===== CARD ACTIONS FIXED ===== */
         .card-actions {
@@ -897,6 +909,7 @@
         }
 
         @media (max-width: 992px) {
+
             .warga-grid,
             .kejadian-grid {
                 grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -1026,89 +1039,65 @@
                 min-width: auto;
             }
 
+            .pagination-modern {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
 
-            /* Table Header with Pagination */
-.table-header-with-pagination {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px 0;
-    padding: 15px 20px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-}
+            .pagination-arrow {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                color: #333;
+                text-decoration: none;
+                transition: all 0.3s ease;
+            }
 
-.data-info {
-    font-size: 14px;
-    color: #495057;
-}
+            .pagination-arrow:hover:not(.disabled) {
+                background-color: #007bff;
+                color: white;
+                border-color: #007bff;
+            }
 
-.data-info strong {
-    color: #007bff;
-}
+            .pagination-arrow.disabled {
+                color: #ccc;
+                cursor: not-allowed;
+            }
 
-/* Top Pagination */
-.top-pagination .pagination-nav {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+            .pagination-number {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                color: #333;
+                text-decoration: none;
+                transition: all 0.3s ease;
+            }
 
-.top-pagination .page-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 500;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    border: 1px solid #007bff;
-}
+            .pagination-number:hover:not(.active) {
+                background-color: #f8f9fa;
+                border-color: #007bff;
+            }
 
-.top-pagination .page-btn:hover:not(.disabled) {
-    background: #0056b3;
-    border-color: #0056b3;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
+            .pagination-number.active {
+                background-color: #007bff;
+                color: white;
+                border-color: #007bff;
+            }
 
-.top-pagination .page-btn.disabled {
-    background: #f8f9fa;
-    color: #6c757d;
-    border: 1px solid #dee2e6;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.page-info {
-    font-size: 14px;
-    font-weight: 600;
-    color: #495057;
-    background: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: 1px solid #e9ecef;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .table-header-with-pagination {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-
-    .top-pagination .pagination-nav {
-        justify-content: center;
-    }
-}
-</style>
+            .pagination-dots {
+                color: #6c757d;
+                padding: 0 8px;
+            }
+    </style>
 </head>
 
 </html>

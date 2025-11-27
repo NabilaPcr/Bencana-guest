@@ -13,41 +13,6 @@
             </a>
         </div>
 
-        <!-- Header dengan Pagination di Atas -->
-        <div class="table-header-with-pagination">
-            <div class="data-info">
-                <p>Menampilkan <strong>{{ $users->count() }}</strong> dari <strong>{{ $users->total() }}</strong> data user</p>
-            </div>
-
-            @if($users->hasPages())
-            <div class="top-pagination">
-                <div class="pagination-nav">
-                    @if(!$users->onFirstPage())
-                        <a href="{{ $users->previousPageUrl() }}" class="page-btn prev">
-                            <i class="fas fa-chevron-left"></i>
-                        </a>
-                    @else
-                        <span class="page-btn disabled">
-                            <i class="fas fa-chevron-left"></i>
-                        </span>
-                    @endif
-
-                    <span class="page-info">Halaman {{ $users->currentPage() }} dari {{ $users->lastPage() }}</span>
-
-                    @if($users->hasMorePages())
-                        <a href="{{ $users->nextPageUrl() }}" class="page-btn next">
-                            <i class="fas fa-chevron-right"></i>
-                        </a>
-                    @else
-                        <span class="page-btn disabled">
-                            <i class="fas fa-chevron-right"></i>
-                        </span>
-                    @endif
-                </div>
-            </div>
-            @endif
-        </div>
-
         @if($users->count() > 0)
             <div class="table-container">
                 <table class="users-table">
@@ -92,6 +57,32 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- INFO DATA DAN PAGINATION DI BAWAH -->
+            <div class="table-header-with-pagination" style="margin-top: 30px;">
+                <div class="data-info">
+                    <p>Menampilkan <strong>{{ $users->count() }}</strong> dari <strong>{{ $users->total() }}</strong> data user</p>
+                </div>
+
+                @if($users->hasPages())
+                <div class="bottom-pagination">
+                    <div class="pagination-simple">
+                        @if(!$users->onFirstPage())
+                            <a href="{{ $users->previousPageUrl() }}" class="btn-prev">
+                                <i class="fas fa-arrow-left"></i> Previous
+                            </a>
+                        @endif
+
+                        @if($users->hasMorePages())
+                            <a href="{{ $users->nextPageUrl() }}" class="btn-next">
+                                Next <i class="fas fa-arrow-right"></i>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+                @endif
+            </div>
+
         @else
             <div class="empty-state">
                 <i class="fas fa-users"></i>
@@ -101,5 +92,4 @@
         @endif
     </div>
     {{-- END MAIN CONTENT --}}
-
-    @endsection
+@endsection

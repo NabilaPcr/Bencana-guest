@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     $query = User::query();
 
-    // SEARCH - Mencari berdasarkan nama, email
+    //search
     if ($request->has('search') && $request->search != '') {
         $search = $request->search;
         $query->where(function($q) use ($search) {
@@ -21,7 +21,7 @@ class UserController extends Controller
         });
     }
 
-    // PAGINATION - 10 data per halaman
+    //pagination
     $users = $query->orderBy('created_at', 'desc')->paginate(5);
 
     return view('pages.user.index', compact('users'));

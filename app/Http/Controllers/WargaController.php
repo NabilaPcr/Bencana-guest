@@ -11,7 +11,7 @@ class WargaController extends Controller
     {
         $query = Warga::query();
 
-        // SEARCH - Mencari berdasarkan nama, NIK, atau alamat
+        // SEARCH - Mencria berdasarkan nama, NIK, atau alamat
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
             $query->where(function($q) use ($search) {
@@ -28,16 +28,16 @@ class WargaController extends Controller
         }
 
 
-        // SORTING - Default urutkan terbaru
-        $sort = $request->get('sort', 'created_at');
-        $order = $request->get('order', 'desc');
-        $query->orderBy($sort, $order);
+        // // SORTING -
+        // $sort = $request->get('sort', 'created_at');
+        // $order = $request->get('order', 'desc');
+        // $query->orderBy($sort, $order);
 
         // PAGINATION - 12 data per halaman (sesuai grid layout)
         $warga = $query->paginate(12);
 
-        // Untuk menjaga filter saat pindah halaman
-        $warga->appends($request->all());
+        // // Untuk menjaga filter saat pindah halaman
+        // $warga->appends($request->all());
 
         return view('pages.warga.index', compact('warga'));
     }

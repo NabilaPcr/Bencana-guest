@@ -34,7 +34,7 @@ class PoskoController extends Controller
         });
     }
 
-    $poskoBencana = $query->paginate(10);
+    $poskoBencana = $query->paginate(5);
 
     // Ambil semua jenis bencana yang UNIK
     $jenisBencanaList = KejadianBencana::distinct()

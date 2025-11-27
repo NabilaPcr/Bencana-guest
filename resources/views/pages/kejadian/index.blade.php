@@ -85,41 +85,6 @@
         </div>
         @endif
 
-        <!-- Header dengan Pagination di Atas -->
-        <div class="table-header-with-pagination">
-            <div class="data-info">
-                <p>Menampilkan <strong>{{ $kejadian->count() }}</strong> dari <strong>{{ $kejadian->total() }}</strong> data kejadian</p>
-            </div>
-
-            @if($kejadian->hasPages())
-            <div class="top-pagination">
-                <div class="pagination-nav">
-                    @if(!$kejadian->onFirstPage())
-                        <a href="{{ $kejadian->previousPageUrl() }}" class="page-btn prev">
-                            <i class="fas fa-chevron-left"></i>
-                        </a>
-                    @else
-                        <span class="page-btn disabled">
-                            <i class="fas fa-chevron-left"></i>
-                        </span>
-                    @endif
-
-                    <span class="page-info">Halaman {{ $kejadian->currentPage() }} dari {{ $kejadian->lastPage() }}</span>
-
-                    @if($kejadian->hasMorePages())
-                        <a href="{{ $kejadian->nextPageUrl() }}" class="page-btn next">
-                            <i class="fas fa-chevron-right"></i>
-                        </a>
-                    @else
-                        <span class="page-btn disabled">
-                            <i class="fas fa-chevron-right"></i>
-                        </span>
-                    @endif
-                </div>
-            </div>
-            @endif
-        </div>
-
         @if($kejadian->count() > 0)
             <div class="kejadian-grid">
                 @foreach($kejadian as $item)
@@ -177,6 +142,32 @@
                 </div>
                 @endforeach
             </div>
+
+            <!-- INFO DATA DAN PAGINATION DI BAWAH -->
+            <div class="table-header-with-pagination" style="margin-top: 30px;">
+                <div class="data-info">
+                    <p>Menampilkan <strong>{{ $kejadian->count() }}</strong> dari <strong>{{ $kejadian->total() }}</strong> data kejadian</p>
+                </div>
+
+                @if($kejadian->hasPages())
+                <div class="bottom-pagination">
+                    <div class="pagination-simple">
+                        @if(!$kejadian->onFirstPage())
+                            <a href="{{ $kejadian->previousPageUrl() }}" class="btn-prev">
+                                <i class="fas fa-arrow-left"></i> Previous
+                            </a>
+                        @endif
+
+                        @if($kejadian->hasMorePages())
+                            <a href="{{ $kejadian->nextPageUrl() }}" class="btn-next">
+                                Next <i class="fas fa-arrow-right"></i>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+                @endif
+            </div>
+
         @else
             <div class="empty-state">
                 <i class="fas fa-clipboard-list"></i>
@@ -192,6 +183,5 @@
             </div>
         @endif
     </div>
-    {{-- END MAIN CLASS  --}}
-
+    {{-- END MAIN CONTENT --}}
 @endsection
