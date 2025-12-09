@@ -30,23 +30,14 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 -> name('guest.dashboard');
 
 //UNTUK KEJADIAN
-Route::get('/kejadian', [KejadianController::class, 'index'])
--> name('kejadian.index');
-
-Route::get('/kejadian/create', [KejadianController::class, 'create'])
-->name('kejadian.create');
-
-Route::post('/kejadian', [KejadianController::class, 'store'])
-->name('kejadian.store');
-
-Route::get('/kejadian/{id}', [KejadianController::class, 'show'])
--> name('kejadian.show');
-
+Route::get('/kejadian', [KejadianController::class, 'index'])-> name('kejadian.index');
+Route::get('/kejadian/create', [KejadianController::class, 'create'])->name('kejadian.create');
+Route::post('/kejadian', [KejadianController::class, 'store'])->name('kejadian.store');
+Route::get('/kejadian/{id}', [KejadianController::class, 'show'])-> name('kejadian.show');
 Route::get('/kejadian/{id}/edit', [KejadianController::class, 'edit'])->name('kejadian.edit');
-
 Route::put('/kejadian/{id}', [KejadianController::class, 'update'])->name('kejadian.update');
-
 Route::delete('/kejadian/{id}', [KejadianController::class, 'destroy'])->name('kejadian.destroy');
+Route::delete('/kejadian/hapus-foto/{id}', [KejadianController::class, 'destroyFile'])->name('kejadian.destroyFile');
 
 // Routes untuk Warga
 Route::prefix('warga')->group(function () {

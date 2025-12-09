@@ -3,17 +3,16 @@ namespace App\Http\Controllers;
 
 use App\Models\KejadianBencana;
 use App\Models\Media;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class KejadianController extends Controller
 {
-
     public function index(Request $request)
     {
         $query = KejadianBencana::query();
 
-        // SEARCH - Mencari berdasarkan jenis bencana, lokasi, atau dampak
+        // SEARCH
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
@@ -23,25 +22,21 @@ class KejadianController extends Controller
             });
         }
 
-        // FILTER - Filter berdasarkan jenis bencana
+        // FILTER
         if ($request->has('jenis_bencana') && $request->jenis_bencana != '') {
             $query->where('jenis_bencana', $request->jenis_bencana);
         }
-
-        // FILTER - Filter berdasarkan status kejadian
         if ($request->has('status_kejadian') && $request->status_kejadian != '') {
             $query->where('status_kejadian', $request->status_kejadian);
         }
 
-        // SORTING - Default urutkan terbaru
+        // SORTING
         $sort  = $request->get('sort', 'created_at');
         $order = $request->get('order', 'desc');
         $query->orderBy($sort, $order);
 
-        // PAGINATION - 10 data per halaman
+        // PAGINATION
         $kejadian = $query->paginate(10);
-
-        // Untuk menjaga filter saat pindah halaman
         $kejadian->appends($request->all());
 
         return view('pages.kejadian.index', compact('kejadian'));
@@ -50,109 +45,141 @@ class KejadianController extends Controller
     public function show($id)
     {
         $kejadian = KejadianBencana::findOrFail($id);
-        return view('pages.kejadian.show', compact('kejadian'));
+
+        $files = Media::where('ref_table', 'kejadian_bencana')
+                     ->where('ref_id', $id)
+                     ->orderBy('sort_order')
+                     ->get();
+
+        return view('pages.kejadian.show', compact('kejadian', 'files'));
     }
+
     public function create()
     {
         return view('pages.kejadian.create');
     }
 
-   public function store(Request $request)
-{
-    $request->validate([
-        'jenis_bencana'   => 'required|string|max:100',
-        'tanggal'         => 'required|date',
-        'lokasi_text'     => 'required|string',
-        'dampak'          => 'required|string',
-        'status_kejadian' => 'required|in:aktif,selesai,dalam penanganan',
-        'foto_kejadian.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Validasi file
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'jenis_bencana'   => 'required|string|max:100',
+            'tanggal'         => 'required|date',
+            'lokasi_text'     => 'required|string',
+            'dampak'          => 'required|string',
+            'status_kejadian' => 'required|in:aktif,selesai,dalam penanganan',
+        ]);
 
-    // Simpan data kejadian bencana
-    $kejadian = KejadianBencana::create($request->all());
+        // Simpan data kejadian
+        $kejadian = KejadianBencana::create($request->all());
 
-    // Upload foto jika ada
-    if ($request->hasFile('foto_kejadian')) {
-        $sortOrder = 1;
-        foreach ($request->file('foto_kejadian') as $file) {
-            // Generate nama file unik
-            $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        // Handle file uploads - SAMA PERSIS SEPERTI PELANGGAN
+        if ($request->hasFile('files')) {
+            $uploadedFiles = [];
 
-            // Simpan file ke storage
-            $file->storeAs('kejadian_bencana', $fileName, 'public');
+            foreach ($request->file('files') as $file) {
+                if ($file->isValid()) {
+                    // Generate unique filename
+                    $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
-            // Simpan ke tabel media
-            Media::create([
-                'ref_table' => 'kejadian_bencana',
-                'ref_id' => $kejadian->kejadian_id,
-                'file_name' => $fileName,
-                'caption' => 'Foto dokumentasi kejadian',
-                'mime_type' => $file->getMimeType(),
-                'sort_order' => $sortOrder
-            ]);
+                    // Store file
+                    $filePath = $file->storeAs('kejadian_bencana', $filename, 'public');
 
-            $sortOrder++;
+                    // Save file info to database - ke tabel media
+                    Media::create([
+                        'ref_table' => 'kejadian_bencana',
+                        'ref_id'    => $kejadian->kejadian_id,
+                        'file_name' => $filename,
+                        'caption'   => 'Foto dokumentasi kejadian',
+                        'mime_type' => $file->getClientMimeType(),
+                        'sort_order' => 1
+                    ]);
+
+                    $uploadedFiles[] = $file->getClientOriginalName();
+                }
+            }
+
+            // Success message dengan info files yang diupload
+            if (! empty($uploadedFiles)) {
+                $fileCount = count($uploadedFiles);
+                $fileNames = implode(', ', $uploadedFiles);
+                return redirect()->route('kejadian.index')
+                    ->with('success', "Data berhasil ditambahkan! {$fileCount} file berhasil diupload: {$fileNames}");
+            }
         }
+
+        return redirect()->route('kejadian.index')
+            ->with('success', 'Data kejadian bencana berhasil ditambahkan!');
     }
-
-    return redirect()->route('kejadian.index')
-        ->with('success', 'Data kejadian bencana berhasil ditambahkan!');
-}
-
 
     public function edit($id)
     {
         $kejadian = KejadianBencana::findOrFail($id);
-        return view('pages.kejadian.edit', compact('kejadian'));
+
+        // Ambil semua file media yang sudah ada (SAMA SEPERTI PELANGGAN)
+        $files = Media::where('ref_table', 'kejadian_bencana')
+                     ->where('ref_id', $id)
+                     ->orderBy('sort_order')
+                     ->get();
+
+        return view('pages.kejadian.edit', compact('kejadian', 'files'));
     }
 
-   public function update(Request $request, $id)
-{
-    $request->validate([
-        'jenis_bencana'   => 'required|string|max:100',
-        'tanggal'         => 'required|date',
-        'lokasi_text'     => 'required|string',
-        'dampak'          => 'required|string',
-        'status_kejadian' => 'required|in:aktif,selesai,dalam penanganan',
-        'foto_kejadian.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
-    ]);
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'jenis_bencana'   => 'required|string|max:100',
+            'tanggal'         => 'required|date',
+            'lokasi_text'     => 'required|string',
+            'dampak'          => 'required|string',
+            'status_kejadian' => 'required|in:aktif,selesai,dalam penanganan',
+        ]);
 
-    $kejadian = KejadianBencana::findOrFail($id);
-    $kejadian->update($request->all());
+        $kejadian = KejadianBencana::findOrFail($id);
+        $kejadian->update($request->all());
 
-    // Upload foto baru jika ada
-    if ($request->hasFile('foto_kejadian')) {
-        // Ambil sort_order terakhir
-        $lastSortOrder = Media::where('ref_table', 'kejadian_bencana')
-                             ->where('ref_id', $id)
-                             ->max('sort_order') ?? 0;
+        // Handle file uploads - SAMA PERSIS SEPERTI PELANGGAN
+        if ($request->hasFile('files')) {
+            $uploadedFiles = [];
 
-        $sortOrder = $lastSortOrder + 1;
+            foreach ($request->file('files') as $file) {
+                if ($file->isValid()) {
+                    // Generate unique filename
+                    $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
-        foreach ($request->file('foto_kejadian') as $file) {
-            // Generate nama file unik
-            $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // Store file
+                    $filePath = $file->storeAs('kejadian_bencana', $filename, 'public');
 
-            // Simpan file ke storage
-            $file->storeAs('kejadian_bencana', $fileName, 'public');
+                    // Get next sort order
+                    $lastSortOrder = Media::where('ref_table', 'kejadian_bencana')
+                                         ->where('ref_id', $id)
+                                         ->max('sort_order') ?? 0;
 
-            // Simpan ke tabel media
-            Media::create([
-                'ref_table' => 'kejadian_bencana',
-                'ref_id' => $kejadian->kejadian_id,
-                'file_name' => $fileName,
-                'caption' => 'Foto dokumentasi kejadian',
-                'mime_type' => $file->getMimeType(),
-                'sort_order' => $sortOrder
-            ]);
+                    // Save file info to database
+                    Media::create([
+                        'ref_table' => 'kejadian_bencana',
+                        'ref_id'    => $id,
+                        'file_name' => $filename,
+                        'caption'   => 'Foto dokumentasi kejadian',
+                        'mime_type' => $file->getClientMimeType(),
+                        'sort_order' => $lastSortOrder + 1
+                    ]);
 
-            $sortOrder++;
+                    $uploadedFiles[] = $file->getClientOriginalName();
+                }
+            }
+
+            // Success message dengan info files yang diupload
+            if (! empty($uploadedFiles)) {
+                $fileCount = count($uploadedFiles);
+                $fileNames = implode(', ', $uploadedFiles);
+                return redirect()->route('kejadian.index')
+                    ->with('success', "Perubahan Data Berhasil! {$fileCount} file berhasil diupload: {$fileNames}");
+            }
         }
-    }
 
-    return redirect()->route('kejadian.index')
-        ->with('success', 'Data kejadian bencana berhasil diperbarui!');
-}
+        return redirect()->route('kejadian.index')
+            ->with('success', 'Perubahan Data Berhasil!');
+    }
 
     public function destroy($id)
     {
@@ -161,5 +188,19 @@ class KejadianController extends Controller
 
         return redirect()->route('kejadian.index')
             ->with('success', 'Data kejadian bencana berhasil dihapus!');
+    }
+
+    // Method untuk menghapus file - SAMA SEPERTI PELANGGAN
+    public function destroyFile($id)
+    {
+        $file = Media::findOrFail($id);
+
+        // Delete file dari storage
+        Storage::disk('public')->delete('kejadian_bencana/' . $file->file_name);
+
+        // Delete record dari database
+        $file->delete();
+
+        return redirect()->back()->with('success', 'File berhasil dihapus!');
     }
 }

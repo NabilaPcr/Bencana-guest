@@ -13,13 +13,12 @@
                 <p>Isi form berikut untuk melaporkan kejadian bencana baru</p>
             </div>
 
-            <form action="{{ route('kejadian.store') }}" method="POST">
-                @csrf
+            <form action="{{ route('kejadian.store') }}" method="POST" enctype="multipart/form-data"> @csrf
 
                 <div class="form-group">
                     <label for="jenis_bencana">Jenis Bencana *</label>
                     <input type="text" id="jenis_bencana" name="jenis_bencana" required
-                           placeholder="Contoh: Banjir, Gempa Bumi, Kebakaran">
+                        placeholder="Contoh: Banjir, Gempa Bumi, Kebakaran">
                 </div>
 
                 <div class="form-group">
@@ -29,8 +28,7 @@
 
                 <div class="form-group">
                     <label for="lokasi_text">Lokasi Kejadian *</label>
-                    <textarea id="lokasi_text" name="lokasi_text" required
-                              placeholder="Deskripsikan lokasi kejadian dengan jelas"></textarea>
+                    <textarea id="lokasi_text" name="lokasi_text" required placeholder="Deskripsikan lokasi kejadian dengan jelas"></textarea>
                 </div>
 
                 <div class="form-row">
@@ -48,7 +46,7 @@
                 <div class="form-group">
                     <label for="dampak">Dampak yang Terjadi *</label>
                     <textarea id="dampak" name="dampak" required
-                              placeholder="Deskripsikan dampak yang terjadi, contoh: 50 rumah terendam, 200 warga mengungsi"></textarea>
+                        placeholder="Deskripsikan dampak yang terjadi, contoh: 50 rumah terendam, 200 warga mengungsi"></textarea>
                 </div>
 
                 <div class="form-group">
@@ -63,9 +61,19 @@
 
                 <div class="form-group">
                     <label for="keterangan">Keterangan Tambahan</label>
-                    <textarea id="keterangan" name="keterangan"
-                              placeholder="Informasi tambahan tentang kejadian ini"></textarea>
+                    <textarea id="keterangan" name="keterangan" placeholder="Informasi tambahan tentang kejadian ini"></textarea>
                 </div>
+                <!-- File Upload Section - SAMA SEPERTI CONTOH PELANGGAN -->
+                <div class="form-group">
+                    <label for="files">Foto Dokumentasi Kejadian</label>
+                    <input type="file" class="form-control" id="files" name="files[]" multiple
+                        accept="image/*,.pdf,.doc,.docx">
+                    <small class="text-muted">
+                        Dapat memilih multiple file. Format yang didukung: JPG, JPEG, PNG, PDF, DOC, DOCX.
+                        Maksimal 2MB per file.
+                    </small>
+                </div>
+
 
                 <button type="submit" class="btn-submit">
                     <i class="fas fa-save"></i> Simpan Data Kejadian

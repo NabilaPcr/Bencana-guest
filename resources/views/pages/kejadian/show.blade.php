@@ -62,15 +62,60 @@
             </div>
             @endif
 
-            <div class="action-buttons">
+            <!-- TAMBAHAN: TAMPILKAN FOTO -->
+            @if(isset($files) && $files->count() > 0)
+            <div class="info-group">
+                <h3><i class="fas fa-images"></i> Foto Dokumentasi</h3>
+                <div class="row mt-3">
+                    @foreach($files as $file)
+                    <div class="col-md-4 col-sm-6 col-12 mb-4">
+                        <div class="card photo-card">
+                            @if(str_contains($file->mime_type, 'image'))
+                                <img src="{{ asset('storage/kejadian_bencana/' . $file->file_name) }}"
+                                     class="card-img-top"
+                                     style="height: 200px; object-fit: cover;"
+                                     alt="Foto kejadian {{ $kejadian->jenis_bencana }}">
+                            @else
+                                <div class="text-center py-5 bg-light">
+                                    <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
+                                    <p class="mb-0">{{ $file->file_name }}</p>
+                                </div>
+                            @endif
+                            <div class="card-body text-center">
+                                <a href="{{ asset('storage/kejadian_bencana/' . $file->file_name) }}"
+                                   target="_blank"
+                                   class="btn btn-sm btn-primary">
+                                    <i class="fas fa-download me-1"></i> Download
+                                </a>
+                                @if($file->caption)
+                                <p class="mt-2 mb-0 small text-muted">{{ $file->caption }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @else
+            <div class="info-group">
+                <h3><i class="fas fa-images"></i> Foto Dokumentasi</h3>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Belum ada foto dokumentasi untuk kejadian ini.
+                </div>
+            </div>
+            @endif
+
+            <div class="action-buttons mt-4">
                 <a href="{{ route('kejadian.index') }}" class="btn btn-secondary">
-                    <i class="fas fa-list"></i> Lihat Semua Kejadian
+                    <i class="fas fa-list me-2"></i> Lihat Semua Kejadian
                 </a>
-                <a href="#" class="btn btn-primary">
-                    <i class="fas fa-donate"></i> Donasi Sekarang
+                {{-- GANTI KODE DIBAWAH JADI MENGARAH KE HALAMAN  DONASI --}}
+                <a href="{{ route('kejadian.edit', $kejadian->kejadian_id) }}" class="btn btn-primary">
+                    <i class="fas fa-edit me-2"></i> Edit Kejadian
                 </a>
+
             </div>
         </div>
     </div>
-    {{-- END Content  --}}
 @endsection
