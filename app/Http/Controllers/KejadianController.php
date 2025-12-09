@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\KejadianBencana;
+use App\Models\Media;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class KejadianController extends Controller
@@ -55,44 +57,102 @@ class KejadianController extends Controller
         return view('pages.kejadian.create');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'jenis_bencana'   => 'required|string|max:100',
-            'tanggal'         => 'required|date',
-            'lokasi_text'     => 'required|string',
-            'dampak'          => 'required|string',
-            'status_kejadian' => 'required|in:aktif,selesai,dalam penanganan',
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'jenis_bencana'   => 'required|string|max:100',
+        'tanggal'         => 'required|date',
+        'lokasi_text'     => 'required|string',
+        'dampak'          => 'required|string',
+        'status_kejadian' => 'required|in:aktif,selesai,dalam penanganan',
+        'foto_kejadian.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Validasi file
+    ]);
 
-        KejadianBencana::create($request->all());
+    // Simpan data kejadian bencana
+    $kejadian = KejadianBencana::create($request->all());
 
-        return redirect()->route('kejadian.index')
-            ->with('success', 'Data kejadian bencana berhasil ditambahkan!');
+    // Upload foto jika ada
+    if ($request->hasFile('foto_kejadian')) {
+        $sortOrder = 1;
+        foreach ($request->file('foto_kejadian') as $file) {
+            // Generate nama file unik
+            $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            // Simpan file ke storage
+            $file->storeAs('kejadian_bencana', $fileName, 'public');
+
+            // Simpan ke tabel media
+            Media::create([
+                'ref_table' => 'kejadian_bencana',
+                'ref_id' => $kejadian->kejadian_id,
+                'file_name' => $fileName,
+                'caption' => 'Foto dokumentasi kejadian',
+                'mime_type' => $file->getMimeType(),
+                'sort_order' => $sortOrder
+            ]);
+
+            $sortOrder++;
+        }
     }
-// Tambahkan method ini di KejadianController
+
+    return redirect()->route('kejadian.index')
+        ->with('success', 'Data kejadian bencana berhasil ditambahkan!');
+}
+
+
     public function edit($id)
     {
         $kejadian = KejadianBencana::findOrFail($id);
         return view('pages.kejadian.edit', compact('kejadian'));
     }
 
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'jenis_bencana'   => 'required|string|max:100',
-            'tanggal'         => 'required|date',
-            'lokasi_text'     => 'required|string',
-            'dampak'          => 'required|string',
-            'status_kejadian' => 'required|in:aktif,selesai,dalam penanganan',
-        ]);
+   public function update(Request $request, $id)
+{
+    $request->validate([
+        'jenis_bencana'   => 'required|string|max:100',
+        'tanggal'         => 'required|date',
+        'lokasi_text'     => 'required|string',
+        'dampak'          => 'required|string',
+        'status_kejadian' => 'required|in:aktif,selesai,dalam penanganan',
+        'foto_kejadian.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
 
-        $kejadian = KejadianBencana::findOrFail($id);
-        $kejadian->update($request->all());
+    $kejadian = KejadianBencana::findOrFail($id);
+    $kejadian->update($request->all());
 
-        return redirect()->route('kejadian.index')
-            ->with('success', 'Data kejadian bencana berhasil diperbarui!');
+    // Upload foto baru jika ada
+    if ($request->hasFile('foto_kejadian')) {
+        // Ambil sort_order terakhir
+        $lastSortOrder = Media::where('ref_table', 'kejadian_bencana')
+                             ->where('ref_id', $id)
+                             ->max('sort_order') ?? 0;
+
+        $sortOrder = $lastSortOrder + 1;
+
+        foreach ($request->file('foto_kejadian') as $file) {
+            // Generate nama file unik
+            $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            // Simpan file ke storage
+            $file->storeAs('kejadian_bencana', $fileName, 'public');
+
+            // Simpan ke tabel media
+            Media::create([
+                'ref_table' => 'kejadian_bencana',
+                'ref_id' => $kejadian->kejadian_id,
+                'file_name' => $fileName,
+                'caption' => 'Foto dokumentasi kejadian',
+                'mime_type' => $file->getMimeType(),
+                'sort_order' => $sortOrder
+            ]);
+
+            $sortOrder++;
+        }
     }
+
+    return redirect()->route('kejadian.index')
+        ->with('success', 'Data kejadian bencana berhasil diperbarui!');
+}
 
     public function destroy($id)
     {
