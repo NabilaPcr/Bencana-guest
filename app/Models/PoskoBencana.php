@@ -22,4 +22,14 @@ class PoskoBencana extends Model
     {
         return $this->belongsTo(KejadianBencana::class, 'kejadian_id', 'kejadian_id');
     }
+
+     public function media()
+    {
+        return $this->morphMany(Media::class, 'reference', 'ref_table', 'ref_id');
+    }
+
+    public function fotos()
+    {
+        return $this->media()->where('ref_table', 'posko_bencana');
+    }
 }

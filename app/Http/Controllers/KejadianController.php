@@ -47,9 +47,9 @@ class KejadianController extends Controller
         $kejadian = KejadianBencana::findOrFail($id);
 
         $files = Media::where('ref_table', 'kejadian_bencana')
-                     ->where('ref_id', $id)
-                     ->orderBy('sort_order')
-                     ->get();
+            ->where('ref_id', $id)
+            ->orderBy('sort_order')
+            ->get();
 
         return view('pages.kejadian.show', compact('kejadian', 'files'));
     }
@@ -58,52 +58,49 @@ class KejadianController extends Controller
     {
         return view('pages.kejadian.create');
     }
-
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'jenis_bencana'   => 'required|string|max:100',
             'tanggal'         => 'required|date',
             'lokasi_text'     => 'required|string',
+            'rt'              => 'nullable|string|max:10',
+            'rw'              => 'nullable|string|max:10',
             'dampak'          => 'required|string',
-            'status_kejadian' => 'required|in:aktif,selesai,dalam penanganan',
+            'status_kejadian' => 'required|in:aktif,dalam penanganan,selesai',
+            'keterangan'      => 'nullable|string',
+            // ✅ VALIDASI: MAKSIMAL 5 FILE
+            'fotos'           => 'required|array|min:1|max:5',
+            'fotos.*'         => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Simpan data kejadian
-        $kejadian = KejadianBencana::create($request->all());
+        $kejadian = KejadianBencana::create($validated);
 
-        // Handle file uploads - SAMA PERSIS SEPERTI PELANGGAN
-        if ($request->hasFile('files')) {
-            $uploadedFiles = [];
-
-            foreach ($request->file('files') as $file) {
+        // Upload multiple photos
+        if ($request->hasFile('fotos')) {
+            foreach ($request->file('fotos') as $index => $file) {
                 if ($file->isValid()) {
                     // Generate unique filename
-                    $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $extension    = $file->getClientOriginalExtension();
+                    $fileName     = $originalName . '_' . time() . '_' . rand(1000, 9999) . '.' . $extension;
 
                     // Store file
-                    $filePath = $file->storeAs('kejadian_bencana', $filename, 'public');
+                    $path = $file->storeAs('uploads/kejadian_bencana', $fileName, 'public');
 
-                    // Save file info to database - ke tabel media
-                    Media::create([
-                        'ref_table' => 'kejadian_bencana',
-                        'ref_id'    => $kejadian->kejadian_id,
-                        'file_name' => $filename,
-                        'caption'   => 'Foto dokumentasi kejadian',
-                        'mime_type' => $file->getClientMimeType(),
-                        'sort_order' => 1
-                    ]);
-
-                    $uploadedFiles[] = $file->getClientOriginalName();
+                    if ($path) {
+                        // Save to media table
+                        Media::create([
+                            'ref_table'  => 'kejadian_bencana',
+                            'ref_id'     => $kejadian->kejadian_id,
+                            'file_name'  => $fileName,
+                            'caption'    => null, // Tidak ada caption tanpa JS
+                            'mime_type'  => $file->getMimeType(),
+                            'sort_order' => $index + 1,
+                        ]);
+                    }
                 }
-            }
-
-            // Success message dengan info files yang diupload
-            if (! empty($uploadedFiles)) {
-                $fileCount = count($uploadedFiles);
-                $fileNames = implode(', ', $uploadedFiles);
-                return redirect()->route('kejadian.index')
-                    ->with('success', "Data berhasil ditambahkan! {$fileCount} file berhasil diupload: {$fileNames}");
             }
         }
 
@@ -115,75 +112,99 @@ class KejadianController extends Controller
     {
         $kejadian = KejadianBencana::findOrFail($id);
 
-        // Ambil semua file media yang sudah ada (SAMA SEPERTI PELANGGAN)
+        // Ambil semua file media yang sudah ada
         $files = Media::where('ref_table', 'kejadian_bencana')
-                     ->where('ref_id', $id)
-                     ->orderBy('sort_order')
-                     ->get();
+            ->where('ref_id', $id)
+            ->orderBy('sort_order')
+            ->get();
 
         return view('pages.kejadian.edit', compact('kejadian', 'files'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $kejadian = KejadianBencana::findOrFail($id);
+
+        $validated = $request->validate([
             'jenis_bencana'   => 'required|string|max:100',
             'tanggal'         => 'required|date',
             'lokasi_text'     => 'required|string',
+            'rt'              => 'nullable|string|max:10',
+            'rw'              => 'nullable|string|max:10',
             'dampak'          => 'required|string',
-            'status_kejadian' => 'required|in:aktif,selesai,dalam penanganan',
+            'status_kejadian' => 'required|in:aktif,dalam penanganan,selesai',
+            'keterangan'      => 'nullable|string',
+            // ✅ VALIDASI: MAKSIMAL 5 FILE (opsional di update)
+            'fotos'           => 'nullable|array|max:5',
+            'fotos.*'         => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'delete_media'    => 'nullable|array',
+            'delete_media.*'  => 'integer',
         ]);
 
-        $kejadian = KejadianBencana::findOrFail($id);
-        $kejadian->update($request->all());
+        // Update data kejadian
+        $kejadian->update($validated);
 
-        // Handle file uploads - SAMA PERSIS SEPERTI PELANGGAN
-        if ($request->hasFile('files')) {
-            $uploadedFiles = [];
-
-            foreach ($request->file('files') as $file) {
-                if ($file->isValid()) {
-                    // Generate unique filename
-                    $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-
-                    // Store file
-                    $filePath = $file->storeAs('kejadian_bencana', $filename, 'public');
-
-                    // Get next sort order
-                    $lastSortOrder = Media::where('ref_table', 'kejadian_bencana')
-                                         ->where('ref_id', $id)
-                                         ->max('sort_order') ?? 0;
-
-                    // Save file info to database
-                    Media::create([
-                        'ref_table' => 'kejadian_bencana',
-                        'ref_id'    => $id,
-                        'file_name' => $filename,
-                        'caption'   => 'Foto dokumentasi kejadian',
-                        'mime_type' => $file->getClientMimeType(),
-                        'sort_order' => $lastSortOrder + 1
-                    ]);
-
-                    $uploadedFiles[] = $file->getClientOriginalName();
+        // Delete selected media
+        if ($request->has('delete_media')) {
+            foreach ($request->input('delete_media') as $mediaId) {
+                $media = Media::find($mediaId);
+                if ($media && $media->ref_table == 'kejadian_bencana' && $media->ref_id == $kejadian->kejadian_id) {
+                    // Delete from storage
+                    Storage::disk('public')->delete('uploads/kejadian_bencana/' . $media->file_name);
+                    // Delete from database
+                    $media->delete();
                 }
             }
+        }
 
-            // Success message dengan info files yang diupload
-            if (! empty($uploadedFiles)) {
-                $fileCount = count($uploadedFiles);
-                $fileNames = implode(', ', $uploadedFiles);
-                return redirect()->route('kejadian.index')
-                    ->with('success', "Perubahan Data Berhasil! {$fileCount} file berhasil diupload: {$fileNames}");
+        // Upload new photos
+        if ($request->hasFile('fotos')) {
+            // Get current max sort_order
+            $currentMax = Media::where('ref_table', 'kejadian_bencana')
+                ->where('ref_id', $kejadian->kejadian_id)
+                ->max('sort_order') ?? 0;
+
+            foreach ($request->file('fotos') as $index => $file) {
+                if ($file->isValid()) {
+                    // Generate unique filename
+                    $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $extension    = $file->getClientOriginalExtension();
+                    $fileName     = $originalName . '_' . time() . '_' . rand(1000, 9999) . '.' . $extension;
+
+                    // Store file
+                    $path = $file->storeAs('uploads/kejadian_bencana', $fileName, 'public');
+
+                    if ($path) {
+                        // Save to media table
+                        Media::create([
+                            'ref_table'  => 'kejadian_bencana',
+                            'ref_id'     => $kejadian->kejadian_id,
+                            'file_name'  => $fileName,
+                            'caption'    => null,
+                            'mime_type'  => $file->getMimeType(),
+                            'sort_order' => $currentMax + $index + 1,
+                        ]);
+                    }
+                }
             }
         }
 
         return redirect()->route('kejadian.index')
-            ->with('success', 'Perubahan Data Berhasil!');
+            ->with('success', 'Data kejadian bencana berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
         $kejadian = KejadianBencana::findOrFail($id);
+
+        // Delete all related media
+        $mediaList = $kejadian->media;
+        foreach ($mediaList as $media) {
+            Storage::disk('public')->delete('uploads/kejadian_bencana/' . $media->file_name);
+            $media->delete();
+        }
+
+        // Delete kejadian
         $kejadian->delete();
 
         return redirect()->route('kejadian.index')

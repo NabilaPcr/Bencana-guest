@@ -62,19 +62,20 @@
             </div>
             @endif
 
-            <!-- TAMBAHAN: TAMPILKAN FOTO -->
+            <!-- ✅ GALERI FOTO -->
             @if(isset($files) && $files->count() > 0)
             <div class="info-group">
-                <h3><i class="fas fa-images"></i> Foto Dokumentasi</h3>
+                <h3><i class="fas fa-images"></i> Galeri Foto Kejadian</h3>
                 <div class="row mt-3">
                     @foreach($files as $file)
                     <div class="col-md-4 col-sm-6 col-12 mb-4">
                         <div class="card photo-card">
                             @if(str_contains($file->mime_type, 'image'))
-                                <img src="{{ asset('storage/kejadian_bencana/' . $file->file_name) }}"
+                                <img src="{{ asset('storage/uploads/kejadian_bencana/' . $file->file_name) }}"
                                      class="card-img-top"
-                                     style="height: 200px; object-fit: cover;"
-                                     alt="Foto kejadian {{ $kejadian->jenis_bencana }}">
+                                     style="height: 200px; object-fit: cover; cursor: pointer;"
+                                     onclick="openLightbox('{{ asset('storage/uploads/kejadian_bencana/' . $file->file_name) }}', '{{ $file->caption ?? 'Foto kejadian' }}')"
+                                     alt="{{ $file->caption ?? 'Foto kejadian' }}">
                             @else
                                 <div class="text-center py-5 bg-light">
                                     <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
@@ -82,7 +83,7 @@
                                 </div>
                             @endif
                             <div class="card-body text-center">
-                                <a href="{{ asset('storage/kejadian_bencana/' . $file->file_name) }}"
+                                <a href="{{ asset('storage/uploads/kejadian_bencana/' . $file->file_name) }}"
                                    target="_blank"
                                    class="btn btn-sm btn-primary">
                                     <i class="fas fa-download me-1"></i> Download
@@ -106,16 +107,41 @@
             </div>
             @endif
 
+            <!-- Lightbox Modal -->
+            <div class="modal fade" id="imageLightbox" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="lightboxTitle"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <img src="" id="lightboxImage" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="action-buttons mt-4">
                 <a href="{{ route('kejadian.index') }}" class="btn btn-secondary">
                     <i class="fas fa-list me-2"></i> Lihat Semua Kejadian
                 </a>
-                {{-- GANTI KODE DIBAWAH JADI MENGARAH KE HALAMAN  DONASI --}}
                 <a href="{{ route('kejadian.edit', $kejadian->kejadian_id) }}" class="btn btn-primary">
                     <i class="fas fa-edit me-2"></i> Edit Kejadian
                 </a>
-
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+function openLightbox(imageSrc, caption) {
+    document.getElementById('lightboxImage').src = imageSrc;
+    document.getElementById('lightboxTitle').textContent = caption || 'Foto Kejadian';
+
+    const lightbox = new bootstrap.Modal(document.getElementById('imageLightbox'));
+    lightbox.show();
+}
+</script>
+@endpush

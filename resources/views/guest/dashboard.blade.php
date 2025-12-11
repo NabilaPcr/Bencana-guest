@@ -6,7 +6,7 @@
             <div class="hero-content">
                 <h1>Bersama Kita Bisa Membantu Mereka</h1>
                 <p>Yuk ikut berkontribusi dalam kegiatan kemanusiaan dan peduli sesama.</p>
-                <a href="#" class="btn-primary">Donasi Sekarang</a>
+                <a href="{{url('/donasi')}}" class="btn-primary">Donasi Sekarang</a>
             </div>
         </div>
     </section>

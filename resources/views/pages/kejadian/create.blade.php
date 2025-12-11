@@ -13,7 +13,8 @@
                 <p>Isi form berikut untuk melaporkan kejadian bencana baru</p>
             </div>
 
-            <form action="{{ route('kejadian.store') }}" method="POST" enctype="multipart/form-data"> @csrf
+            <form action="{{ route('kejadian.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
                 <div class="form-group">
                     <label for="jenis_bencana">Jenis Bencana *</label>
@@ -63,17 +64,24 @@
                     <label for="keterangan">Keterangan Tambahan</label>
                     <textarea id="keterangan" name="keterangan" placeholder="Informasi tambahan tentang kejadian ini"></textarea>
                 </div>
-                <!-- File Upload Section - SAMA SEPERTI CONTOH PELANGGAN -->
-                <div class="form-group">
-                    <label for="files">Foto Dokumentasi Kejadian</label>
-                    <input type="file" class="form-control" id="files" name="files[]" multiple
-                        accept="image/*,.pdf,.doc,.docx">
-                    <small class="text-muted">
-                        Dapat memilih multiple file. Format yang didukung: JPG, JPEG, PNG, PDF, DOC, DOCX.
-                        Maksimal 2MB per file.
-                    </small>
-                </div>
 
+                <!-- ✅ MULTIPLE FILE UPLOAD - TANPA JAVASCRIPT -->
+                <div class="form-group mt-4">
+                    <label class="fw-bold">Upload Foto Kejadian *</label>
+                    <small class="text-muted d-block mb-2">
+                        Format: JPG, PNG, GIF. Maksimal 2MB per file.
+                    </small>
+
+                    <!-- Input file multiple -->
+                    <input type="file"
+                           name="fotos[]"
+                           class="form-control"
+                           accept="image/*"
+                           multiple
+                           required>
+
+                    <!-- Info file yang dipilih akan muncul otomatis di browser -->
+                </div>
 
                 <button type="submit" class="btn-submit">
                     <i class="fas fa-save"></i> Simpan Data Kejadian

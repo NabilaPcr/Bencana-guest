@@ -1097,6 +1097,7 @@
                 color: #6c757d;
                 padding: 0 8px;
             }
+
     </style>
 </head>
 

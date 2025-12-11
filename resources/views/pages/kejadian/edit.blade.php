@@ -75,51 +75,57 @@
                     <label for="keterangan">Keterangan Tambahan</label>
                     <textarea id="keterangan" name="keterangan" placeholder="Informasi tambahan tentang kejadian ini">{{ old('keterangan', $kejadian->keterangan) }}</textarea>
                 </div>
-                <!-- File Upload Section - SAMA SEPERTI CONTOH PELANGGAN -->
-                <div class="form-group">
-                    <label for="files">Tambah Foto Dokumentasi</label>
-                    <input type="file" class="form-control" id="files" name="files[]" multiple
-                        accept="image/*,.pdf,.doc,.docx">
-                    <small class="text-muted">
-                        Dapat memilih multiple file. Format yang didukung: JPG, JPEG, PNG, PDF, DOC, DOCX.
-                        Maksimal 2MB per file.
-                    </small>
-                </div>
 
-                <!-- List Existing Files - SAMA SEPERTI CONTOH PELANGGAN -->
+                <!-- ✅ FOTO YANG SUDAH ADA - HANYA ICON -->
                 @if ($files->count() > 0)
-                    <div class="form-group">
-                        <label>File yang sudah diupload:</label>
-                        <div class="list-files">
+                    <div class="form-group mt-4">
+                        <label class="fw-bold mb-3">Foto yang sudah diupload</label>
+                        <div class="row">
                             @foreach ($files as $file)
-                                <div
-                                    class="file-item d-flex justify-content-between align-items-center mb-2 p-2 border rounded">
-                                    <div>
-                                        <i class="far fa-file me-2"></i>
-                                        {{ $file->file_name }}
-                                        <small class="text-muted ms-2">({{ $file->mime_type }})</small>
-                                    </div>
-                                    <div>
-                                        <a href="{{ asset('storage/kejadian_bencana/' . $file->file_name) }}"
-                                            target="_blank" class="btn btn-sm btn-outline-primary me-1">
-                                            <i class="far fa-eye"></i> Lihat
-                                        </a>
-                                        <form action="{{ route('kejadian.destroyFile', $file->media_id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                onclick="return confirm('Hapus file ini?')">
-                                                <i class="far fa-trash-alt"></i> Hapus
-                                            </button>
-                                        </form>
+                                <div class="col-md-3 col-sm-4 col-6 mb-3">
+                                    <div class="position-relative">
+                                        <!-- Gambar -->
+                                        <img src="{{ asset('storage/uploads/kejadian_bencana/' . $file->file_name) }}"
+                                            class="img-thumbnail w-100" style="height: 120px; object-fit: cover;">
+
+                                        <!-- Checkbox kecil di pojok -->
+                                        <div class="position-absolute top-0 end-0 m-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="delete_media[]"
+                                                    value="{{ $file->media_id }}" id="delete_media_{{ $file->media_id }}">
+                                                <label class="form-check-label text-danger"
+                                                    for="delete_media_{{ $file->media_id }}">
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
+
+                        <div class="alert alert-info py-2 mt-2">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Klik untuk memilih foto yang akan dihapus
+                        </div>
                     </div>
                 @endif
+                <!-- ✅ UPLOAD FOTO BARU -->
+                <div class="form-group mt-4">
+                    <label class="fw-bold">Upload Foto Baru (Opsional)</label>
+                    <small class="text-muted d-block mb-2">
+                        Format: JPG, PNG, GIF. Maksimal 2MB per file.
+                    </small>
 
+                    <!-- Input file multiple -->
+                    <input type="file" name="fotos[]" class="form-control" accept="image/*" multiple>
+
+                    <div class="mt-2">
+                        <small class="text-muted">
+                            <i class="fas fa-lightbulb"></i>
+                            Kosongkan jika tidak ingin menambah foto baru.
+                        </small>
+                    </div>
+                </div>
 
                 <div class="action-buttons">
                     <a href="{{ route('kejadian.index') }}" class="btn-cancel">
