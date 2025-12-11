@@ -23,6 +23,9 @@
                 <input type="text" id="posko_id" name="posko_id" required
                        value="{{ old('posko_id') }}"
                        placeholder="Contoh: POSKO-001">
+                @error('posko_id')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
@@ -32,10 +35,13 @@
                     @foreach($kejadianList as $kejadian)
                         <option value="{{ $kejadian->kejadian_id }}"
                             {{ old('kejadian_id') == $kejadian->kejadian_id ? 'selected' : '' }}>
-                            {{ $kejadian->jenis_bencana }} - {{ $kejadian->lokasi_text }} ({{ $kejadian->tanggal->format('d/m/Y') }})
+                            {{ $kejadian->jenis_bencana }} - {{ $kejadian->lokasi_text }} ({{ \Carbon\Carbon::parse($kejadian->tanggal)->format('d/m/Y') }})
                         </option>
                     @endforeach
                 </select>
+                @error('kejadian_id')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
@@ -43,12 +49,18 @@
                 <input type="text" id="nama" name="nama" required
                        value="{{ old('nama') }}"
                        placeholder="Contoh: Posko Pengungsian Pusat">
+                @error('nama')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
                 <label for="alamat">Alamat Lengkap *</label>
                 <textarea id="alamat" name="alamat" required
                           placeholder="Alamat lengkap posko">{{ old('alamat') }}</textarea>
+                @error('alamat')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-row">
@@ -57,6 +69,9 @@
                     <input type="text" id="kontak" name="kontak" required
                            value="{{ old('kontak') }}"
                            placeholder="Contoh: 081234567890">
+                    @error('kontak')
+                        <div class="text-danger mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -64,21 +79,35 @@
                     <input type="text" id="penanggung_jawab" name="penanggung_jawab" required
                            value="{{ old('penanggung_jawab') }}"
                            placeholder="Nama penanggung jawab">
+                    @error('penanggung_jawab')
+                        <div class="text-danger mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
-            {{-- <div class="form-group">
-                <label for="media">Media</label>
-                <input type="text" id="media" name="media"
-                       value="{{ old('media') }}"
-                       placeholder="Contoh: Instagram, Facebook, dll">
-            </div> --}}
+            <!-- ✅ MULTIPLE FILE UPLOAD UNTUK POSKO -->
+            <div class="form-group mt-4">
+                <label class="fw-bold">Upload Foto Posko *</label>
+                <small class="text-muted d-block mb-2">
+                    Format: JPG, PNG, GIF. Maksimal 2MB per file.
+                    <br>Tekan <kbd>Ctrl</kbd> (Windows) atau <kbd>Cmd</kbd> (Mac) untuk memilih multiple file.
+                </small>
 
-            {{-- <div class="form-group">
-                <label for="foto">Foto Posko</label>
-                <input type="file" id="foto" name="foto" accept="image/*">
-                <small class="form-text">Format: JPG, PNG, GIF. Maksimal 2MB.</small>
-            </div> --}}
+                <!-- Input file multiple -->
+                <input type="file"
+                       name="fotos[]"
+                       class="form-control"
+                       accept="image/*"
+                       multiple
+                       required>
+
+                @error('fotos')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
+                @error('fotos.*')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
+            </div>
 
             <button type="submit" class="btn-submit">
                 <i class="fas fa-save"></i> Simpan Data Posko

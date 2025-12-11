@@ -13,7 +13,7 @@
                 <p>Isi form berikut untuk menambahkan data donasi baru</p>
             </div>
 
-            <form action="{{ route('donasi.store') }}" method="POST">
+            <form action="{{ route('donasi.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-group">
@@ -72,6 +72,30 @@
                             @enderror
                         </div>
                     </div>
+                </div>
+
+                <!-- ✅ MULTIPLE FILE UPLOAD UNTUK DONASI -->
+                <div class="form-group mt-4">
+                    <label class="fw-bold">Upload Bukti Donasi *</label>
+                    <small class="text-muted d-block mb-2">
+                        Format: JPG, PNG, GIF, PDF. Maksimal 2MB per file.
+                        <br>Tekan <kbd>Ctrl</kbd> (Windows) atau <kbd>Cmd</kbd> (Mac) untuk memilih multiple file.
+                    </small>
+
+                    <!-- Input file multiple -->
+                    <input type="file"
+                           name="bukti_donasi[]"
+                           class="form-control"
+                           accept="image/*,.pdf"
+                           multiple
+                           required>
+
+                    @error('bukti_donasi')
+                        <div class="text-danger mt-1">{{ $message }}</div>
+                    @enderror
+                    @error('bukti_donasi.*')
+                        <div class="text-danger mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group mt-4">
