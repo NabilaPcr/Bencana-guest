@@ -4,7 +4,7 @@
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
-                <h1>Bersama Kita Bisa Membantu Mereka</h1>
+                <h1>Selamat Datang di SiDa !</h1>
                 <p>Yuk ikut berkontribusi dalam kegiatan kemanusiaan dan peduli sesama.</p>
                 <a href="{{url('/donasi')}}" class="btn-primary">Donasi Sekarang</a>
             </div>
@@ -47,8 +47,10 @@
     <div id="tentang" class="section">
         <div class="container">
             <h2>Tentang Kami</h2>
-            <p>Kami berfokus membantu masyarakat yang terkena bencana dan membutuhkan. BinaDesa adalah platform yang
-                menghubungkan para donatur dengan komunitas yang membutuhkan bantuan di seluruh Indonesia.</p>
+            <p>Siaga Desa adalah sebuah platform digital yang didedikasikan untuk memperkuat ketangguhan masyarakat pedesaan dalam menghadapi bencana.
+                Kami memahami bahwa desa sering kali memiliki akses terbatas terhadap informasi dan koordinasi bantuan ketika bencana terjadi.
+                Melalui teknologi yang sederhana dan mudah diakses, Siaga Desa hadir
+                untuk menjadi teman siaga bagi setiap warga.</p>
             <div class="row mt-5">
                 <div class="col-md-4 mb-4">
                     <div class="text-center">
@@ -77,6 +79,17 @@
                         <p>Bekerja sama dengan berbagai pihak untuk bantuan yang maksimal</p>
                     </div>
                 </div>
+
+                <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4 text-center">
+                    <div class="d-grid">
+                        <a href="{{ url('/tentang') }}" class="btn btn-primary btn-lg py-3">
+                            <i class="fas fa-clipboard-list me-2"></i>
+                            mau tau lebih dalam mengenai kami ?
+                        </a>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -118,6 +131,7 @@
                         Lihat Distribusi
                     </a>
                 </div>
+
             </div>
         </div>
     </div>
@@ -149,7 +163,7 @@
         <div class="container">
             <h2>Kontak Kami</h2>
             <p>Jika Anda memiliki pertanyaan atau ingin berkolaborasi dengan kami, jangan ragu untuk menghubungi tim
-                BinaDesa.</p>
+                SiDa.</p>
 
             <div class="contact-info">
                 <div class="contact-card">

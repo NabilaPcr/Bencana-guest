@@ -9,6 +9,8 @@ use App\Http\Controllers\KejadianController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PoskoController;
 use App\Http\Controllers\DonasiBencanaController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\DeveloperController;
 
 
 
@@ -74,15 +76,6 @@ Route::put('/posko/{id}', [PoskoController::class, 'update'])->name('posko.updat
 Route::delete('/posko/{id}', [PoskoController::class, 'destroy'])->name('posko.destroy');
 
 
-//ROUTE DONASI :
-// Route::get('/donasi', [DonasiBencanaController::class, 'index'])->name('donasi.index');
-// Route::get('/donasi/create', [DonasiBencanaController::class, 'create'])->name('donasi.create');
-// Route::post('/donasi', [DonasiBencanaController::class, 'store'])->name('donasi.store');
-// Route::get('/donasi/{id}', [DonasiBencanaController::class, 'show'])->name('donasi.show');
-// Route::get('/donasi/{id}/edit', [DonasiBencanaController::class, 'edit'])->name('donasi.edit');
-// Route::put('/donasi/{id}', [DonasiBencanaController::class, 'update'])->name('donasi.update');
-// Route::delete('/donasi/{id}', [DonasiBencanaController::class, 'destroy'])->name('donasi.destroy');
-
 
 // ROUTE DONASI - Pastikan seperti ini:
 Route::get('/donasi', [DonasiBencanaController::class, 'index'])->name('donasi.index');
@@ -92,3 +85,14 @@ Route::get('/donasi/{id}', [DonasiBencanaController::class, 'show'])->name('dona
 Route::get('/donasi/{id}/edit', [DonasiBencanaController::class, 'edit'])->name('donasi.edit');
 Route::put('/donasi/{id}', [DonasiBencanaController::class, 'update'])->name('donasi.update');
 Route::delete('/donasi/{id}', [DonasiBencanaController::class, 'destroy'])->name('donasi.destroy');
+
+//ROUTE LOGISTIIK
+
+
+//ROUTE DISTRIBUSI
+
+//ROUTE ABOUT:
+Route::get('/tentang', [AboutController::class, 'index'])->name('about');
+
+
+Route::get('/developer', [DeveloperController::class, 'show'])->name('developer.show');

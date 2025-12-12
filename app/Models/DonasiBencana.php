@@ -23,13 +23,19 @@ class DonasiBencana extends Model
         'nilai' => 'decimal:2',
     ];
 
-    // Relasi ke kejadian_bencana
     public function kejadian()
     {
         return $this->belongsTo(KejadianBencana::class, 'kejadian_id', 'kejadian_id');
     }
 
-    // Accessor untuk format nilai
+    public function media()
+    {
+        return $this->hasMany(\App\Models\Media::class, 'ref_id', 'donasi_id')
+                    ->where('ref_table', 'donasi_bencana')
+                    ->orderBy('sort_order');
+    }
+
+    // Helper untuk format nilai
     public function getNilaiFormattedAttribute()
     {
         if ($this->jenis == 'uang') {
@@ -37,14 +43,4 @@ class DonasiBencana extends Model
         }
         return number_format($this->nilai, 0) . ' barang';
     }
-
-    public function media()
-    {
-        return $this->morphMany(Media::class, 'reference', 'ref_table', 'ref_id');
-    }
-
-    //  public function bukti_donasi()
-    // {
-    //     return $this->media()->where('ref_table', 'donasi_bencana');
-    // }
 }

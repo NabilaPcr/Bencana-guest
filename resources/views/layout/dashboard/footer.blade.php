@@ -4,15 +4,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <h2>BinaDesa</h2>
+                    <h2>Siaga Desa</h2>
                     <p>Platform bantuan bencana yang menghubungkan donatur dengan komunitas yang membutuhkan di seluruh
                         Indonesia.</p>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
                     <h2>Tautan Cepat</h2>
-                    <a href="#tentang">Tentang Kami</a>
+                    <a href="/tentang">Tentang Kami</a>
                     <a href="#kegiatan">Kegiatan</a>
-                    <a href="#warga">Data Warga</a>
+                    <a href="/warga">Data Warga</a>
                     <a href="#kontak">Kontak</a>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
@@ -30,9 +30,17 @@
                     <a href="#"><i class="fab fa-youtube me-2"></i> YouTube</a>
                 </div>
             </div>
-            <div class="copyright text-center">
-                <p>&copy; 2024 BinaDesa. Semua hak dilindungi.</p>
-            </div>
+            <div class="row mt-5">
+        <div class="col-12 text-center">
+            <p class="text-muted">
+                <small>
+                    <i class="fas fa-copyright"></i> {{ date('Y') }} Siaga Desa (SiDa).
+                    Sistem Informasi Kebencanaan Berbasis Komunitas.
+                </small>
+            </p>
+        </div>
+    </div>
+    </div>
         </div>
     </footer>
     {{-- END FOOTER  --}}

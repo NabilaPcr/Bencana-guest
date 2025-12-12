@@ -4,8 +4,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-
-
 <style>
     /* ===== RESET & FONT ===== */
     * {
@@ -26,71 +24,320 @@
         color: inherit;
     }
 
-    /* ===== NAVBAR ===== */
-    header {
-        background-color: #ffffff;
-        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
-        padding: 0;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-    }
+/* ===== NAVBAR IMPROVED ===== */
+header {
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1200px;
-        margin: auto;
-        padding: 15px 20px;
-    }
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    padding: 12px 20px;
+}
 
-    .navbar .logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #2e6d38;
-    }
+/* ===== LOGO HORIZONTAL IMPROVED ===== */
+.logo-horizontal {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 12px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    padding: 5px 0;
+}
 
-    .navbar .logo i {
-        font-size: 2rem;
-        color: #56a65a;
-    }
+.logo-horizontal:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+}
 
-    .navbar .logo span {
-        color: #7ac27b;
-    }
+.logo-icon-container {
+    background: linear-gradient(135deg, #56a65a, #2e6d38);
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(86, 166, 90, 0.3);
+    transition: all 0.3s ease;
+}
 
+.logo-horizontal:hover .logo-icon-container {
+    transform: rotate(-5deg) scale(1.05);
+    box-shadow: 0 6px 15px rgba(86, 166, 90, 0.4);
+}
+
+.logo-icon-container i {
+    font-size: 22px;
+    color: white;
+}
+
+.logo-text-container {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.logo-main {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2e6d38;
+    letter-spacing: -0.5px;
+}
+
+.logo-accent {
+    font-size: 18px;
+    font-weight: 600;
+    color: #56a65a;
+    margin-top: -2px;
+}
+
+/* ===== NAV LINKS ===== */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 15px;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links > li {
+    position: relative;
+}
+
+.nav-links a {
+    font-weight: 600;
+    color: #2e6d38;
+    transition: all 0.3s;
+    padding: 10px 18px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.nav-links a i:first-child {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    margin-right: 8px;
+}
+
+.nav-links a:hover {
+    background: linear-gradient(135deg, #56a65a, #4a9a4e);
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(86, 166, 90, 0.3);
+}
+
+/* ===== DROPDOWN MENU ===== */
+.dropdown-toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.dropdown-toggle .fa-chevron-down {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+    margin-left: 3px;
+}
+
+.dropdown:hover .dropdown-toggle .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 220px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    padding: 10px 0;
+    margin-top: 8px;
+    border: 1px solid rgba(86, 166, 90, 0.1);
+    list-style: none;
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu li {
+    list-style: none;
+}
+
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #2e6d38;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    margin: 2px 10px;
+}
+
+.dropdown-menu a i {
+    width: 20px;
+    text-align: center;
+    margin-right: 10px;
+    color: #56a65a;
+}
+
+.dropdown-menu a:hover {
+    background: linear-gradient(135deg, #56a65a, #2e6d38);
+    color: white !important;
+    transform: translateX(5px);
+}
+
+.dropdown-menu a:hover i {
+    color: white;
+}
+
+/* ===== LOGIN BUTTON ===== */
+.btn-login {
+    background: linear-gradient(135deg, #56a65a, #2e6d38);
+    color: white !important;
+    padding: 10px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(86, 166, 90, 0.3);
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-login:hover {
+    background: linear-gradient(135deg, #48904d, #255d2a);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(86, 166, 90, 0.4);
+    color: white !important;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
     .nav-links {
-        display: flex;
-        list-style: none;
-        gap: 30px;
-        align-items: center;
+        gap: 10px;
     }
 
     .nav-links a {
-        font-weight: 500;
-        color: #2e6d38;
-        transition: 0.3s;
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
     }
 
-    .nav-links a:hover {
-        color: #56a65a;
+    .nav-links {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    .nav-links a {
+        justify-content: flex-start;
+        padding: 12px 20px;
+    }
+
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        border: 1px solid rgba(86, 166, 90, 0.2);
+        margin: 5px 0 !important;
+        background: #f9fff9;
+        width: 100%;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        max-height: 300px;
+        padding: 10px 0;
+    }
+
+    .dropdown-menu a {
+        margin: 2px 15px;
+        padding: 10px 15px 10px 30px;
     }
 
     .btn-login {
-        background: #56a65a;
+        margin-top: 10px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .logo-icon-container {
+        width: 40px;
+        height: 40px;
+    }
+
+    .logo-icon-container i {
+        font-size: 20px;
+    }
+
+    .logo-main {
+        font-size: 20px;
+    }
+
+    .logo-accent {
+        font-size: 16px;
+    }
+}
+    /* ===== LOGIN BUTTON IMPROVED ===== */
+    .btn-login {
+        background: linear-gradient(135deg, #56a65a, #2e6d38);
         color: white !important;
-        padding: 10px 22px;
-        border-radius: 8px;
-        font-weight: 500;
+        padding: 10px 24px;
+        border-radius: 12px;
+        font-weight: 600;
         transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(86, 166, 90, 0.3);
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: 10px;
     }
 
     .btn-login:hover {
-        background: #48904d;
+        background: linear-gradient(135deg, #48904d, #255d2a);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(86, 166, 90, 0.4);
+        color: white !important;
     }
 
     /* ===== MAIN CONTENT ===== */
@@ -479,7 +726,6 @@
     }
 
     @media (max-width: 768px) {
-
         .container,
         .container-form {
             padding: 20px 15px;
@@ -551,16 +797,79 @@
         .action-buttons {
             flex-direction: column;
         }
+
+        /* Navbar responsive */
+        .nav-links {
+            flex-direction: column;
+            gap: 5px;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        .nav-links a {
+            margin: 2px 0;
+            border-radius: 8px;
+            justify-content: flex-start;
+        }
+
+        .btn-login {
+            margin: 10px 0 0 0;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .nav-links .dropdown-menu {
+            position: static;
+            box-shadow: none;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            margin: 5px 0 !important;
+            background: #f8f9fa;
+            width: 100%;
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .nav-links .dropdown:hover .dropdown-menu {
+            max-height: 200px;
+            padding: 10px 0;
+        }
+
+        .nav-links .dropdown-menu a {
+            margin: 2px 5px;
+            padding: 10px 15px 10px 35px;
+        }
     }
 
     @media (max-width: 576px) {
         .navbar {
             flex-direction: column;
             gap: 15px;
+            padding: 15px;
+        }
+
+        .logo-icon-container {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-icon-container i {
+            font-size: 20px;
+        }
+
+        .logo-main {
+            font-size: 20px;
+        }
+
+        .logo-accent {
+            font-size: 16px;
         }
 
         .nav-links {
-            gap: 15px;
+            gap: 10px;
         }
 
         .users-table {
@@ -582,7 +891,6 @@
         .users-table th:nth-child(4) {
             width: 20%;
         }
-
 
         /* Table Header with Pagination */
         .table-header-with-pagination {
@@ -665,7 +973,5 @@
                 justify-content: center;
             }
         }
-
-
     }
 </style>

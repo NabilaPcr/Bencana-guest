@@ -11,7 +11,7 @@ class AboutController extends Controller
      */
     public function index()
     {
-        return view('tentang');
+        return view('pages.tentang.index');
     }
 
     /**
