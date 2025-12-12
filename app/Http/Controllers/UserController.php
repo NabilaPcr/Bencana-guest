@@ -2,99 +2,113 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash; // Jangan lupa import Hash
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-   public function index(Request $request)
-{
-    $query = User::query();
-
-    //search
-    if ($request->has('search') && $request->search != '') {
-        $search = $request->search;
-        $query->where(function($q) use ($search) {
-            $q->where('name', 'like', "%{$search}%")
-              ->orWhere('email', 'like', "%{$search}%");
-        });
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $users = User::latest()->paginate(10);
+        return view('pages.user.index', compact('users'));
     }
 
-    //pagination
-    $users = $query->orderBy('created_at', 'desc')->paginate(5);
-
-    return view('pages.user.index', compact('users'));
-}
-
-
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return view('pages.user.create'); // View path diubah
+        return view('pages.user.create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|confirmed',
+        // Validasi data
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+            'role' => 'required|string|in:Super Admin,Pelanggan,Mitra'
         ]);
 
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ];
-
-        User::create($data); // Menggunakan create($data)
+        // Simpan user baru
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role' => $validated['role']
+        ]);
 
         return redirect()->route('users.index')
-            ->with('success', 'Data user berhasil ditambahkan.');
+            ->with('success', 'User berhasil ditambahkan!');
     }
 
-    public function show($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        // Optional: jika butuh halaman detail user
+        $user = User::findOrFail($id);
+        return view('pages.user.show', compact('user'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
         $user = User::findOrFail($id);
-        return view('pages.user.show', compact('user')); // View path diubah
+        return view('pages.user.edit', compact('user'));
     }
 
-    public function edit($id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
         $user = User::findOrFail($id);
-        return view('pages.user.edit', compact('user')); // View path diubah
-    }
 
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required',
+        // Validasi data
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'nullable|min:8|confirmed',
+            'password' => 'nullable|string|min:6|confirmed',
+            'role' => 'required|string|in:Super Admin,Pelanggan,Mitra'
         ]);
 
-        $user = User::findOrFail($id);
-        $updateData = [
-            'name' => $request->name,
-            'email' => $request->email,
-        ];
+        // Update data user
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->role = $validated['role'];
 
-        if ($request->filled('password')) {
-            $updateData['password'] = Hash::make($request->password);
+        // Update password jika diisi
+        if (!empty($validated['password'])) {
+            $user->password = Hash::make($validated['password']);
         }
 
-        $user->update($updateData);
+        $user->save();
 
         return redirect()->route('users.index')
-            ->with('success', 'Data user berhasil diupdate.');
+            ->with('success', 'User berhasil diperbarui!');
     }
 
-    public function destroy($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
         $user = User::findOrFail($id);
         $user->delete();
 
         return redirect()->route('users.index')
-            ->with('success', 'Data user berhasil dihapus.');
+            ->with('success', 'User berhasil dihapus!');
     }
 }

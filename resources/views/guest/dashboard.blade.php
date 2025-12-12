@@ -11,38 +11,6 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-6">
-                    <div class="stat-item">
-                        <div class="stat-number">250+</div>
-                        <div class="stat-label">Bencana Tertangani</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-item">
-                        <div class="stat-number">15K+</div>
-                        <div class="stat-label">Warga Terbantu</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-item">
-                        <div class="stat-number">120+</div>
-                        <div class="stat-label">Posko Aktif</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-item">
-                        <div class="stat-number">5K+</div>
-                        <div class="stat-label">Relawan</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Tentang Kami -->
     <div id="tentang" class="section">
         <div class="container">

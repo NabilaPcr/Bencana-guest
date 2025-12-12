@@ -3,91 +3,58 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
+class AuthController extends Controller
+{
 
-
-class AuthController extends Controller {
     public function index()
     {
-    return view('pages.auth.formlogin');
-
+        return view('pages.auth.formlogin');
     }
-    public function login(Request $request)
-    {
-     $request->validate([
-            'email' => 'required|email', // Ubah dari username ke email
-            'password' => 'required',
-        ]);
 
-        // Cek email ada di database
-        $user = User::where('email', $request->email)->first();
+    // Proses login
+  public function login(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:8',
+    ]);
 
-        // Jika email ditemukan, cek password dengan Hash::check
-        if ($user && Hash::check($request->password, $user->password)) {
-            // Login berhasil
-            auth()->login($user);
-            return redirect('/dashboard')->with('success', 'Login berhasil!');
+    $credentials = $request->only('email', 'password');
+
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+
+        $user = Auth::user(); //digunakan agar pengguna dapat login
+
+        // Redirect berdasarkan role
+        if ($user->role === 'Super Admin') {
+            return redirect()->route('dashboard')
+                ->with('success', 'Selamat datang Super Admin!');
+        } elseif ($user->role === 'Mitra') {
+            return redirect()->route('dashboard')
+                ->with('success', 'Selamat datang Mitra!');
+        } else {
+            // Untuk Pelanggan, redirect ke halaman khusus
+            return redirect()->route('dashboard')
+                ->with('success', 'Selamat datang!');
         }
-
-        // Login gagal
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->withInput($request->only('email'));
     }
-     public function logout(Request $request)
-    {
-        Auth::logout();
 
+    return back()->withErrors([
+        'email' => 'Email atau password salah.',
+    ])->onlyInput('email');
+}
+    // Proses logout
+    public function logout(Request $request)
+    {
+        Auth::logout(); //mengeluarkan pengguna
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/auth')->with('pesan', 'Anda telah logout.');
-    }
-
-
-    public function create()
-    {
-        //
-    }
-
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect('/auth')->with('success', 'Anda telah logout.');
     }
 }

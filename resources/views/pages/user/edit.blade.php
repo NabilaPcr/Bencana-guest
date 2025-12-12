@@ -1,6 +1,6 @@
 @extends('layout.admin.app')
 
-    @section('content')
+@section('content')
     <!-- MAIN CONTENT -->
     <div class="container">
         <a href="{{ route('users.index') }}" class="back-link">
@@ -20,9 +20,8 @@
 
                 <div class="form-group">
                     <label for="name">Nama Lengkap *</label>
-                    <input type="text" id="name" name="name" required
-                           value="{{ old('name', $user->name) }}"
-                           placeholder="Masukkan nama lengkap">
+                    <input type="text" id="name" name="name" required value="{{ old('name', $user->name) }}"
+                        placeholder="Masukkan nama lengkap">
                     @error('name')
                         <div style="color: #e74c3c; font-size: 0.875rem; margin-top: 5px;">{{ $message }}</div>
                     @enderror
@@ -30,9 +29,8 @@
 
                 <div class="form-group">
                     <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required
-                           value="{{ old('email', $user->email) }}"
-                           placeholder="Masukkan alamat email">
+                    <input type="email" id="email" name="email" required value="{{ old('email', $user->email) }}"
+                        placeholder="Masukkan alamat email">
                     @error('email')
                         <div style="color: #e74c3c; font-size: 0.875rem; margin-top: 5px;">{{ $message }}</div>
                     @enderror
@@ -47,7 +45,7 @@
                     <div class="form-group">
                         <label for="password">Password Baru</label>
                         <input type="password" id="password" name="password"
-                               placeholder="Masukkan password baru (opsional)">
+                            placeholder="Masukkan password baru (opsional)">
                         @error('password')
                             <div style="color: #e74c3c; font-size: 0.875rem; margin-top: 5px;">{{ $message }}</div>
                         @enderror
@@ -56,8 +54,27 @@
                     <div class="form-group">
                         <label for="password_confirmation">Konfirmasi Password Baru</label>
                         <input type="password" id="password_confirmation" name="password_confirmation"
-                               placeholder="Konfirmasi password baru">
+                            placeholder="Konfirmasi password baru">
                     </div>
+                </div>
+                {{-- Tambahkan setelah input email --}}
+                <div class="form-group">
+                    <label for="role">Role *</label>
+                    <select name="role" id="role" class="form-control" required>
+                        <option value="">Pilih Role</option>
+                        <option value="Super Admin" {{ old('role', $user->role) == 'Super Admin' ? 'selected' : '' }}>
+                            Super Admin
+                        </option>
+                        <option value="Pelanggan" {{ old('role', $user->role) == 'Warga' ? 'selected' : '' }}>
+                            Warga
+                        </option>
+                        <option value="Mitra" {{ old('role', $user->role) == 'Mitra' ? 'selected' : '' }}>
+                            Mitra
+                        </option>
+                    </select>
+                    @error('role')
+                        <div style="color: #e74c3c; font-size: 0.875rem; margin-top: 5px;">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="action-buttons">
@@ -73,6 +90,6 @@
     </div>
 
     {{-- START JS  --}}
-   @include('layout.admin.js')
+    @include('layout.admin.js')
     {{-- END JS  --}}
 @endsection

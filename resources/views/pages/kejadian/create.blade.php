@@ -65,7 +65,7 @@
                     <textarea id="keterangan" name="keterangan" placeholder="Informasi tambahan tentang kejadian ini"></textarea>
                 </div>
 
-                <!-- ✅ MULTIPLE FILE UPLOAD - TANPA JAVASCRIPT -->
+                <!-- ✅ MULTIPLE FILE UPLOAD -  -->
                 <div class="form-group mt-4">
                     <label class="fw-bold">Upload Foto Kejadian *</label>
                     <small class="text-muted d-block mb-2">
