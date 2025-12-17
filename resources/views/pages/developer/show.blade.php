@@ -106,7 +106,7 @@
                         <a href="{{ route('about') }}" class="btn btn-outline-primary btn-lg me-2">
                             <i class="fas fa-arrow-left me-2"></i> Kembali ke Tentang Kami
                         </a>
-                        <a href="{{ route('guest.dashboard') }}" class="btn btn-primary btn-lg">
+                        <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg">
                             <i class="fas fa-home me-2"></i> Beranda
                         </a>
                     </div>

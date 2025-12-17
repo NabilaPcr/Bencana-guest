@@ -16,24 +16,24 @@ class RegisController extends Controller
     }
 
     // Proses registrasi
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+ public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8|confirmed',
+    ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => 'warga', // Set default role sebagai warga
+    ]);
 
-        // Auto login setelah registrasi
-        Auth::login($user);
+    Auth::login($user);
 
-        return redirect('/dashboard')
-            ->with('success', 'Registrasi berhasil! Selamat datang di Siaga Desa.');
-    }
+    return redirect('/dashboard')
+        ->with('success', 'Registrasi berhasil! Selamat datang di Siaga Desa.');
+}
 }

@@ -34,9 +34,11 @@ Route::get('/developer', [DeveloperController::class, 'show'])->name('developer.
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
 // ===== ROUTE YANG BUTUH LOGIN =====
  Route::middleware(['checkislogin'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // KEJADIAN
     Route::prefix('kejadian')->group(function () {
