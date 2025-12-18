@@ -53,11 +53,7 @@ class KejadianBencana extends Model
         return $this->morphMany(Media::class, 'reference', 'ref_table', 'ref_id');
     }
 
-    // public function fotos()
-    // {
-    //     return $this->media()->where('ref_table', 'kejadian_bencana');
-    // }
-
+   
 
 
 

@@ -18,7 +18,8 @@
         <form action="{{ route('posko.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
-            <div class="form-group">
+            <!-- HAPUS FIELD posko_id karena auto increment -->
+            <!-- <div class="form-group">
                 <label for="posko_id">ID Posko *</label>
                 <input type="text" id="posko_id" name="posko_id" required
                        value="{{ old('posko_id') }}"
@@ -26,7 +27,7 @@
                 @error('posko_id')
                     <div class="text-danger mt-1">{{ $message }}</div>
                 @enderror
-            </div>
+            </div> -->
 
             <div class="form-group">
                 <label for="kejadian_id">Kejadian Bencana *</label>
