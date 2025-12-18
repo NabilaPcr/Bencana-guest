@@ -56,7 +56,7 @@
                         <h4 class="fw-bold mb-4 text-center">Hubungi Saya</h4>
                         <div class="d-flex justify-content-center gap-4 flex-wrap">
                             <!-- LinkedIn -->
-                            <a href="[LINKEDIN_URL_ANDA]"
+                            <a href="[]"
                                target="_blank"
                                class="social-icon linkedin">
                                 <i class="fab fa-linkedin fa-2x"></i>
@@ -72,7 +72,7 @@
                             </a>
 
                             <!-- Instagram -->
-                            <a href="[INSTAGRAM_URL_ANDA]"
+                            <a href="[https://www.instagram.com/me.nblzhr?igsh=MWswMTkweGl4Yzc5aQ==]"
                                target="_blank"
                                class="social-icon instagram">
                                 <i class="fab fa-instagram fa-2x"></i>
@@ -93,9 +93,9 @@
                         <h4 class="fw-bold mb-3 text-center">Teknologi yang Digunakan</h4>
                         <div class="d-flex justify-content-center flex-wrap gap-2">
                             <span class="badge bg-primary p-2">Laravel</span>
-                            <span class="badge bg-success p-2">Bootstrap 5</span>
+                            {{-- <span class="badge bg-success p-2">Bootstrap 5</span> --}}
                             <span class="badge bg-info p-2">MySQL</span>
-                            <span class="badge bg-warning p-2">JavaScript</span>
+                            {{-- <span class="badge bg-warning p-2">JavaScript</span> --}}
                             <span class="badge bg-danger p-2">HTML/CSS</span>
                             <span class="badge bg-secondary p-2">Git</span>
                         </div>

@@ -36,7 +36,7 @@ class PoskoController extends Controller
             });
         }
 
-        $poskoBencana = $query->paginate(10);
+        $poskoBencana = $query->paginate(30);
 
         $jenisBencanaList = KejadianBencana::distinct()
             ->pluck('jenis_bencana')
@@ -108,9 +108,6 @@ class PoskoController extends Controller
     public function show($id)
     {
         $posko = PoskoBencana::with('kejadian')->findOrFail($id);
-
-        // Tidak perlu ambil files lagi karena sudah ada di model
-        // $posko->media akan otomatis tersedia melalui accessor
 
         return view('pages.posko.show', compact('posko'));
     }

@@ -36,7 +36,7 @@ class KejadianController extends Controller
         $query->orderBy($sort, $order);
 
         // PAGINATION
-        $kejadian = $query->paginate(10);
+        $kejadian = $query->paginate(30);
         $kejadian->appends($request->all());
 
         return view('pages.kejadian.index', compact('kejadian'));
