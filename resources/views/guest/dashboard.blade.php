@@ -1039,10 +1039,11 @@
                         <i class="fas fa-eye me-1"></i> Lihat Posko
                     </a>
                 </div>
+                <!-- Logistik Bencana (BARU) -->
                 <div class="event-card">
                     <img src="{{ asset('assets/img/logistik.jpeg') }}" alt="Logistik Bencana">
                     <h3>Logistik Bencana</h3>
-                    <p>Daftar bantuan donasi untuk para korban bencana.</p>
+                    <p>Data barang dan persediaan logistik untuk penanganan bencana.</p>
                     <a href="{{ url('/logistik') }}" class="event-btn">
                         <i class="fas fa-eye me-1"></i> Lihat Logistik
                     </a>

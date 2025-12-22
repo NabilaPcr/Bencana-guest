@@ -11,6 +11,7 @@ use App\Http\Controllers\PoskoController;
 use App\Http\Controllers\DonasiBencanaController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\DeveloperController;
+use App\Http\Controllers\LogistikBencanaController;
 
 // ===== ROUTE PUBLIC (TANPA MIDDLEWARE) =====
 // Halaman utama guest
@@ -84,7 +85,17 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
         Route::put('/{id}', [DonasiBencanaController::class, 'update'])->name('donasi.update');
         Route::delete('/{id}', [DonasiBencanaController::class, 'destroy'])->name('donasi.destroy');
     });
- //});
+
+     Route::prefix('logistik')->group(function () {
+        Route::get('/', [LogistikBencanaController::class, 'index'])->name('logistik.index');
+        Route::get('/create', [LogistikBencanaController::class, 'create'])->name('logistik.create');
+        Route::post('/', [LogistikBencanaController::class, 'store'])->name('logistik.store');
+        Route::get('/{id}', [LogistikBencanaController::class, 'show'])->name('logistik.show');
+        Route::get('/{id}/edit', [LogistikBencanaController::class, 'edit'])->name('logistik.edit');
+        Route::put('/{id}', [LogistikBencanaController::class, 'update'])->name('logistik.update');
+        Route::delete('/{id}', [LogistikBencanaController::class, 'destroy'])->name('logistik.destroy');
+        Route::patch('/{id}/stok', [LogistikBencanaController::class, 'updateStok'])->name('logistik.updateStok');
+    });
 
 // ===== ROUTE HANYA UNTUK SUPER ADMIN =====
  Route::middleware(['checkislogin', 'checkrole:Super Admin'])->group(function () {
