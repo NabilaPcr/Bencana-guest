@@ -254,7 +254,7 @@
                 <div class="brand-logo">
                     <i class="fas fa-hands-helping"></i>
                 </div>
-                <div class="brand-text">BinaDesa</div>
+                <div class="brand-text">SiagaDesa</div>
                 <div class="brand-subtext">Sistem Kebencanaan & Tanggap Darurat</div>
             </div>
 

@@ -50,7 +50,7 @@
                         </li>
                         <li><hr class="dropdown-divider"></li>
 
-                         {{-- <li>
+                         <li>
                             <a class="dropdown-item" href="/logistik">
                                 <i class="fas fa-plus-circle me-2 text-success"></i>Logistik
                             </a>
@@ -59,18 +59,21 @@
 
                          <li>
                             <a class="dropdown-item" href="/distribusi">
-                                <i class="fas fa-plus-circle me-2 text-success"></i>Posko
+                                <i class="fas fa-plus-circle me-2 text-success"></i>Distribusi
                             </a>
                         </li>
-                        <li><hr class="dropdown-divider"></li> --}}
-
-
+                        <li><hr class="dropdown-divider"></li>
                     </ul>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="/warga">
                         <i class="fas fa-users me-2"></i>Data Warga
+                    </a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="/users">
+                        <i class="fas fa-users me-2"></i>Pengguna
                     </a>
                 </li>
                 <li class="nav-item ms-lg-2">

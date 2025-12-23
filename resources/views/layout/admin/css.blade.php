@@ -1,9 +1,3 @@
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Data User - BinaDesa</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
     /* ===== RESET & FONT ===== */
     * {
@@ -610,7 +604,7 @@
     }
 
     .users-table th:nth-child(4) {
-        width: 18%; /* ROLE */
+        width: 15%; /* ROLE - lebih kecil karena badge sudah ringkas */
         text-align: center;
     }
 
@@ -644,6 +638,11 @@
         font-weight: 500;
     }
 
+    .users-table td:nth-child(4) {
+        text-align: center;
+        vertical-align: middle;
+    }
+
     .user-name {
         font-weight: 600;
         color: #2e6d38;
@@ -656,8 +655,12 @@
         font-size: 0.9rem;
     }
 
+    .password-cell {
+        max-width: 250px;
+    }
+
     .password-hash {
-        font-family: 'Courier New', monospace;
+        font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
         font-size: 0.8rem;
         color: #888;
         word-break: break-all;
@@ -666,10 +669,297 @@
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         line-height: 1.4;
-        padding: 4px 6px;
+        padding: 6px 8px;
         background: #f8f9fa;
-        border-radius: 4px;
+        border-radius: 6px;
         border: 1px solid #e9ecef;
+        max-height: 48px;
+    }
+
+    /* ===== ROLE BADGE (TANPA IKON) ===== */
+    .role-badge {
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        min-width: 120px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 2px solid;
+    }
+
+    .role-badge:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Super Admin Role - warna lebih gelap */
+    .role-badge-superadmin {
+        background-color: #f8c471;
+        color: #7d3c1e;
+        border-color: #e67e22;
+    }
+
+    /* Admin Role - warna lebih gelap */
+    .role-badge-admin {
+        background-color: #85c1e9;
+        color: #154360;
+        border-color: #2e86c1;
+    }
+
+    /* Mira Role - dari gambar */
+    .role-badge-mira {
+        background-color: #d7bde2;
+        color: #6c3483;
+        border-color: #8e44ad;
+    }
+
+    /* Warga Role - dari gambar */
+    .role-badge-warga {
+        background-color: #82e0aa;
+        color: #186a3b;
+        border-color: #28b463;
+    }
+
+    /* Staf Role - warna lebih gelap */
+    .role-badge-staf {
+        background-color: #aed6f1;
+        color: #1b4f72;
+        border-color: #3498db;
+    }
+
+    /* Relawan Role - warna lebih gelap */
+    .role-badge-relawan {
+        background-color: #bb8fce;
+        color: #4a235a;
+        border-color: #9b59b6;
+    }
+
+    /* Umum Role - warna lebih gelap */
+    .role-badge-umum {
+        background-color: #f2f3f4;
+        color: #424949;
+        border-color: #bdc3c7;
+    }
+
+    /* Mitra Role - warna lebih gelap */
+    .role-badge-mitra {
+        background-color: #f5b7b1;
+        color: #78281f;
+        border-color: #e74c3c;
+    }
+
+    /* Disabled Role - warna lebih gelap */
+    .role-badge-disabled {
+        background-color: #b2babb;
+        color: #212f3d;
+        border-color: #7f8c8d;
+        opacity: 0.8;
+    }
+
+    /* Role Display in Table */
+    .role-cell {
+        text-align: center;
+        vertical-align: middle;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    /* Role Filter Dropdown */
+    .role-filter {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border: 1px solid #e9ecef;
+    }
+
+    .role-filter-btn {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        border: 2px solid transparent;
+        background: white;
+        color: #495057;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .role-filter-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .role-filter-btn.active {
+        font-weight: 600;
+    }
+
+    .role-filter-btn[data-role="superadmin"] {
+        border-color: #e67e22;
+        color: #7d3c1e;
+    }
+
+    .role-filter-btn[data-role="admin"] {
+        border-color: #2e86c1;
+        color: #154360;
+    }
+
+    .role-filter-btn[data-role="mira"] {
+        border-color: #8e44ad;
+        color: #6c3483;
+    }
+
+    .role-filter-btn[data-role="warga"] {
+        border-color: #28b463;
+        color: #186a3b;
+    }
+
+    .role-filter-btn[data-role="staf"] {
+        border-color: #3498db;
+        color: #1b4f72;
+    }
+
+    .role-filter-btn[data-role="relawan"] {
+        border-color: #9b59b6;
+        color: #4a235a;
+    }
+
+    .role-filter-btn[data-role="umum"] {
+        border-color: #bdc3c7;
+        color: #424949;
+    }
+
+    .role-filter-btn[data-role="mitra"] {
+        border-color: #e74c3c;
+        color: #78281f;
+    }
+
+    .role-count {
+        font-size: 0.75rem;
+        background: #f1f2f6;
+        padding: 2px 8px;
+        border-radius: 10px;
+        margin-left: 4px;
+    }
+
+    /* Role Selector in Forms */
+    .role-selector {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
+        margin: 15px 0;
+    }
+
+    .role-option {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .role-option input[type="radio"] {
+        display: none;
+    }
+
+    .role-option label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 15px;
+        border-radius: 12px;
+        background: white;
+        border: 2px solid #e0e0e0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        min-height: 100px;
+    }
+
+    .role-option label:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .role-option input[type="radio"]:checked + label {
+        border-width: 3px;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .role-option input[type="radio"]:checked + label .role-icon {
+        transform: scale(1.1);
+    }
+
+    .role-option[data-role="superadmin"] input[type="radio"]:checked + label {
+        border-color: #e67e22;
+        background: linear-gradient(135deg, #fff5e6 0%, #ffeaa7 30%);
+    }
+
+    .role-option[data-role="admin"] input[type="radio"]:checked + label {
+        border-color: #2e86c1;
+        background: linear-gradient(135deg, #e8f4ff 0%, #d0e7ff 30%);
+    }
+
+    .role-option[data-role="mira"] input[type="radio"]:checked + label {
+        border-color: #8e44ad;
+        background: linear-gradient(135deg, #f4ecf7 0%, #e8d4f1 30%);
+    }
+
+    .role-option[data-role="warga"] input[type="radio"]:checked + label {
+        border-color: #28b463;
+        background: linear-gradient(135deg, #e8fff8 0%, #d0fff0 30%);
+    }
+
+    .role-option[data-role="staf"] input[type="radio"]:checked + label {
+        border-color: #3498db;
+        background: linear-gradient(135deg, #e8f4ff 0%, #d0e7ff 30%);
+    }
+
+    .role-option[data-role="relawan"] input[type="radio"]:checked + label {
+        border-color: #9b59b6;
+        background: linear-gradient(135deg, #f0eeff 0%, #e6e3ff 30%);
+    }
+
+    .role-option[data-role="umum"] input[type="radio"]:checked + label {
+        border-color: #bdc3c7;
+        background: linear-gradient(135deg, #f8f9fa 0%, #f1f2f6 30%);
+    }
+
+    .role-option[data-role="mitra"] input[type="radio"]:checked + label {
+        border-color: #e74c3c;
+        background: linear-gradient(135deg, #fdedec 0%, #fadbd8 30%);
+    }
+
+    .role-icon {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .role-name {
+        font-weight: 600;
+        margin-bottom: 5px;
+        font-size: 0.95rem;
+    }
+
+    .role-description {
+        font-size: 0.8rem;
+        color: #666;
+        line-height: 1.3;
     }
 
     /* ===== ACTION BUTTONS ===== */
@@ -677,15 +967,15 @@
         display: flex;
         gap: 8px;
         flex-wrap: nowrap;
-        justify-content: flex-start;
+        justify-content: center;
     }
 
     .btn-action {
         padding: 8px 16px;
         border: none;
-        border-radius: 6px;
+        border-radius: 8px;
         font-size: 0.85rem;
-        font-weight: 500;
+        font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
         display: inline-flex;
@@ -693,74 +983,32 @@
         gap: 6px;
         text-decoration: none;
         white-space: nowrap;
-        min-width: 70px;
+        min-width: 80px;
         justify-content: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
 
     .btn-edit {
-        background: #f39c12;
+        background: linear-gradient(135deg, #f39c12, #e67e22);
         color: white;
     }
 
     .btn-edit:hover {
-        background: #e67e22;
-        transform: translateY(-2px);
-        box-shadow: 0 3px 6px rgba(243, 156, 18, 0.2);
+        background: linear-gradient(135deg, #e67e22, #d35400);
     }
 
     .btn-delete {
-        background: #e74c3c;
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
         color: white;
     }
 
     .btn-delete:hover {
-        background: #c0392b;
-        transform: translateY(-2px);
-        box-shadow: 0 3px 6px rgba(231, 76, 60, 0.2);
-    }
-
-    /* ===== BADGE STYLES ===== */
-    .badge {
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        white-space: nowrap;
-        justify-content: center;
-        min-width: 100px;
-    }
-
-    .badge-superadmin {
-        background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
-        color: #d63031;
-        border: 1px solid #fdcb6e;
-    }
-
-    .badge-mitra {
-        background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
-        color: white;
-        border: 1px solid #6c5ce7;
-    }
-
-    .badge-pelanggan {
-        background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
-        color: white;
-        border: 1px solid #00b894;
-    }
-
-    .badge-default {
-        background: #dfe6e9;
-        color: #636e72;
-        border: 1px solid #b2bec3;
-    }
-
-    .user-role {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        background: linear-gradient(135deg, #c0392b, #a93226);
     }
 
     /* Empty State */
@@ -868,16 +1116,20 @@
             padding: 14px 16px;
         }
 
-        .badge {
-            min-width: 90px;
-            padding: 5px 12px;
+        .role-badge {
+            min-width: 100px;
+            padding: 6px 12px;
             font-size: 0.75rem;
         }
 
         .btn-action {
-            padding: 7px 14px;
+            padding: 6px 12px;
+            min-width: 70px;
             font-size: 0.8rem;
-            min-width: 65px;
+        }
+
+        .users-table {
+            min-width: 1000px;
         }
     }
 
@@ -913,7 +1165,7 @@
         }
 
         .users-table {
-            min-width: 850px;
+            min-width: 900px;
         }
 
         .users-table th {
@@ -935,6 +1187,7 @@
             width: 100%;
             justify-content: center;
             padding: 8px 12px;
+            min-width: auto;
         }
 
         .form-card {
@@ -959,6 +1212,36 @@
             text-align: center;
             gap: 12px;
             padding: 15px;
+        }
+
+        /* Role Responsive */
+        .role-badge {
+            min-width: 100px;
+            padding: 6px 12px;
+            font-size: 0.75rem;
+        }
+
+        .role-selector {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .role-option label {
+            padding: 15px 10px;
+            min-height: 80px;
+        }
+
+        .role-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .role-name {
+            font-size: 0.85rem;
+        }
+
+        .role-description {
+            font-size: 0.7rem;
         }
 
         /* Navbar responsive */
@@ -1052,7 +1335,7 @@
             padding: 10px 20px;
         }
 
-        .badge {
+        .role-badge {
             min-width: 85px;
             padding: 4px 10px;
             font-size: 0.7rem;
@@ -1091,6 +1374,26 @@
 
         .form-header h1 {
             font-size: 1.6rem;
+        }
+
+        /* Role Responsive */
+        .role-badge {
+            min-width: 90px;
+            padding: 5px 10px;
+            font-size: 0.7rem;
+        }
+
+        .role-selector {
+            grid-template-columns: 1fr;
+        }
+
+        .role-filter {
+            justify-content: center;
+        }
+
+        .role-filter-btn {
+            padding: 6px 12px;
+            font-size: 0.8rem;
         }
     }
 </style>

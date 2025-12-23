@@ -1,20 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\RegisController;
-use App\Http\Controllers\WargaController;
-use App\Http\Controllers\KejadianController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PoskoController;
-use App\Http\Controllers\DonasiBencanaController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeveloperController;
+use App\Http\Controllers\DonasiBencanaController;
+use App\Http\Controllers\DistribusiLogistikController;
+use App\Http\Controllers\KejadianController;
 use App\Http\Controllers\LogistikBencanaController;
+use App\Http\Controllers\PoskoController;
+use App\Http\Controllers\RegisController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WargaController;
+use Illuminate\Support\Facades\Route;
 
 // ===== ROUTE PUBLIC (TANPA MIDDLEWARE) =====
-// Halaman utama guest
+
 Route::get('/', function () {
     return view('guest.dashboard');
 });
@@ -34,12 +35,10 @@ Route::get('/developer', [DeveloperController::class, 'show'])->name('developer.
 // ===== ROUTE LOGOUT =====
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-
 // ===== ROUTE YANG BUTUH LOGIN =====
- Route::middleware(['checkislogin'])->group(function () {
+Route::middleware(['checkislogin'])->group(function () {
 
     // KEJADIAN
     Route::prefix('kejadian')->group(function () {
@@ -86,7 +85,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
         Route::delete('/{id}', [DonasiBencanaController::class, 'destroy'])->name('donasi.destroy');
     });
 
-     Route::prefix('logistik')->group(function () {
+    Route::prefix('logistik')->group(function () {
         Route::get('/', [LogistikBencanaController::class, 'index'])->name('logistik.index');
         Route::get('/create', [LogistikBencanaController::class, 'create'])->name('logistik.create');
         Route::post('/', [LogistikBencanaController::class, 'store'])->name('logistik.store');
@@ -97,17 +96,28 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
         Route::patch('/{id}/stok', [LogistikBencanaController::class, 'updateStok'])->name('logistik.updateStok');
     });
 
-// ===== ROUTE HANYA UNTUK SUPER ADMIN =====
- Route::middleware(['checkislogin', 'checkrole:Super Admin'])->group(function () {
-    // USER MANAGEMENT - hanya untuk Super Admin
-    Route::prefix('users')->group(function () {
-        Route::get('/', [UserController::class, 'index'])->name('users.index');
-        Route::get('/create', [UserController::class, 'create'])->name('users.create');
-        Route::post('/', [UserController::class, 'store'])->name('users.store');
-        Route::get('/{id}', [UserController::class, 'show'])->name('users.show');
-        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-        Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
-        Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+    // Routes untuk distribusi logistik
+    Route::prefix('distribusi')->group(function () {
+        Route::get('/', [DistribusiLogistikController::class, 'index'])->name('distribusi.index');
+        Route::get('/create', [DistribusiLogistikController::class, 'create'])->name('distribusi.create');
+        Route::post('/', [DistribusiLogistikController::class, 'store'])->name('distribusi.store');
+        Route::get('/{id}', [DistribusiLogistikController::class, 'show'])->name('distribusi.show');
+        Route::get('/{id}/edit', [DistribusiLogistikController::class, 'edit'])->name('distribusi.edit');
+        Route::put('/{id}', [DistribusiLogistikController::class, 'update'])->name('distribusi.update');
+        Route::delete('/{id}', [DistribusiLogistikController::class, 'destroy'])->name('distribusi.destroy');
     });
- });
- });
+
+// ===== ROUTE HANYA UNTUK SUPER ADMIN =====
+    // Route::middleware(['checkislogin', 'checkrole:Super Admin'])->group(function () {
+        // USER MANAGEMENT - hanya untuk Super Admin
+        Route::prefix('users')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('users.index');
+            Route::get('/create', [UserController::class, 'create'])->name('users.create');
+            Route::post('/', [UserController::class, 'store'])->name('users.store');
+            Route::get('/{id}', [UserController::class, 'show'])->name('users.show');
+            Route::get('/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+            Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
+            Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+        });
+    });
+// });

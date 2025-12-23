@@ -12,13 +12,7 @@
             <div class="form-header">
                 <h1><i class="fas fa-edit"></i> Edit Kejadian Bencana</h1>
                 <p>Perbarui informasi kejadian bencana berikut</p>
-                {{-- <div class="alert alert-info d-flex align-items-center mt-3">
-                    <i class="fas fa-info-circle fa-lg me-3"></i>
-                    <div>
-                        <strong>Perhatian:</strong> Data yang sudah tersimpan tidak dapat dikembalikan.
-                        Pastikan semua informasi sudah benar sebelum menyimpan.
-                    </div>
-                </div> --}}
+               
             </div>
 
             <form action="{{ route('kejadian.update', $kejadian->kejadian_id) }}" method="POST"
