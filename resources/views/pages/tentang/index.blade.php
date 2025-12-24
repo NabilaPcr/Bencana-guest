@@ -30,7 +30,9 @@
                         <div class="col-md-8">
                             <h2 class="fw-bold mb-3">Apa itu Siaga Desa?</h2>
                             <p class="fs-5 text-muted">
-                                Siaga Desa adalah sebuah platform digital yang didedikasikan untuk memperkuat ketangguhan masyarakat pedesaan dalam menghadapi bencana. Kami memahami bahwa desa sering kali memiliki akses terbatas terhadap informasi dan koordinasi bantuan ketika bencana terjadi. Melalui teknologi yang sederhana dan mudah diakses, Siaga Desa hadir untuk menjadi teman siaga bagi setiap warga.
+                                Siaga Desa adalah sebuah platform digital yang didedikasikan untuk memperkuat ketangguhan masyarakat pedesaan dalam menghadapi bencana.
+                                Kami memahami bahwa desa sering kali memiliki akses terbatas terhadap informasi dan koordinasi bantuan ketika bencana terjadi.
+                                Melalui teknologi yang sederhana dan mudah diakses, Siaga Desa hadir untuk menjadi teman siaga bagi setiap warga.
                             </p>
                         </div>
                     </div>

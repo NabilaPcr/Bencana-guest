@@ -74,22 +74,15 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
+                </ul>
+            </li>
 
-                    <!-- Warga -->
-                    <li>
+            <!-- warga -->
+            <li>
                         <a class="dropdown-item" href="/warga">
                             <i class="fas fa-users me-2 text-secondary"></i>Data Warga
                         </a>
                     </li>
-                </ul>
-            </li>
-
-            <!-- Pengguna -->
-            <li>
-                <a href="/users">
-                    <i class="fas fa-user-cog me-2"></i> Pengguna
-                </a>
-            </li>
 
             <!-- Tombol Masuk/Logout -->
             @if (auth()->check())

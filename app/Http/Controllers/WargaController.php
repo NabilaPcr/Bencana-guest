@@ -11,7 +11,7 @@ class WargaController extends Controller
     {
         $query = Warga::query();
 
-        // SEARCH - Mencria berdasarkan nama, NIK, atau alamat
+        // SEARCH - Mencari berdasarkan nama, NIK, atau alamat
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
             $query->where(function($q) use ($search) {
@@ -27,19 +27,15 @@ class WargaController extends Controller
             $query->where('jenis_kelamin', $request->jenis_kelamin);
         }
 
-
-        // // SORTING -
-        // $sort = $request->get('sort', 'created_at');
-        // $order = $request->get('order', 'desc');
-        // $query->orderBy($sort, $order);
-
         // PAGINATION - 12 data per halaman (sesuai grid layout)
         $warga = $query->paginate(12);
-
-        // // Untuk menjaga filter saat pindah halaman
-        // $warga->appends($request->all());
-
         return view('pages.warga.index', compact('warga'));
+    }
+
+    // TAMBAHKAN METHOD CREATE
+    public function create()
+    {
+        return view('pages.warga.create');
     }
 
     public function store(Request $request)
@@ -51,11 +47,9 @@ class WargaController extends Controller
             'agama' => 'required',
             'pekerjaan' => 'required',
             'telp' => 'required',
-            'status_dampak' => 'required|in:korban,pengungsi,relawan,warga_biasa',
             'alamat' => 'required',
             'rt' => 'required',
             'rw' => 'required',
-            'status_kesehatan' => 'required|in:sehat,luka_ringan,luka_berat,meninggal',
         ]);
 
         Warga::create([
@@ -65,11 +59,12 @@ class WargaController extends Controller
             'agama' => $request->agama,
             'pekerjaan' => $request->pekerjaan,
             'telp' => $request->telp,
-            'status_dampak' => $request->status_dampak,
+            'email' => $request->email,
             'alamat' => $request->alamat,
             'rt' => $request->rt,
             'rw' => $request->rw,
-            'status_kesehatan' => $request->status_kesehatan,
+            'kebutuhan_khusus' => $request->kebutuhan_khusus,
+            'keterangan' => $request->keterangan,
         ]);
 
         return redirect()->route('warga.index')
@@ -97,11 +92,9 @@ class WargaController extends Controller
             'agama' => 'required',
             'pekerjaan' => 'required',
             'telp' => 'required',
-            'status_dampak' => 'required|in:korban,pengungsi,relawan,warga_biasa',
             'alamat' => 'required',
             'rt' => 'required',
             'rw' => 'required',
-            'status_kesehatan' => 'required|in:sehat,luka_ringan,luka_berat,meninggal',
         ]);
 
         $warga = Warga::findOrFail($id);
@@ -112,12 +105,12 @@ class WargaController extends Controller
             'agama' => $request->agama,
             'pekerjaan' => $request->pekerjaan,
             'telp' => $request->telp,
-            'status_dampak' => $request->status_dampak,
-
+            'email' => $request->email,
             'alamat' => $request->alamat,
             'rt' => $request->rt,
             'rw' => $request->rw,
-            'status_kesehatan' => $request->status_kesehatan,
+            'kebutuhan_khusus' => $request->kebutuhan_khusus,
+            'keterangan' => $request->keterangan,
         ]);
 
         return redirect()->route('warga.index')

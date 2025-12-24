@@ -37,10 +37,10 @@
                 <!-- Action Buttons -->
                 <div class="form-group">
                     <button type="submit" class="btn-filter">
-                        <i class="fas fa-search"></i> Terapkan
+                        <i class="fas fa-search"></i> Cari
                     </button>
                     <a href="{{ route('warga.index') }}" class="btn-reset">
-                        <i class="fas fa-redo"></i> Reset
+                        <i class="fas fa-redo"></i> Ulang
                     </a>
                 </div>
             </div>

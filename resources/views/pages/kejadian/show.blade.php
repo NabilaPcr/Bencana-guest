@@ -106,13 +106,7 @@
                 <h3><i class="fas fa-camera"></i> Dokumentasi Kejadian</h3>
 
                 @if(isset($files) && $files->count() > 0)
-                    <div class="alert alert-info d-flex align-items-center">
-                        <i class="fas fa-info-circle fa-2x me-3"></i>
-                        <div>
-                            <strong>Informasi:</strong> Data foto tercatat di sistem, namun file asli belum diupload.
-                            Silakan upload foto asli melalui menu edit.
-                        </div>
-                    </div>
+
 
                     <div class="row mt-3">
                         @foreach($files as $index => $file)
@@ -164,12 +158,12 @@
                         @endforeach
                     </div>
 
-                    <div class="text-center mt-3">
+                    {{-- <div class="text-center mt-3">
                         <div class="badge bg-secondary">
                             <i class="fas fa-database me-1"></i>
                             Total: {{ $files->count() }} data tercatat
                         </div>
-                    </div>
+                    </div> --}}
                 @else
                     <div class="text-center py-5">
                         <div class="mb-4">

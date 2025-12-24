@@ -19,11 +19,9 @@ class Warga extends Model
         'agama',
         'pekerjaan',
         'telp',
-        'status_dampak',
         'alamat',
         'rt',
         'rw',
-        'status_kesehatan'
     ];
 
 

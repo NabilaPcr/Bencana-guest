@@ -37,6 +37,18 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+// WARGA
+    Route::prefix('warga')->group(function () {
+        Route::get('/create', [WargaController::class, 'create'])->name('warga.create');
+        Route::post('/store', [WargaController::class, 'store'])->name('warga.store');
+        Route::get('/', [WargaController::class, 'index'])->name('warga.index');
+        Route::get('/{id}', [WargaController::class, 'show'])->name('warga.show');
+        Route::get('/{id}/edit', [WargaController::class, 'edit'])->name('warga.edit');
+        Route::put('/{id}', [WargaController::class, 'update'])->name('warga.update');
+        Route::delete('/{id}', [WargaController::class, 'destroy'])->name('warga.destroy');
+    });
+
+
 // ===== ROUTE YANG BUTUH LOGIN =====
 Route::middleware(['checkislogin'])->group(function () {
 
@@ -52,16 +64,6 @@ Route::middleware(['checkislogin'])->group(function () {
         Route::delete('/hapus-foto/{id}', [KejadianController::class, 'destroyFile'])->name('kejadian.destroyFile');
     });
 
-    // WARGA
-    Route::prefix('warga')->group(function () {
-        Route::get('/create', [WargaController::class, 'create'])->name('warga.create');
-        Route::post('/store', [WargaController::class, 'store'])->name('warga.store');
-        Route::get('/', [WargaController::class, 'index'])->name('warga.index');
-        Route::get('/{id}', [WargaController::class, 'show'])->name('warga.show');
-        Route::get('/{id}/edit', [WargaController::class, 'edit'])->name('warga.edit');
-        Route::put('/{id}', [WargaController::class, 'update'])->name('warga.update');
-        Route::delete('/{id}', [WargaController::class, 'destroy'])->name('warga.destroy');
-    });
 
     // POSKO
     Route::prefix('posko')->group(function () {

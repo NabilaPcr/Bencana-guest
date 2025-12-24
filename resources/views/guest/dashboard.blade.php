@@ -878,7 +878,7 @@
                     <!-- Kejadian Bencana -->
                     <li>
                         <a class="dropdown-item" href="/kejadian">
-                            <i class="fas fa-exclamation-triangle me-2 text-warning"></i>Kejadian Bencana
+                            <i class="fas fa-exclamation-triangle me-2 "></i>Kejadian Bencana
                         </a>
                     </li>
                     <li>
@@ -888,7 +888,7 @@
 
                     <li>
                         <a class="dropdown-item" href="/posko">
-                            <i class="fas fa-hospital-alt me-2 text-primary"></i>Posko Bantuan
+                            <i class="fas fa-hospital-alt me-2 "></i>Posko Bantuan
                         </a>
                     </li>
                     <li>
@@ -898,7 +898,7 @@
                     <!-- Donasi -->
                     <li>
                         <a class="dropdown-item" href="/donasi">
-                            <i class="fas fa-hand-holding-heart me-2 text-danger"></i>Donasi
+                            <i class="fas fa-hand-holding-heart me-2 "></i>Donasi
                         </a>
                     </li>
                     <li>
@@ -908,7 +908,7 @@
                     <!-- Logistik -->
                     <li>
                         <a class="dropdown-item" href="/logistik">
-                            <i class="fas fa-box me-2 text-success"></i>Logistik
+                            <i class="fas fa-box me-2 "></i>Logistik
                         </a>
                     </li>
                     <li>
@@ -918,7 +918,7 @@
                     <!-- Distribusi -->
                     <li>
                         <a class="dropdown-item" href="/distribusi">
-                            <i class="fas fa-truck-loading me-2 text-info"></i>Distribusi
+                            <i class="fas fa-truck-loading me-2 "></i>Distribusi
                         </a>
                     </li>
                     <li>
@@ -1046,7 +1046,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <a href="{{ url('/developer') }}" class="btn-view-more">
+                    <a href="{{ url('/tentang') }}" class="btn-view-more">
                         <i class="fas fa-users me-2"></i> Lihat Selengkapnya!
                     </a>
                 </div>
@@ -1161,6 +1161,9 @@
                             </li>
                             <li><a href="/posko"><i class="fas fa-hospital-alt"></i> Posko Bantuan</a></li>
                             <li><a href="/donasi"><i class="fas fa-hand-holding-heart"></i> Donasi</a></li>
+                            <li><a href="/logistik"><i class="fas fa-box me-2 "></i> Logistik</a></li>
+                            <li><a href="/distribusi"><i class="fas fa-truck-loading me-2 "></i> Distribusi</a></li>
+
                         </ul>
                     </div>
 
@@ -1168,17 +1171,16 @@
                     <div class="footer-section">
                         <h3>Kontak Kami</h3>
                         <ul class="footer-links">
-                            <li><a href="tel:+6281234567890"><i class="fas fa-phone"></i> +62 812-3456-7890</a></li>
-                            <li><a href="mailto:info@binadesa.id"><i class="fas fa-envelope"></i> info@binadesa.id</a>
+                            <li><a href="tel:+6282384588294"><i class="fas fa-phone"></i> +62 823 8458 8294</a></li>
+                            <li><a href="mailto:info@siagadesa.id"><i class="fas fa-envelope"></i> info@siagadesa.id</a>
                             </li>
-                            <li><a href="#"><i class="fas fa-map-marker-alt"></i> Desa Sukamaju, Kec.
-                                    Sukamakmur</a></li>
+                            <li><a href="#"><i class="fas fa-map-marker-alt"></i> Rumbai, Pekanbaru</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="copyright">
-                    <p>&copy; {{ date('Y') }} BinaDesa - Siaga Desa. Hak cipta dilindungi.</p>
+                    <p>&copy; {{ date('Y') }} Siaga Desa. Hak cipta dilindungi.</p>
                 </div>
             </div>
         </footer>

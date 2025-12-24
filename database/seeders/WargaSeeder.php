@@ -17,7 +17,7 @@ class WargaSeeder extends Seeder
             $nama         = $jenisKelamin === 'L' ? $faker->firstNameMale() . ' ' . $faker->lastName() : $faker->firstNameFemale() . ' ' . $faker->lastName();
 
             DB::table('warga')->insert([
-                'no_ktp'           => $faker->nik(),
+                'no_ktp'           => $faker->no_ktp(),
                 'nama'             => $nama,
                 'jenis_kelamin'    => $jenisKelamin,
                 'agama'            => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu']),
@@ -26,12 +26,12 @@ class WargaSeeder extends Seeder
                     'Ibu Rumah Tangga', 'Pelajar/Mahasiswa', 'Buruh', 'Pedagang', 'Tidak Bekerja',
                 ]),
                 'telp'             => $faker->phoneNumber(),
-                'email'            => $faker->optional(0.7)->email(), // ✅ Ada di migration
+                'email'            => $faker->optional(0.7)->email(),
                 'alamat'           => $faker->streetAddress(),
                 'rt'               => $faker->numberBetween(1, 10),
                 'rw'               => $faker->numberBetween(1, 10),
-                'keterangan'       => $faker->optional(0.3)->sentence(), // ✅ Ada di migration
-                'kebutuhan_khusus' => $faker->optional(0.2)->sentence(), // ✅ Ada di migration
+                'keterangan'       => $faker->optional(0.3)->sentence(),
+                'kebutuhan_khusus' => $faker->optional(0.2)->sentence(),
                 'created_at'       => now(),
                 'updated_at'       => now(),
             ]);

@@ -111,8 +111,6 @@ class KejadianController extends Controller
     public function edit($id)
     {
         $kejadian = KejadianBencana::findOrFail($id);
-
-        // Ambil semua file media yang sudah ada
         $files = Media::where('ref_table', 'kejadian_bencana')
             ->where('ref_id', $id)
             ->orderBy('sort_order')
