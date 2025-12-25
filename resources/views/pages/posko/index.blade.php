@@ -73,11 +73,7 @@
             <div class="warga-card">
                 <h3><i class="fas fa-first-aid"></i> {{ $posko->nama }}</h3>
 
-                <div class="warga-info">
-                    <p>
-                        <i class="fas fa-id-card"></i>
-                        <strong>ID Posko:</strong> {{ $posko->posko_id }}
-                    </p>
+                <div class="warga-info">1
                     <p>
                         <i class="fas fa-user"></i>
                         <strong>Penanggung Jawab:</strong> {{ $posko->penanggung_jawab }}

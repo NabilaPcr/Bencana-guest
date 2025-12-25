@@ -53,15 +53,6 @@ class PoskoBencanaSeeder extends Seeder
                     ]);
                 }
             }
-
-            // // Progress indicator
-            // if ($i % 20 == 0) {
-            //     $this->command->info("Created $i posko...");
-            // }
         }
-
-        // $this->command->info('✓ PoskoBencanaSeeder berhasil dijalankan!');
-        // $this->command->info('✓ 100 data posko bencana telah dibuat');
-        // $this->command->info('✓ 50% posko memiliki data di tabel media');
     }
 }

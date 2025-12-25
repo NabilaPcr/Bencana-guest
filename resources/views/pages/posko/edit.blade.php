@@ -11,13 +11,6 @@
             <div class="form-header">
                 <h1><i class="fas fa-edit"></i> Edit Posko Bencana</h1>
                 <p>Perbarui informasi posko bencana berikut</p>
-                <div class="alert alert-info d-flex align-items-center mt-3">
-                    <i class="fas fa-info-circle fa-lg me-3"></i>
-                    <div>
-                        <strong>Perhatian:</strong> Data yang sudah tersimpan tidak dapat dikembalikan.
-                        Pastikan semua informasi sudah benar sebelum menyimpan.
-                    </div>
-                </div>
             </div>
 
             <form action="{{ route('posko.update', $posko->posko_id) }}" method="POST" enctype="multipart/form-data"
@@ -27,10 +20,6 @@
 
                 <!-- Informasi Posko -->
                 <div class="form-section">
-                    <h4 class="section-title">
-                        <i class="fas fa-info-circle me-2"></i>Informasi Dasar
-                    </h4>
-
                     <div class="form-group">
                         <label for="nama" class="required">Nama Posko</label>
                         <input type="text" id="nama" name="nama"
@@ -78,10 +67,6 @@
 
                 <!-- Kontak & Alamat -->
                 <div class="form-section">
-                    <h4 class="section-title">
-                        <i class="fas fa-address-card me-2"></i>Kontak & Lokasi
-                    </h4>
-
                     <div class="form-group">
                         <label for="alamat" class="required">Alamat Lengkap</label>
                         <textarea id="alamat" name="alamat" rows="3"
@@ -113,16 +98,6 @@
 
                 @if($files->count() > 0)
                     <div class="form-section">
-                        <h4 class="section-title">
-                            <i class="fas fa-database me-2"></i>Data Foto Tercatat
-                            <span class="badge bg-primary ms-2">{{ $files->count() }} data</span>
-                        </h4>
-
-                        <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle me-2"></i>
-                            Data berikut hanya mencatat bahwa posko ini memiliki foto. File asli belum diupload.
-                        </div>
-
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead class="table-light">
@@ -215,14 +190,10 @@
 
                 <!-- UPLOAD FOTO BARU -->
                 <div class="form-section">
-                    <h4 class="section-title">
-                        <i class="fas fa-cloud-upload-alt me-2"></i>Upload Foto Asli
-                    </h4>
-
-                    <div class="alert alert-success">
+                    {{-- <div class="alert alert-success">
                         <i class="fas fa-lightbulb me-2"></i>
-                        Upload foto asli untuk menggantikan placeholder dan memiliki dokumentasi yang lengkap.
-                    </div>
+                        Upload foto asli untuk menggantikan placeholder.
+                    </div> --}}
 
                     <div class="form-group">
                         <label for="fotos">Pilih File Foto</label>
@@ -231,30 +202,15 @@
                                accept="image/*" multiple>
                         <small class="text-muted">
                             <i class="fas fa-info-circle me-1"></i>
-                            Pilih file gambar (JPG, PNG, GIF). Maksimal 2MB per file. Bisa pilih multiple file.
+                            Pilih file gambar (JPG, PNG, GIF), Maksimal 2MB per file
                         </small>
                         @error('fotos')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
-                    <!-- Preview Area -->
-                    <div class="preview-area mt-3 d-none" id="previewArea">
-                        <h6 class="mb-3">
-                            <i class="fas fa-eye me-2"></i>Preview File yang Dipilih
-                        </h6>
-                        <div class="row" id="previewContainer"></div>
-                    </div>
-                </div>
-
                 <!-- Form Actions -->
                 <div class="form-actions">
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('posko.show', $posko->posko_id) }}"
-                           class="btn btn-outline-secondary">
-                            <i class="fas fa-times me-2"></i>Batal
-                        </a>
-
                         <div>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save me-2"></i>Simpan Perubahan

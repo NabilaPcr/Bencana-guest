@@ -57,19 +57,16 @@
                             placeholder="Konfirmasi password baru">
                     </div>
                 </div>
-                {{-- Tambahkan setelah input email --}}
+
                 <div class="form-group">
                     <label for="role">Role *</label>
                     <select name="role" id="role" class="form-control" required>
                         <option value="">Pilih Role</option>
                         <option value="Super Admin" {{ old('role', $user->role) == 'Super Admin' ? 'selected' : '' }}>
-                            Super Admin
+                            <i class="fas fa-crown"></i> Super Admin
                         </option>
-                        <option value="Pelanggan" {{ old('role', $user->role) == 'Warga' ? 'selected' : '' }}>
-                            Warga
-                        </option>
-                        <option value="Mitra" {{ old('role', $user->role) == 'Mitra' ? 'selected' : '' }}>
-                            Mitra
+                        <option value="Warga" {{ old('role', $user->role) == 'Warga' ? 'selected' : '' }}>
+                            <i class="fas fa-user"></i> Warga
                         </option>
                     </select>
                     @error('role')

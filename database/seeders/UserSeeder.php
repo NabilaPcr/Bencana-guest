@@ -27,17 +27,14 @@ class UserSeeder extends Seeder
         ]);
 
         // Array role yang tersedia
-        $roles = ['Warga', 'Mitra', 'Super Admin'];
+        $roles = ['Warga','Super Admin'];
 
         for ($i = 1; $i <= 100; $i++) {
-            // Random role, tapi lebih banyak Pelanggan
             $roleIndex = rand(0, 100);
             if ($roleIndex < 70) {
-                $role = 'Warga'; 
-            } elseif ($roleIndex < 90) {
-                $role = 'Mitra'; // 20% Mitra
+                $role = 'Warga';
             } else {
-                $role = 'Super Admin'; // 10% Super Admin
+                $role = 'Super Admin';
             }
 
             DB::table('users')->insert([

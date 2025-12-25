@@ -1,6 +1,5 @@
 @extends('layout.guest.app')
 @section('title', 'Detail Donasi')
-
 @section('content')
     <div class="container-fluid">
         <div class="row">

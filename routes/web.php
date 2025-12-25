@@ -110,8 +110,8 @@ Route::middleware(['checkislogin'])->group(function () {
     });
 
 // ===== ROUTE HANYA UNTUK SUPER ADMIN =====
-    // Route::middleware(['checkislogin', 'checkrole:Super Admin'])->group(function () {
-        // USER MANAGEMENT - hanya untuk Super Admin
+    Route::middleware(['checkislogin', 'checkrole:Super Admin'])->group(function () {
+
         Route::prefix('users')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('users.index');
             Route::get('/create', [UserController::class, 'create'])->name('users.create');
@@ -122,4 +122,4 @@ Route::middleware(['checkislogin'])->group(function () {
             Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
         });
     });
-// });
+ });

@@ -82,10 +82,6 @@
 
                 <div class="warga-info">
                     <p>
-                        <i class="fas fa-id-card"></i>
-                        <strong>ID Distribusi:</strong> {{ $dist->distribusi_id }}
-                    </p>
-                    <p>
                         <i class="fas fa-calendar"></i>
                         <strong>Tanggal:</strong> {{ $dist->tanggal->format('d F Y') }}
                     </p>

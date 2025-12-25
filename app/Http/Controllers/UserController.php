@@ -35,7 +35,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
-            'role' => 'required|string|in:Super Admin,Pelanggan,Mitra'
+            'role' => 'required|string|in:Super Admin,Warga' // Hanya 2 role
         ]);
 
         // Simpan user baru
@@ -81,7 +81,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|string|min:6|confirmed',
-            'role' => 'required|string|in:Super Admin,Pelanggan,Mitra'
+            'role' => 'required|string|in:Super Admin,Warga' // Hanya 2 role
         ]);
 
         // Update data user
@@ -106,6 +106,13 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::findOrFail($id);
+
+        // Mencegah penghapusan user sendiri
+        if ($user->id === auth()->id()) {
+            return redirect()->route('users.index')
+                ->with('error', 'Tidak dapat menghapus akun sendiri!');
+        }
+
         $user->delete();
 
         return redirect()->route('users.index')

@@ -43,6 +43,7 @@ class PoskoController extends Controller
             ->sort();
 
         return view('pages.posko.index', compact('poskoBencana', 'jenisBencanaList'));
+        
     }
 
     public function create()

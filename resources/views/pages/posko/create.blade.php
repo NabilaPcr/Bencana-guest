@@ -17,18 +17,6 @@
 
         <form action="{{ route('posko.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-
-            <!-- HAPUS FIELD posko_id karena auto increment -->
-            <!-- <div class="form-group">
-                <label for="posko_id">ID Posko *</label>
-                <input type="text" id="posko_id" name="posko_id" required
-                       value="{{ old('posko_id') }}"
-                       placeholder="Contoh: POSKO-001">
-                @error('posko_id')
-                    <div class="text-danger mt-1">{{ $message }}</div>
-                @enderror
-            </div> -->
-
             <div class="form-group">
                 <label for="kejadian_id">Kejadian Bencana *</label>
                 <select id="kejadian_id" name="kejadian_id" required>
@@ -91,7 +79,6 @@
                 <label class="fw-bold">Upload Foto Posko *</label>
                 <small class="text-muted d-block mb-2">
                     Format: JPG, PNG, GIF. Maksimal 2MB per file.
-                    <br>Tekan <kbd>Ctrl</kbd> (Windows) atau <kbd>Cmd</kbd> (Mac) untuk memilih multiple file.
                 </small>
 
                 <!-- Input file multiple -->

@@ -46,4 +46,36 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Scope untuk role Super Admin
+     */
+    public function scopeSuperAdmin($query)
+    {
+        return $query->where('role', 'Super Admin');
+    }
+
+    /**
+     * Scope untuk role Warga
+     */
+    public function scopeWarga($query)
+    {
+        return $query->where('role', 'Warga');
+    }
+
+    /**
+     * Cek apakah user adalah Super Admin
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === 'Super Admin';
+    }
+
+    /**
+     * Cek apakah user adalah Warga
+     */
+    public function isWarga(): bool
+    {
+        return $this->role === 'Warga';
+    }
 }

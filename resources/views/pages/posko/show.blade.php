@@ -20,7 +20,6 @@
         </div>
 
         <div class="detail-grid">
-            <!-- LOKASI POSKO -->
             <div class="info-group">
                 <h3><i class="fas fa-map-marked-alt"></i> Lokasi Posko</h3>
                 <div class="info-content">
@@ -28,8 +27,6 @@
                     <p><strong>Kontak Lokasi:</strong> {{ $posko->kontak }}</p>
                 </div>
             </div>
-
-            <!-- KEJADIAN BENCANA -->
             <div class="info-group">
                 <h3><i class="fas fa-exclamation-triangle"></i> Kejadian Terkait</h3>
                 <div class="info-content">
@@ -38,8 +35,6 @@
                     <p><strong>Lokasi Bencana:</strong> {{ $posko->kejadian->lokasi_text ?? 'Tidak diketahui' }}</p>
                 </div>
             </div>
-
-            <!-- PENANGGUNG JAWAB -->
             <div class="info-group">
                 <h3><i class="fas fa-user-tie"></i> Penanggung Jawab</h3>
                 <div class="info-content">
@@ -48,8 +43,6 @@
                     <p><strong>Dibuat:</strong> {{ $posko->created_at->format('d M Y H:i') }}</p>
                 </div>
             </div>
-
-            <!-- INFO TAMBAHAN -->
             <div class="info-group">
                 <h3><i class="fas fa-info-circle"></i> Informasi</h3>
                 <div class="info-content">
@@ -63,13 +56,11 @@
                 </div>
             </div>
         </div>
-
-        <!-- GALERI FOTO POSKO -->
         <div class="info-group">
             <h3><i class="fas fa-images"></i> Dokumentasi Posko</h3>
 
             @php
-                $files = $posko->media; // Menggunakan accessor dari model
+                $files = $posko->media; 
                 $images = $posko->getImagesUrls();
                 $hasRealImages = $posko->hasRealImages;
             @endphp
@@ -181,12 +172,12 @@
             <div class="row g-3">
                 <div class="col-md-4">
                     <a href="{{ route('posko.index') }}" class="btn btn-outline-secondary w-100">
-                        <i class="fas fa-list me-2"></i> Semua Posko
+                        <i class="fas fa-list me-2"></i>daftar Posko
                     </a>
                 </div>
                 <div class="col-md-4">
                     <a href="{{ route('posko.edit', $posko->posko_id) }}" class="btn btn-primary w-100">
-                        <i class="fas fa-edit me-2"></i> Edit Data
+                        <i class="fas fa-edit me-2"></i> Edit
                     </a>
                 </div>
                 <div class="col-md-4">

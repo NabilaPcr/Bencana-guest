@@ -11,13 +11,6 @@
         <div class="form-header">
             <h1><i class="fas fa-edit"></i> Edit Data Logistik</h1>
             <p>Perbarui informasi logistik bencana berikut</p>
-            <div class="alert alert-info d-flex align-items-center mt-3">
-                <i class="fas fa-info-circle fa-lg me-3"></i>
-                <div>
-                    <strong>Perhatian:</strong> Data yang sudah tersimpan tidak dapat dikembalikan.
-                    Pastikan semua informasi sudah benar sebelum menyimpan.
-                </div>
-            </div>
         </div>
 
         <form action="{{ route('logistik.update', $logistik->logistik_id) }}" method="POST">
@@ -26,10 +19,6 @@
 
             <!-- Informasi Logistik -->
             <div class="form-section">
-                <h4 class="section-title">
-                    <i class="fas fa-info-circle me-2"></i>Informasi Dasar
-                </h4>
-
                 <div class="form-group">
                     <label for="nama_barang" class="required">Nama Barang</label>
                     <input type="text" id="nama_barang" name="nama_barang"
@@ -88,10 +77,6 @@
 
             <!-- Jumlah & Sumber -->
             <div class="form-section">
-                <h4 class="section-title">
-                    <i class="fas fa-calculator me-2"></i>Jumlah & Sumber
-                </h4>
-
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -124,10 +109,6 @@
 
             <!-- Status Stok -->
             <div class="form-section">
-                <h4 class="section-title">
-                    <i class="fas fa-chart-line me-2"></i>Status Stok
-                </h4>
-
                 <div class="alert alert-light">
                     <div class="d-flex align-items-center">
                         <div class="me-3">
@@ -160,10 +141,6 @@
             <!-- Form Actions -->
             <div class="form-actions">
                 <div class="d-flex justify-content-between">
-                    <a href="{{ route('logistik.show', $logistik->logistik_id) }}"
-                       class="btn btn-outline-secondary">
-                        <i class="fas fa-times me-2"></i>Batal
-                    </a>
 
                     <div>
                         <button type="submit" class="btn btn-primary">

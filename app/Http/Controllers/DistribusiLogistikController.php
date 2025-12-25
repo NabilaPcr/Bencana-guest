@@ -129,7 +129,7 @@ class DistribusiLogistikController extends Controller
     {
         $distribusi = DistribusiLogistik::with(['logistik', 'posko'])->findOrFail($id);
 
-        return view('distribusi.show', compact('distribusi'));
+        return view('pages.distribusi.show', compact('distribusi'));
     }
 
     public function edit($id)

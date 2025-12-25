@@ -147,12 +147,12 @@
             <div class="row g-3">
                 <div class="col-md-4">
                     <a href="{{ route('logistik.index') }}" class="btn btn-outline-secondary w-100">
-                        <i class="fas fa-list me-2"></i> Semua Logistik
+                        <i class="fas fa-list me-2"></i> Daftar Logistik
                     </a>
                 </div>
                 <div class="col-md-4">
                     <a href="{{ route('logistik.edit', $logistik->logistik_id) }}" class="btn btn-primary w-100">
-                        <i class="fas fa-edit me-2"></i> Edit Data
+                        <i class="fas fa-edit me-2"></i> Edit
                     </a>
                 </div>
                 <div class="col-md-4">

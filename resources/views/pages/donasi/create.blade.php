@@ -79,7 +79,6 @@
                     <label class="fw-bold">Upload Bukti Donasi *</label>
                     <small class="text-muted d-block mb-2">
                         Format: JPG, PNG, GIF, PDF. Maksimal 2MB per file.
-                        <br>Tekan <kbd>Ctrl</kbd> (Windows) atau <kbd>Cmd</kbd> (Mac) untuk memilih multiple file.
                     </small>
 
                     <!-- Input file multiple -->

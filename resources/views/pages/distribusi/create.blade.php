@@ -18,10 +18,6 @@
 
                 <!-- Informasi Logistik -->
                 <div class="form-section">
-                    <h4 class="section-title">
-                        <i class="fas fa-box me-2"></i>Informasi Logistik
-                    </h4>
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -64,10 +60,6 @@
 
                 <!-- Detail Distribusi -->
                 <div class="form-section">
-                    <h4 class="section-title">
-                        <i class="fas fa-info-circle me-2"></i>Detail Distribusi
-                    </h4>
-
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -144,10 +136,6 @@
 
                 <!-- ✅ MULTIPLE FILE UPLOAD - Bukti Distribusi -->
                 <div class="form-section">
-                    <h4 class="section-title">
-                        <i class="fas fa-camera me-2"></i>Bukti Distribusi
-                    </h4>
-
                     <div class="form-group">
                         <label class="fw-bold required">Upload Bukti Distribusi</label>
                         <small class="text-muted d-block mb-2">
