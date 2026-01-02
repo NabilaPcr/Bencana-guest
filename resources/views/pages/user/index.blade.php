@@ -52,13 +52,13 @@
                                     @if($user->role == 'Super Admin')
                                         <span class="status-badge status-superadmin">
                                             {{ $user->role }}
-                                        </span>
+                                        </span>--
                                     @elseif($user->role == 'Warga')
                                         <span class="status-badge status-warga">
                                             {{ $user->role }}
                                         </span>
                                     @else
-                                        <span class="status-badge status-default">
+                                        <span class="status-badge status-user">
                                             {{ $user->role ?? 'Belum diatur' }}
                                         </span>
                                     @endif
@@ -150,7 +150,7 @@
         border-color: #00b894;
     }
 
-    .status-default {
+    .status-user {
         background-color: #dfe6e9;
         color: #636e72;
         border-color: #b2bec3;

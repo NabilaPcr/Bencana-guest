@@ -1401,5 +1401,6 @@
             padding: 6px 12px;
             font-size: 0.8rem;
         }
+        
     }
 </style>

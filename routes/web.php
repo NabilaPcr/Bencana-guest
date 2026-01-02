@@ -110,7 +110,7 @@ Route::middleware(['checkislogin'])->group(function () {
     });
 
 // ===== ROUTE HANYA UNTUK SUPER ADMIN =====
-    Route::middleware(['checkislogin', 'checkrole:Super Admin'])->group(function () {
+   // Route::middleware(['checkislogin', 'checkrole:Super Admin'])->group(function () {
 
         Route::prefix('users')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('users.index');
@@ -122,4 +122,4 @@ Route::middleware(['checkislogin'])->group(function () {
             Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
         });
     });
- });
+ //});
