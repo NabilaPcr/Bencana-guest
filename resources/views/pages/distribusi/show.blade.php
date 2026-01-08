@@ -245,9 +245,9 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="action-buttons mt-5 pt-4 border-top">
-            <div class="row g-3">
-                <div class="col-md-4">
+       <div class="detail-action-buttons">
+                <div class="row g-3">
+                    <div class="col-md-4">
                     <a href="{{ route('distribusi.index') }}" class="btn btn-outline-secondary w-100">
                         <i class="fas fa-list me-2"></i> Daftar Distribusi
                     </a>

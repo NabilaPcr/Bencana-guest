@@ -29,7 +29,7 @@
                     <div class="info-content">
                         <p><strong>Alamat Lengkap:</strong> {{ $kejadian->lokasi_text }}</p>
                         <p><strong>RT/RW:</strong>
-                            @if($kejadian->rt && $kejadian->rw)
+                            @if ($kejadian->rt && $kejadian->rw)
                                 {{ $kejadian->rt }}/{{ $kejadian->rw }}
                             @else
                                 <span class="text-muted">Tidak tercatat</span>
@@ -50,7 +50,7 @@
                             @php
                                 $daysAgo = $kejadian->tanggal->diffInDays(now());
                             @endphp
-                            @if($daysAgo == 0)
+                            @if ($daysAgo == 0)
                                 Hari ini
                             @elseif($daysAgo == 1)
                                 Kemarin
@@ -65,7 +65,7 @@
                     <h3><i class="fas fa-fire-alt"></i> Dampak & Kerusakan</h3>
                     <div class="info-content">
                         <p>{{ $kejadian->dampak }}</p>
-                        @if($kejadian->status_kejadian == 'selesai')
+                        @if ($kejadian->status_kejadian == 'selesai')
                             <p class="text-success mb-0">
                                 <i class="fas fa-check-circle me-1"></i>
                                 Penanganan telah selesai
@@ -78,11 +78,11 @@
                     <h3><i class="fas fa-tasks"></i> Status Penanganan</h3>
                     <div class="info-content">
                         <p><strong>Status:</strong>
-                            <span class="badge
-                                @if($kejadian->status_kejadian == 'aktif') bg-danger
+                            <span
+                                class="badge
+                                @if ($kejadian->status_kejadian == 'aktif') bg-danger
                                 @elseif($kejadian->status_kejadian == 'dalam penanganan') bg-warning text-dark
-                                @else bg-success
-                                @endif">
+                                @else bg-success @endif">
                                 {{ ucfirst($kejadian->status_kejadian) }}
                             </span>
                         </p>
@@ -92,32 +92,80 @@
                 </div>
             </div>
 
-            @if($kejadian->keterangan)
-            <div class="info-group">
-                <h3><i class="fas fa-clipboard-list"></i> Keterangan Tambahan</h3>
-                <div class="keterangan-box">
-                    <p class="mb-0">{{ $kejadian->keterangan }}</p>
+            @if ($kejadian->keterangan)
+                <div class="info-group">
+                    <h3><i class="fas fa-clipboard-list"></i> Keterangan Tambahan</h3>
+                    <div class="keterangan-box">
+                        <p class="mb-0">{{ $kejadian->keterangan }}</p>
+                    </div>
                 </div>
-            </div>
+            @endif
+            <!-- Tambahkan bagian ini di dalam detail-card, sebelum action buttons -->
+            @if ($kejadian->posko->count() > 0)
+                <div class="info-group">
+                    <h3><i class="fas fa-first-aid"></i> Posko Penanganan</h3>
+                    <div class="info-content">
+                        <div class="posko-list-detail">
+                            @foreach ($kejadian->posko as $posko)
+                                <div class="posko-item-detail">
+                                    <h5>
+                                        <i class="fas fa-hospital"></i>
+                                        {{ $posko->nama }}
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><i class="fas fa-user"></i> <strong>Penanggung Jawab:</strong>
+                                                {{ $posko->penanggung_jawab }}</p>
+                                            <p><i class="fas fa-phone"></i> <strong>Kontak:</strong> {{ $posko->kontak }}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><i class="fas fa-map-marker-alt"></i> <strong>Lokasi Posko:</strong>
+                                                {{ $posko->alamat }}</p>
+                                            <p class="text-end">
+                                                <a href="{{ route('posko.show', $posko->posko_id) }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-eye"></i> Detail Posko
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div class="info-group">
+                    <h3><i class="fas fa-first-aid"></i> Posko Penanganan</h3>
+                    <div class="info-content">
+                        <div class="text-center py-4">
+                            <i class="fas fa-info-circle fa-2x text-muted mb-3"></i>
+                            <p class="text-muted mb-0">Belum ada posko yang ditugaskan untuk menangani kejadian ini</p>
+                            <a href="{{ route('posko.create') }}?kejadian_id={{ $kejadian->kejadian_id }}"
+                                class="btn btn-primary mt-3">
+                                <i class="fas fa-plus"></i> Tambah Posko
+                            </a>
+                        </div>
+                    </div>
+                </div>
             @endif
 
             <!-- GALERI FOTO -->
             <div class="info-group">
                 <h3><i class="fas fa-camera"></i> Dokumentasi Kejadian</h3>
 
-                @if(isset($files) && $files->count() > 0)
-
-
+                @if (isset($files) && $files->count() > 0)
                     <div class="row mt-3">
-                        @foreach($files as $index => $file)
+                        @foreach ($files as $index => $file)
                             <div class="col-md-3 col-sm-6 col-12 mb-4">
                                 <div class="card photo-card border">
                                     <!-- Placeholder Image -->
                                     <div class="d-flex justify-content-center align-items-center bg-light"
-                                         style="height: 200px; overflow: hidden;">
+                                        style="height: 200px; overflow: hidden;">
                                         <img src="{{ asset('assets/images/placeholder.png') }}"
-                                             alt="Placeholder - {{ $file->caption ?? 'Dokumentasi' }}"
-                                             style="width: 80%; height: auto; opacity: 0.7;">
+                                            alt="Placeholder - {{ $file->caption ?? 'Dokumentasi' }}"
+                                            style="width: 80%; height: auto; opacity: 0.7;">
                                     </div>
 
                                     <div class="card-body">
@@ -135,7 +183,7 @@
                                             {{ $file->file_name }}
                                         </h6>
 
-                                        @if($file->caption)
+                                        @if ($file->caption)
                                             <p class="card-text small text-muted mb-2">
                                                 <i class="fas fa-comment me-1"></i>
                                                 {{ $file->caption }}
@@ -157,19 +205,11 @@
                             </div>
                         @endforeach
                     </div>
-
-                    {{-- <div class="text-center mt-3">
-                        <div class="badge bg-secondary">
-                            <i class="fas fa-database me-1"></i>
-                            Total: {{ $files->count() }} data tercatat
-                        </div>
-                    </div> --}}
                 @else
                     <div class="text-center py-5">
                         <div class="mb-4">
-                            <img src="{{ asset('assets/images/placeholder.png') }}"
-                                 alt="Tidak ada foto"
-                                 style="width: 150px; height: auto; opacity: 0.5;">
+                            <img src="{{ asset('assets/images/placeholder.png') }}" alt="Tidak ada foto"
+                                style="width: 150px; height: auto; opacity: 0.5;">
                         </div>
                         <h5 class="text-muted mb-3">
                             <i class="fas fa-images me-2"></i>
@@ -178,8 +218,7 @@
                         <p class="text-muted">
                             Data foto untuk kejadian ini belum tercatat di sistem.
                         </p>
-                        <a href="{{ route('kejadian.edit', $kejadian->kejadian_id) }}"
-                           class="btn btn-primary mt-2">
+                        <a href="{{ route('kejadian.edit', $kejadian->kejadian_id) }}" class="btn btn-primary mt-2">
                             <i class="fas fa-plus-circle me-1"></i>
                             Tambah Foto
                         </a>
@@ -199,7 +238,7 @@
                         </div>
                         <div class="modal-body text-center p-0">
                             <img src="" id="lightboxImage" class="img-fluid"
-                                 style="max-height: 70vh; object-fit: contain;">
+                                style="max-height: 70vh; object-fit: contain;">
                         </div>
                         <div class="modal-footer justify-content-center">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -211,21 +250,21 @@
             </div>
 
             <!-- Action Buttons -->
-            <div class="action-buttons mt-5 pt-4 border-top">
+            <div class="detail-action-buttons">
                 <div class="row g-3">
                     <div class="col-md-4">
-                        <a href="{{ route('kejadian.index') }}" class="btn btn-outline-secondary w-100">
+                        <a href="{{ route('kejadian.index') }}" class="btn btn-outline-secondary">
                             <i class="fas fa-list me-2"></i> Semua Kejadian
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a href="{{ route('kejadian.edit', $kejadian->kejadian_id) }}" class="btn btn-primary w-100">
+                        <a href="{{ route('kejadian.edit', $kejadian->kejadian_id) }}" class="btn btn-primary">
                             <i class="fas fa-edit me-2"></i> Edit Data
                         </a>
                     </div>
                     <div class="col-md-4">
                         <form action="{{ route('kejadian.destroy', $kejadian->kejadian_id) }}" method="POST"
-                              class="d-inline w-100" onsubmit="return confirm('Hapus data kejadian ini?')">
+                            class="d-inline w-100" onsubmit="return confirm('Hapus data kejadian ini?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger w-100">
@@ -241,85 +280,125 @@
 @endsection
 
 @push('styles')
-<style>
-    .photo-card {
-        transition: transform 0.3s, box-shadow 0.3s;
-        height: 100%;
-    }
+    <style>
+        .photo-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+        }
 
-    .photo-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
 
-    .status-badge {
-        font-size: 0.8rem;
-        padding: 5px 15px;
-        border-radius: 20px;
-        font-weight: 600;
-    }
+        .status-badge {
+            font-size: 0.8rem;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
 
-    .status-aktif {
-        background: #ffeaea;
-        color: #d63031;
-    }
+        .status-aktif {
+            background: #ffeaea;
+            color: #d63031;
+        }
 
-    .status-dalam-penanganan {
-        background: #fef5e7;
-        color: #e67e22;
-    }
+        .status-dalam-penanganan {
+            background: #fef5e7;
+            color: #e67e22;
+        }
 
-    .status-selesai {
-        background: #eafaf1;
-        color: #27ae60;
-    }
+        .status-selesai {
+            background: #eafaf1;
+            color: #27ae60;
+        }
 
-    .keterangan-box {
-        background: #fff9e6;
-        border-left: 4px solid #f39c12;
-        padding: 20px;
-        border-radius: 8px;
-    }
+        .keterangan-box {
+            background: #fff9e6;
+            border-left: 4px solid #f39c12;
+            padding: 20px;
+            border-radius: 8px;
+        }
 
-    .info-content {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 10px;
-        border: 1px solid #e9ecef;
-    }
+        .info-content {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
 
-    .detail-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
-        margin-bottom: 30px;
-    }
-</style>
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* CSS untuk posko di halaman detail kejadian */
+        .posko-list-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .posko-item-detail {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .posko-item-detail:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .posko-item-detail h5 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .posko-item-detail p {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .posko-item-detail i {
+            color: var(--primary);
+            width: 16px;
+        }
+    </style>
 @endpush
 
 @push('scripts')
-<script>
-function openLightbox(imageSrc, caption) {
-    document.getElementById('lightboxImage').src = imageSrc;
-    document.getElementById('lightboxTitle').textContent = caption || 'Foto Kejadian';
+    <script>
+        function openLightbox(imageSrc, caption) {
+            document.getElementById('lightboxImage').src = imageSrc;
+            document.getElementById('lightboxTitle').textContent = caption || 'Foto Kejadian';
 
-    const lightbox = new bootstrap.Modal(document.getElementById('imageLightbox'));
-    lightbox.show();
-}
+            const lightbox = new bootstrap.Modal(document.getElementById('imageLightbox'));
+            lightbox.show();
+        }
 
-// Auto-highlight active photo on hover
-document.addEventListener('DOMContentLoaded', function() {
-    const photoCards = document.querySelectorAll('.photo-card');
+        // Auto-highlight active photo on hover
+        document.addEventListener('DOMContentLoaded', function() {
+            const photoCards = document.querySelectorAll('.photo-card');
 
-    photoCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.borderColor = '#56a65a';
+            photoCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.borderColor = '#56a65a';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.borderColor = '#dee2e6';
+                });
+            });
         });
-
-        card.addEventListener('mouseleave', function() {
-            this.style.borderColor = '#dee2e6';
-        });
-    });
-});
-</script>
+    </script>
 @endpush

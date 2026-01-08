@@ -123,11 +123,6 @@
                                 </div>
                                 <small class="text-muted">Masukkan jumlah stok yang baru</small>
                             </div>
-                            <div class="col-md-5">
-                                <button type="submit" class="btn btn-primary w-100">
-                                    <i class="fas fa-save me-2"></i>Update Stok
-                                </button>
-                            </div>
                         </div>
 
                         <div class="mt-3">
@@ -143,9 +138,9 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="action-buttons mt-5 pt-4 border-top">
-            <div class="row g-3">
-                <div class="col-md-4">
+        <div class="detail-action-buttons">
+                <div class="row g-3">
+                    <div class="col-md-4">
                     <a href="{{ route('logistik.index') }}" class="btn btn-outline-secondary w-100">
                         <i class="fas fa-list me-2"></i> Daftar Logistik
                     </a>

@@ -1320,7 +1320,944 @@
         .delete-form {
             margin: 0;
         }
-        
+
+        /* ===== DETAIL ACTION BUTTONS FIX ===== */
+        .detail-action-buttons {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .detail-action-buttons .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: -8px;
+        }
+
+        .detail-action-buttons .col-md-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+            padding: 8px;
+        }
+
+        /* Override untuk tombol di halaman detail */
+        .detail-action-buttons .btn {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 500;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+
+        .detail-action-buttons .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tombol spesifik untuk detail page */
+        .detail-action-buttons .btn-outline-secondary {
+            background: white;
+            color: var(--gray);
+            border-color: #ddd;
+        }
+
+        .detail-action-buttons .btn-outline-secondary:hover {
+            background: #f8f9fa;
+            color: var(--dark);
+            border-color: var(--gray);
+        }
+
+        .detail-action-buttons .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            border: none;
+        }
+
+        .detail-action-buttons .btn-primary:hover {
+            background: linear-gradient(135deg, #48904d, #255d2a);
+            color: white;
+        }
+
+        .detail-action-buttons .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #c0392b);
+            color: white;
+            border: none;
+        }
+
+        .detail-action-buttons .btn-danger:hover {
+            background: linear-gradient(135deg, #c0392b, #a93226);
+            color: white;
+        }
+
+        /* Responsive untuk tombol detail */
+        @media (max-width: 768px) {
+            .detail-action-buttons .col-md-4 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            .detail-action-buttons .btn {
+                height: 45px;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .detail-action-buttons {
+                margin-top: 30px;
+                padding-top: 20px;
+            }
+
+            .detail-action-buttons .btn {
+                height: 42px;
+                font-size: 0.9rem;
+            }
+        }
+        /* ===== BENCANA CARD STYLES ===== */
+.kejadian-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.bencana-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.bencana-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.bencana-card-inner {
+    display: grid;
+    grid-template-columns: 140px 1fr 200px;
+    gap: 25px;
+    padding: 25px;
+    align-items: center;
+}
+
+/* Kolom Gambar */
+.bencana-image {
+    width: 140px;
+    height: 140px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f0f9ff, #e6f7ff);
+}
+
+.bencana-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bencana-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #a8e0b3, #eaf5ea);
+}
+
+.bencana-img-placeholder i {
+    font-size: 2.5rem;
+    color: var(--primary);
+}
+
+/* Kolom Info Bencana */
+.bencana-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.bencana-title {
+    font-size: 1.3rem;
+    color: var(--dark);
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s;
+    margin-bottom: 5px;
+}
+
+.bencana-title:hover {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.bencana-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bencana-details p {
+    margin: 0;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.bencana-details i {
+    color: var(--primary);
+    width: 16px;
+    text-align: center;
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.status-aktif { background: #ffeaea; color: var(--danger); }
+.status-selesai { background: #eafaf1; color: #27ae60; }
+.status-dalam-penanganan { background: #fef5e7; color: var(--warning); }
+
+/* Kolom Aksi - DIPERBAIKI UKURAN TOMBOL */
+.bencana-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+}
+
+.posko-count-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.posko-count {
+    background: linear-gradient(135deg, var(--primary), var(--dark));
+    color: white;
+    padding: 12px 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(86, 166, 90, 0.3);
+    text-align: center;
+    width: 100%;
+    min-width: 110px;
+}
+
+.count-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 3px;
+}
+
+.count-label {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.btn-show-posko {
+    background: var(--info);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.3s;
+    font-size: 0.85rem;
+    width: 100%;
+    height: 36px;
+    min-height: 36px;
+}
+
+.btn-show-posko:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(41, 128, 185, 0.3);
+}
+
+.action-buttons {
+    width: 100%;
+}
+
+.btn-add-posko {
+    background: linear-gradient(135deg, var(--accent), #e67e22);
+    color: white;
+    padding: 9px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.3s;
+    width: 100%;
+    height: 36px;
+    min-height: 36px;
+    font-size: 0.85rem;
+}
+
+.btn-add-posko:hover {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+    transform: translateY(-2px);
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(230, 126, 34, 0.3);
+}
+
+/* Detail Posko Section */
+.posko-detail-section {
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    padding: 20px 25px;
+}
+
+.posko-detail-header {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.posko-detail-header h4 {
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+}
+
+.posko-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.posko-item {
+    background: white;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+}
+
+.posko-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.posko-info {
+    flex: 1;
+}
+
+.posko-info h5 {
+    color: var(--dark);
+    margin-bottom: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.posko-info p {
+    margin: 3px 0;
+    color: #555;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.4;
+}
+
+.posko-item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-detail-small,
+.btn-edit-small {
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.3s;
+    height: 32px;
+    min-height: 32px;
+}
+
+.btn-detail-small {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-detail-small:hover {
+    background: #48904d;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-edit-small {
+    background: var(--accent);
+    color: white;
+}
+
+.btn-edit-small:hover {
+    background: #e67e22;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.empty-posko {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px dashed #ddd;
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .bencana-card-inner {
+        grid-template-columns: 120px 1fr 170px;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .bencana-image {
+        width: 120px;
+        height: 120px;
+    }
+
+    .bencana-title {
+        font-size: 1.2rem;
+    }
+
+    .posko-count {
+        min-width: 100px;
+        padding: 10px 12px;
+    }
+
+    .count-number {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .bencana-card-inner {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .bencana-image {
+        width: 100%;
+        height: 180px;
+        max-width: 250px;
+        margin: 0 auto;
+    }
+
+    .bencana-actions {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    .posko-count-section {
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        width: auto;
+    }
+
+    .posko-count {
+        margin-bottom: 0;
+        min-width: 90px;
+        padding: 10px;
+    }
+
+    .count-number {
+        font-size: 1.5rem;
+    }
+
+    .btn-show-posko,
+    .btn-add-posko {
+        width: auto;
+        min-width: 140px;
+    }
+
+    .action-buttons {
+        width: auto;
+    }
+
+    .posko-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .posko-item-actions {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 576px) {
+    .bencana-card-inner {
+        padding: 18px;
+    }
+
+    .bencana-image {
+        height: 150px;
+    }
+
+    .bencana-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .posko-count-section {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .btn-show-posko,
+    .btn-add-posko {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .bencana-title {
+        font-size: 1.1rem;
+    }
+
+    .bencana-details p {
+        font-size: 0.85rem;
+    }
+
+    .posko-info h5 {
+        font-size: 0.95rem;
+    }
+
+    .posko-info p {
+        font-size: 0.8rem;
+    }
+}
+/* ===== DONASI CARD STYLES ===== */
+/* Struktur utama sama seperti posko, hanya beberapa warna dan ikon yang berbeda */
+
+.donasi-count-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.donasi-count {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    color: white;
+    padding: 12px 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+    text-align: center;
+    width: 100%;
+    min-width: 110px;
+}
+
+.donasi-count .count-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 3px;
+}
+
+.donasi-count .count-label {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* Tombol khusus donasi */
+.btn-show-donasi {
+    background: var(--info);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.3s;
+    font-size: 0.85rem;
+    width: 100%;
+    height: 36px;
+    min-height: 36px;
+}
+
+.btn-show-donasi:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(41, 128, 185, 0.3);
+}
+
+.btn-add-donasi {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    color: white;
+    padding: 9px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.3s;
+    width: 100%;
+    height: 36px;
+    min-height: 36px;
+    font-size: 0.85rem;
+}
+
+.btn-add-donasi:hover {
+    background: linear-gradient(135deg, #229954, #27ae60);
+    transform: translateY(-2px);
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+}
+
+/* Ikon khusus untuk donasi */
+.bencana-img-placeholder .fa-hand-holding-heart {
+    color: #27ae60;
+    font-size: 2.5rem;
+}
+
+/* Statistik donasi */
+.donasi-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.stat-item {
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-item.uang {
+    border-left: 4px solid #27ae60;
+}
+
+.stat-item.barang {
+    border-left: 4px solid #3498db;
+}
+
+.stat-number {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 2px;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Detail Donasi Section */
+.donasi-detail-section {
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    padding: 20px 25px;
+}
+
+.donasi-detail-header {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.donasi-detail-header h4 {
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+}
+
+.donasi-detail-header h4 i {
+    color: #27ae60;
+}
+
+.donasi-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.donasi-item {
+    background: white;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+    border-left: 4px solid #27ae60;
+}
+
+.donasi-item.barang-item {
+    border-left-color: #3498db;
+}
+
+.donasi-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.donasi-info {
+    flex: 1;
+}
+
+.donasi-info h5 {
+    color: var(--dark);
+    margin-bottom: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.donasi-info h5 i {
+    color: #27ae60;
+}
+
+.donasi-info .badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.badge-uang {
+    background: #27ae60;
+    color: white;
+}
+
+.badge-barang {
+    background: #3498db;
+    color: white;
+}
+
+.donasi-info p {
+    margin: 4px 0;
+    color: #555;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.4;
+}
+
+.donasi-info p i {
+    color: var(--primary);
+    width: 14px;
+}
+
+.donasi-item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Tombol detail dan edit sama seperti posko, bisa gunakan class yang sama */
+.btn-detail-small,
+.btn-edit-small {
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.3s;
+    height: 32px;
+    min-height: 32px;
+}
+
+.btn-detail-small {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-detail-small:hover {
+    background: #48904d;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-edit-small {
+    background: var(--accent);
+    color: white;
+}
+
+.btn-edit-small:hover {
+    background: #e67e22;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.empty-donasi {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px dashed #ddd;
+    font-size: 0.9rem;
+}
+
+/* Responsive Design untuk donasi */
+@media (max-width: 992px) {
+    .donasi-count {
+        min-width: 100px;
+        padding: 10px 12px;
+    }
+
+    .donasi-count .count-number {
+        font-size: 1.6rem;
+    }
+
+    .stat-number {
+        font-size: 0.9rem;
+    }
+
+    .stat-label {
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .donasi-count-section {
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        width: auto;
+    }
+
+    .donasi-count {
+        margin-bottom: 0;
+        min-width: 90px;
+        padding: 10px;
+    }
+
+    .donasi-count .count-number {
+        font-size: 1.5rem;
+    }
+
+    .donasi-stats {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .btn-show-donasi,
+    .btn-add-donasi {
+        width: auto;
+        min-width: 140px;
+    }
+
+    .donasi-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .donasi-item-actions {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 576px) {
+    .donasi-count-section {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .btn-show-donasi,
+    .btn-add-donasi {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .donasi-info h5 {
+        font-size: 0.95rem;
+    }
+
+    .donasi-info p {
+        font-size: 0.8rem;
+    }
+}
+
+/* Animasi khusus untuk donasi */
+@keyframes pulse-donasi {
+    0% {
+        box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(39, 174, 96, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(39, 174, 96, 0);
+    }
+}
+
+.donasi-count.pulse {
+    animation: pulse-donasi 2s infinite;
+}
     </style>
 </head>
 

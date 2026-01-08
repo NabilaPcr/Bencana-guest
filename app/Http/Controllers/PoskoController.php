@@ -10,41 +10,38 @@ use Illuminate\Support\Facades\DB;
 
 class PoskoController extends Controller
 {
-    public function index(Request $request)
-    {
-        $query = PoskoBencana::with('kejadian');
+    // Update di PoskoController.php
+public function index(Request $request)
+{
+    // Query untuk kejadian bencana yang memiliki posko
+    $query = KejadianBencana::withCount('posko')->has('posko');
 
-        // Search functionality
-        if ($request->has('search') && $request->search != '') {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('nama', 'like', '%' . $search . '%')
-                  ->orWhere('penanggung_jawab', 'like', '%' . $search . '%')
-                  ->orWhere('alamat', 'like', '%' . $search . '%')
-                  ->orWhere('kontak', 'like', '%' . $search . '%')
-                  ->orWhereHas('kejadian', function($q) use ($search) {
-                      $q->where('jenis_bencana', 'like', '%' . $search . '%')
-                        ->orWhere('lokasi_text', 'like', '%' . $search . '%');
-                  });
-            });
-        }
-
-        // Filter by jenis bencana
-        if ($request->has('jenis_bencana') && $request->jenis_bencana != '') {
-            $query->whereHas('kejadian', function($q) use ($request) {
-                $q->where('jenis_bencana', $request->jenis_bencana);
-            });
-        }
-
-        $poskoBencana = $query->paginate(30);
-
-        $jenisBencanaList = KejadianBencana::distinct()
-            ->pluck('jenis_bencana')
-            ->sort();
-
-        return view('pages.posko.index', compact('poskoBencana', 'jenisBencanaList'));
-        
+    // Search functionality
+    if ($request->has('search') && $request->search != '') {
+        $search = $request->search;
+        $query->where(function($q) use ($search) {
+            $q->where('jenis_bencana', 'like', '%' . $search . '%')
+              ->orWhere('lokasi_text', 'like', '%' . $search . '%')
+              ->orWhereHas('posko', function($q) use ($search) {
+                  $q->where('nama', 'like', '%' . $search . '%')
+                    ->orWhere('penanggung_jawab', 'like', '%' . $search . '%');
+              });
+        });
     }
+
+    // Filter by jenis bencana
+    if ($request->has('jenis_bencana') && $request->jenis_bencana != '') {
+        $query->where('jenis_bencana', $request->jenis_bencana);
+    }
+
+    $kejadianList = $query->paginate(15);
+
+    $jenisBencanaList = KejadianBencana::distinct()
+        ->pluck('jenis_bencana')
+        ->sort();
+
+    return view('pages.posko.index', compact('kejadianList', 'jenisBencanaList'));
+}
 
     public function create()
     {
@@ -55,7 +52,6 @@ class PoskoController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // 'posko_id' => 'required|unique:posko_bencana,posko_id',
             'kejadian_id' => 'required|exists:kejadian_bencana,kejadian_id',
             'nama' => 'required|string|max:255',
             'alamat' => 'required|string',
@@ -65,7 +61,6 @@ class PoskoController extends Controller
             'fotos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Buat posko tanpa field posko_id (karena auto increment)
         $posko = PoskoBencana::create([
             'kejadian_id' => $validated['kejadian_id'],
             'nama' => $validated['nama'],
@@ -77,7 +72,6 @@ class PoskoController extends Controller
         if ($request->hasFile('fotos')) {
             foreach ($request->file('fotos') as $index => $file) {
                 if ($file->isValid()) {
-                    // Generate nama file
                     $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                     $extension = $file->getClientOriginalExtension();
                     $fileName = 'posko_' . $posko->posko_id . '_' . time() . '_' . ($index + 1) . '.' . $extension;
@@ -101,7 +95,6 @@ class PoskoController extends Controller
                 }
             }
         }
-
         return redirect()->route('posko.index')
             ->with('success', 'Posko bencana berhasil ditambahkan!');
     }
@@ -117,9 +110,6 @@ class PoskoController extends Controller
     {
         $posko = PoskoBencana::findOrFail($id);
         $kejadianList = KejadianBencana::all();
-
-        // Tidak perlu ambil files lagi karena sudah ada di model
-
         return view('pages.posko.edit', compact('posko', 'kejadianList'));
     }
 

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KejadianBencana;
 use App\Models\Media;
+use App\Models\PoskoBencana;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -44,7 +45,7 @@ class KejadianController extends Controller
 
     public function show($id)
     {
-        $kejadian = KejadianBencana::findOrFail($id);
+        $kejadian = KejadianBencana::with('posko')->findOrFail($id);
 
         $files = Media::where('ref_table', 'kejadian_bencana')
             ->where('ref_id', $id)
@@ -56,8 +57,12 @@ class KejadianController extends Controller
 
     public function create()
     {
-        return view('pages.kejadian.create');
+        // Ambil semua posko yang tersedia
+        $poskoList = PoskoBencana::all();
+
+        return view('pages.kejadian.create', compact('poskoList'));
     }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -69,13 +74,26 @@ class KejadianController extends Controller
             'dampak'          => 'required|string',
             'status_kejadian' => 'required|in:aktif,dalam penanganan,selesai',
             'keterangan'      => 'nullable|string',
-            // ✅ VALIDASI: MAKSIMAL 5 FILE
+            'posko_id'        => 'nullable|array', // Field untuk memilih posko
+            'posko_id.*'      => 'exists:posko_bencana,posko_id',
             'fotos'           => 'required|array|min:1|max:5',
             'fotos.*'         => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Simpan data kejadian
         $kejadian = KejadianBencana::create($validated);
+
+        // Update posko yang dipilih (jika ada)
+        if ($request->has('posko_id') && !empty($request->posko_id)) {
+            // Filter array untuk menghapus nilai null/empty
+            $selectedPoskoIds = array_filter($request->posko_id);
+
+            if (!empty($selectedPoskoIds)) {
+                // Update posko yang dipilih dengan kejadian_id baru
+                PoskoBencana::whereIn('posko_id', $selectedPoskoIds)
+                            ->update(['kejadian_id' => $kejadian->kejadian_id]);
+            }
+        }
 
         // Upload multiple photos
         if ($request->hasFile('fotos')) {
@@ -95,7 +113,7 @@ class KejadianController extends Controller
                             'ref_table'  => 'kejadian_bencana',
                             'ref_id'     => $kejadian->kejadian_id,
                             'file_name'  => $fileName,
-                            'caption'    => null, // Tidak ada caption tanpa JS
+                            'caption'    => null,
                             'mime_type'  => $file->getMimeType(),
                             'sort_order' => $index + 1,
                         ]);
@@ -110,13 +128,16 @@ class KejadianController extends Controller
 
     public function edit($id)
     {
-        $kejadian = KejadianBencana::findOrFail($id);
+        $kejadian = KejadianBencana::with('posko')->findOrFail($id);
         $files = Media::where('ref_table', 'kejadian_bencana')
             ->where('ref_id', $id)
             ->orderBy('sort_order')
             ->get();
 
-        return view('pages.kejadian.edit', compact('kejadian', 'files'));
+        // Ambil semua posko untuk dipilih
+        $poskoList = PoskoBencana::all();
+
+        return view('pages.kejadian.edit', compact('kejadian', 'files', 'poskoList'));
     }
 
     public function update(Request $request, $id)
@@ -132,7 +153,8 @@ class KejadianController extends Controller
             'dampak'          => 'required|string',
             'status_kejadian' => 'required|in:aktif,dalam penanganan,selesai',
             'keterangan'      => 'nullable|string',
-            // ✅ VALIDASI: MAKSIMAL 5 FILE (opsional di update)
+            'posko_id'        => 'nullable|array',
+            'posko_id.*'      => 'exists:posko_bencana,posko_id',
             'fotos'           => 'nullable|array|max:5',
             'fotos.*'         => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'delete_media'    => 'nullable|array',
@@ -141,6 +163,24 @@ class KejadianController extends Controller
 
         // Update data kejadian
         $kejadian->update($validated);
+
+        // Update posko yang terkait - TANPA MENGHAPUS/MEN-SET NULL
+        if ($request->has('posko_id') && !empty($request->posko_id)) {
+            // Filter array untuk menghapus nilai null/empty
+            $selectedPoskoIds = array_filter($request->posko_id);
+
+            if (!empty($selectedPoskoIds)) {
+                // Reset hanya posko yang sebelumnya terhubung ke kejadian ini
+                // Tapi tetap pertahankan kejadian_id-nya (jangan set ke null)
+                // Kita hanya akan update posko yang dipilih
+
+                // Update posko yang dipilih dengan kejadian_id baru
+                PoskoBencana::whereIn('posko_id', $selectedPoskoIds)
+                            ->update(['kejadian_id' => $kejadian->kejadian_id]);
+            }
+            // Tidak melakukan reset untuk posko yang tidak dipilih
+            // Biarkan kejadian_id-nya tetap seperti sebelumnya
+        }
 
         // Delete selected media
         if ($request->has('delete_media')) {
@@ -187,13 +227,14 @@ class KejadianController extends Controller
             }
         }
 
-        return redirect()->route('kejadian.index')
+        return redirect()->route('kejadian.show', $kejadian->kejadian_id)
             ->with('success', 'Data kejadian bencana berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
         $kejadian = KejadianBencana::findOrFail($id);
+
 
         // Delete all related media
         $mediaList = $kejadian->media;

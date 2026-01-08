@@ -60,7 +60,7 @@
             <h3><i class="fas fa-images"></i> Dokumentasi Posko</h3>
 
             @php
-                $files = $posko->media; 
+                $files = $posko->media;
                 $images = $posko->getImagesUrls();
                 $hasRealImages = $posko->hasRealImages;
             @endphp
@@ -168,9 +168,9 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="action-buttons mt-5 pt-4 border-top">
-            <div class="row g-3">
-                <div class="col-md-4">
+        <div class="detail-action-buttons">
+                <div class="row g-3">
+                    <div class="col-md-4">
                     <a href="{{ route('posko.index') }}" class="btn btn-outline-secondary w-100">
                         <i class="fas fa-list me-2"></i>daftar Posko
                     </a>

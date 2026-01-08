@@ -1,12 +1,11 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class PoskoBencana extends Model
 {
-    protected $table = 'posko_bencana';
+    protected $table      = 'posko_bencana';
     protected $primaryKey = 'posko_id';
 
     // Jika posko_id adalah auto increment, jangan masukkan ke fillable
@@ -50,9 +49,9 @@ class PoskoBencana extends Model
         ];
 
         return in_array($fileName, $placeholderNames) ||
-               str_contains($fileName, 'placeholder') ||
-               str_contains($fileName, 'no-image') ||
-               str_contains($fileName, 'default');
+        str_contains($fileName, 'placeholder') ||
+        str_contains($fileName, 'no-image') ||
+        str_contains($fileName, 'default');
     }
 
     /**
@@ -86,7 +85,7 @@ class PoskoBencana extends Model
      */
     public function getImagesUrls()
     {
-        $files = $this->getMediaFiles();
+        $files  = $this->getMediaFiles();
         $images = [];
 
         if ($files->isEmpty()) {
@@ -113,7 +112,7 @@ class PoskoBencana extends Model
         }
 
         foreach ($files as $file) {
-            if (!$this->isPlaceholder($file->file_name)) {
+            if (! $this->isPlaceholder($file->file_name)) {
                 $path = 'storage/uploads/posko_bencana/' . $file->file_name;
                 if (file_exists(public_path($path))) {
                     return true;
@@ -139,4 +138,13 @@ class PoskoBencana extends Model
     {
         return $this->hasRealImages();
     }
+
+    // Di model PoskoBencana.php
+    public function scopeAvailable($query)
+    {
+        return $query->whereNull('kejadian_id')
+            ->orWhere('kejadian_id', '');
+    }
+
+
 }

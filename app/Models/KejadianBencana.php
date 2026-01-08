@@ -30,8 +30,12 @@ class KejadianBencana extends Model
     {
         return $this->hasMany(PoskoBencana::class, 'kejadian_id', 'kejadian_id');
     }
+    public function getJumlahPoskoAttribute()
+    {
+        return $this->posko()->count();
+    }
 
-      public function donasi()
+    public function donasi()
     {
         return $this->hasMany(DonasiBencana::class, 'kejadian_id', 'kejadian_id');
     }
@@ -52,10 +56,5 @@ class KejadianBencana extends Model
     {
         return $this->morphMany(Media::class, 'reference', 'ref_table', 'ref_id');
     }
-
-   
-
-
-
 
 }

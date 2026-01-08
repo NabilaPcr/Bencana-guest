@@ -28,7 +28,7 @@
                     <!-- Kejadian Bencana -->
                     <li>
                         <a class="dropdown-item" href="/kejadian">
-                            <i class="fas fa-exclamation-triangle me-2 text-warning"></i>Kejadian Bencana
+                            <i class="fas fa-exclamation-triangle me-2 "></i>Kejadian Bencana
                         </a>
                     </li>
                     <li>
@@ -38,7 +38,7 @@
                     <!-- Posko -->
                     <li>
                         <a class="dropdown-item" href="/posko">
-                            <i class="fas fa-hospital-alt me-2 text-primary"></i>Posko Bantuan
+                            <i class="fas fa-hospital-alt me-2 "></i>Posko Bantuan
                         </a>
                     </li>
                     <li>
@@ -48,7 +48,7 @@
                     <!-- Donasi -->
                     <li>
                         <a class="dropdown-item" href="/donasi">
-                            <i class="fas fa-hand-holding-heart me-2 text-danger"></i>Donasi
+                            <i class="fas fa-hand-holding-heart me-2 "></i>Donasi
                         </a>
                     </li>
                     <li>
@@ -58,7 +58,7 @@
                     <!-- Logistik -->
                     <li>
                         <a class="dropdown-item" href="/logistik">
-                            <i class="fas fa-box me-2 text-success"></i>Logistik
+                            <i class="fas fa-box me-2"></i>Logistik
                         </a>
                     </li>
                     <li>
@@ -68,7 +68,7 @@
                     <!-- Distribusi -->
                     <li>
                         <a class="dropdown-item" href="/distribusi">
-                            <i class="fas fa-truck-loading me-2 text-info"></i>Distribusi
+                            <i class="fas fa-truck-loading me-2 "></i>Distribusi
                         </a>
                     </li>
                     <li>
@@ -80,7 +80,7 @@
             <!-- warga -->
             <li>
                         <a class="dropdown-item" href="/warga">
-                            <i class="fas fa-users me-2 text-secondary"></i>Data Warga
+                            <i class="fas fa-users me-2 "></i>Data Warga
                         </a>
                     </li>
 

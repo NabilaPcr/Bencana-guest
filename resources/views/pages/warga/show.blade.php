@@ -161,10 +161,6 @@
                 <i class="fas fa-user"></i>
                 {{ $warga->nama }}
             </h1>
-            {{-- <p class="text-muted mb-0">
-                <i class="fas fa-id-card me-1"></i>
-                No KTP: {{ $warga->no_ktp }}
-            </p> --}}
         </div>
 
         <div class="detail-grid">
@@ -172,7 +168,6 @@
                 <h3><i class="fas fa-user-circle"></i> Data Pribadi</h3>
                 <div class="info-content">
                     <p><strong>Nama Lengkap:</strong> {{ $warga->nama }}</p>
-                    {{-- <p><strong>No KTP:</strong> {{ $warga->no_ktp }}</p> --}}
                     <p><strong>Jenis Kelamin:</strong>
                         @if($warga->jenis_kelamin == 'L')
                             Laki-laki
@@ -222,125 +217,11 @@
             </div>
         </div>
 
-        <!-- GALERI FOTO -->
-        {{-- <div class="info-group">
-            <h3><i class="fas fa-camera"></i> Dokumentasi Warga</h3>
-
-            @if(isset($files) && $files->count() > 0)
-                <div class="alert alert-info d-flex align-items-center">
-                    <i class="fas fa-info-circle fa-2x me-3"></i>
-                    <div>
-                        <strong>Informasi:</strong> Data foto tercatat di sistem, namun file asli belum diupload.
-                        Silakan upload foto asli melalui menu edit.
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    @foreach($files as $index => $file)
-                        <div class="col-md-3 col-sm-6 col-12 mb-4">
-                            <div class="card photo-card border">
-                                <!-- Placeholder Image -->
-                                <div class="d-flex justify-content-center align-items-center bg-light"
-                                     style="height: 200px; overflow: hidden;">
-                                    <img src="{{ asset('assets/images/placeholder.png') }}"
-                                         alt="Placeholder - {{ $file->caption ?? 'Dokumentasi Warga' }}"
-                                         style="width: 80%; height: auto; opacity: 0.7;">
-                                </div>
-
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-start mb-2">
-                                        <span class="badge bg-primary">
-                                            <i class="fas fa-image me-1"></i> Foto {{ $index + 1 }}
-                                        </span>
-                                        <small class="text-muted">
-                                            {{ $file->mime_type }}
-                                        </small>
-                                    </div>
-
-                                    <h6 class="card-title mb-2">
-                                        <i class="fas fa-file-alt me-1"></i>
-                                        {{ $file->file_name }}
-                                    </h6>
-
-                                    @if($file->caption)
-                                        <p class="card-text small text-muted mb-2">
-                                            <i class="fas fa-comment me-1"></i>
-                                            {{ $file->caption }}
-                                        </p>
-                                    @endif
-
-                                    <div class="d-flex justify-content-between">
-                                        <small class="text-muted">
-                                            <i class="fas fa-sort-numeric-up me-1"></i>
-                                            Urutan: {{ $file->sort_order }}
-                                        </small>
-                                        <small class="text-muted">
-                                            <i class="fas fa-clock me-1"></i>
-                                            {{ $file->created_at->format('d/m/Y') }}
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <div class="text-center mt-3">
-                    <div class="badge bg-secondary">
-                        <i class="fas fa-database me-1"></i>
-                        Total: {{ $files->count() }} data tercatat
-                    </div>
-                </div>
-            @else
-                <div class="text-center py-5">
-                    <div class="mb-4">
-                        <img src="{{ asset('assets/images/placeholder.png') }}"
-                             alt="Tidak ada foto"
-                             style="width: 150px; height: auto; opacity: 0.5;">
-                    </div>
-                    <h5 class="text-muted mb-3">
-                        <i class="fas fa-images me-2"></i>
-                        Belum ada dokumentasi foto
-                    </h5>
-                    <p class="text-muted">
-                        Data foto untuk warga ini belum tercatat di sistem.
-                    </p>
-                    <a href="{{ route('warga.edit', $warga->warga_id) }}"
-                       class="btn btn-primary mt-2">
-                        <i class="fas fa-plus-circle me-1"></i>
-                        Tambah Foto
-                    </a>
-                </div>
-            @endif
-        </div> --}}
-
-        <!-- Lightbox Modal -->
-        {{-- <div class="modal fade" id="imageLightbox" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="lightboxTitle">
-                            <i class="fas fa-image me-2"></i>Preview Foto
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body text-center p-0">
-                        <img src="" id="lightboxImage" class="img-fluid"
-                             style="max-height: 70vh; object-fit: contain;">
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            <i class="fas fa-times me-1"></i>Tutup
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
 
         <!-- Action Buttons -->
-        <div class="action-buttons mt-5 pt-4 border-top">
-            <div class="row g-3">
-                <div class="col-md-4">
+        <div class="detail-action-buttons">
+                <div class="row g-3">
+                    <div class="col-md-4">
                     <a href="{{ route('warga.index') }}" class="btn btn-outline-secondary w-100">
                         <i class="fas fa-list me-2"></i> Semua Warga
                     </a>

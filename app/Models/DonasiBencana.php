@@ -21,6 +21,8 @@ class DonasiBencana extends Model
 
     protected $casts = [
         'nilai' => 'decimal:2',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function kejadian()
@@ -35,12 +37,21 @@ class DonasiBencana extends Model
                     ->orderBy('sort_order');
     }
 
-    // Helper untuk format nilai
     public function getNilaiFormattedAttribute()
     {
         if ($this->jenis == 'uang') {
             return 'Rp ' . number_format($this->nilai, 0, ',', '.');
         }
         return number_format($this->nilai, 0) . ' barang';
+    }
+
+    public function scopeUang($query)
+    {
+        return $query->where('jenis', 'uang');
+    }
+
+    public function scopeBarang($query)
+    {
+        return $query->where('jenis', 'barang');
     }
 }

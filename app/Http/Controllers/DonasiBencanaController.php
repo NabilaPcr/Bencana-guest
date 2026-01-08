@@ -10,16 +10,42 @@ use Illuminate\Support\Facades\Storage;
 
 class DonasiBencanaController extends Controller
 {
-    // Path untuk placeholder image
     private $placeholderPath = 'public/storages/uploads/donasi_bencana/placeholder.jpg';
 
-    public function index()
+    public function index(Request $request)
     {
-        $donasi = DonasiBencana::with('kejadian')
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        // Query untuk kejadian bencana yang memiliki donasi
+        $query = KejadianBencana::withCount(['donasi as total_donasi_uang' => function($q) {
+                $q->where('jenis', 'uang')->select(\DB::raw('COALESCE(SUM(nilai), 0)'));
+            }])
+            ->withCount(['donasi as total_donasi_barang' => function($q) {
+                $q->where('jenis', 'barang')->select(\DB::raw('COALESCE(SUM(nilai), 0)'));
+            }])
+            ->has('donasi');
 
-        return view('pages.donasi.index', compact('donasi'));
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('jenis_bencana', 'like', '%' . $search . '%')
+                  ->orWhere('lokasi_text', 'like', '%' . $search . '%')
+                  ->orWhereHas('donasi', function($q) use ($search) {
+                      $q->where('donatur_nama', 'like', '%' . $search . '%');
+                  });
+            });
+        }
+
+        // Filter by jenis bencana
+        if ($request->has('jenis_bencana') && $request->jenis_bencana != '') {
+            $query->where('jenis_bencana', $request->jenis_bencana);
+        }
+
+        $kejadianList = $query->paginate(15);
+
+        $jenisBencanaList = KejadianBencana::distinct()
+            ->pluck('jenis_bencana')
+            ->sort();
+
+        return view('pages.donasi.index', compact('kejadianList', 'jenisBencanaList'));
     }
 
     public function create()
@@ -46,7 +72,6 @@ class DonasiBencanaController extends Controller
         // Simpan data donasi
         $donasi = DonasiBencana::create($validated);
 
-        // ✅ UPLOAD MULTIPLE BUKTI DONASI (TANPA COMPRESS)
         if ($request->hasFile('bukti_donasi')) {
             foreach ($request->file('bukti_donasi') as $index => $file) {
                 if ($file->isValid()) {
@@ -54,7 +79,6 @@ class DonasiBencanaController extends Controller
                 }
             }
         } else {
-            // ✅ JIKA TIDAK ADA GAMBAR DIUPLOAD, SIMPAN PLACEHOLDER
             $this->savePlaceholderImage($donasi->donasi_id);
         }
 
@@ -66,17 +90,14 @@ class DonasiBencanaController extends Controller
     {
         $donasiBencana = DonasiBencana::findOrFail($id);
 
-        // AMBIL FILE MEDIA YANG SUDAH ADA
         $files = Media::where('ref_table', 'donasi_bencana')
                      ->where('ref_id', $id)
                      ->orderBy('sort_order')
                      ->get();
 
-        // JIKA TIDAK ADA FILE, TAMBAHKAN PLACEHOLDER
         if ($files->isEmpty()) {
             $files = collect([$this->getPlaceholderData()]);
         } else {
-            // Tambahkan URL lengkap untuk setiap file
             $files = $files->map(function ($file) {
                 if ($file->file_name === 'placeholder.jpg') {
                     return $this->getPlaceholderData();
@@ -99,13 +120,11 @@ class DonasiBencanaController extends Controller
             ->orderBy('tanggal', 'desc')
             ->get();
 
-        // AMBIL FILE MEDIA YANG SUDAH ADA
         $files = Media::where('ref_table', 'donasi_bencana')
                      ->where('ref_id', $id)
                      ->orderBy('sort_order')
                      ->get();
 
-        // Tambahkan URL untuk file yang ada
         if ($files->isNotEmpty()) {
             $files = $files->map(function ($file) {
                 $file->url = $this->getFileUrl($file->file_name);
@@ -132,15 +151,12 @@ class DonasiBencanaController extends Controller
             'delete_media.*' => 'integer',
         ]);
 
-        // Update data donasi
         $donasiBencana->update($validated);
 
-        // ✅ HAPUS BUKTI DONASI YANG DIPILIH
         if ($request->has('delete_media')) {
             foreach ($request->input('delete_media') as $mediaId) {
                 $media = Media::find($mediaId);
                 if ($media && $media->ref_table == 'donasi_bencana' && $media->ref_id == $donasiBencana->donasi_id) {
-                    // Jangan hapus jika ini placeholder
                     if ($media->file_name !== 'placeholder.jpg') {
                         Storage::disk('public')->delete('uploads/donasi_bencana/' . $media->file_name);
                     }
@@ -149,13 +165,11 @@ class DonasiBencanaController extends Controller
             }
         }
 
-        // ✅ UPLOAD BUKTI DONASI BARU (TANPA COMPRESS)
         if ($request->hasFile('bukti_donasi')) {
             $currentMax = Media::where('ref_table', 'donasi_bencana')
                 ->where('ref_id', $donasiBencana->donasi_id)
                 ->max('sort_order') ?? 0;
 
-            // Hapus placeholder jika ada
             Media::where('ref_table', 'donasi_bencana')
                 ->where('ref_id', $donasiBencana->donasi_id)
                 ->where('file_name', 'placeholder.jpg')
@@ -168,7 +182,6 @@ class DonasiBencanaController extends Controller
             }
         }
 
-        // ✅ JIKA SETELAH UPDATE TIDAK ADA GAMBAR LAGI, TAMBAH PLACEHOLDER
         $remainingFiles = Media::where('ref_table', 'donasi_bencana')
             ->where('ref_id', $donasiBencana->donasi_id)
             ->count();
@@ -185,7 +198,6 @@ class DonasiBencanaController extends Controller
     {
         $donasiBencana = DonasiBencana::findOrFail($id);
 
-        // ✅ HAPUS SEMUA FILE MEDIA TERKAIT (KECUALI PLACEHOLDER)
         $files = Media::where('ref_table', 'donasi_bencana')
                      ->where('ref_id', $id)
                      ->where('file_name', '!=', 'placeholder.jpg')
@@ -196,7 +208,6 @@ class DonasiBencanaController extends Controller
             $file->delete();
         }
 
-        // Hapus placeholder jika ada
         Media::where('ref_table', 'donasi_bencana')
             ->where('ref_id', $id)
             ->where('file_name', 'placeholder.jpg')
@@ -209,7 +220,6 @@ class DonasiBencanaController extends Controller
     }
 
     /**
-     * Upload gambar (TANPA COMPRESS)
      */
     private function uploadImage($file, $donasiId, $sortOrder)
     {
@@ -217,7 +227,6 @@ class DonasiBencanaController extends Controller
         $extension = $file->getClientOriginalExtension();
         $fileName = $originalName . '_' . time() . '_' . rand(1000, 9999) . '.' . $extension;
 
-        // Simpan file asli (tanpa compress)
         $path = $file->storeAs('uploads/donasi_bencana', $fileName, 'public');
 
         if ($path) {
@@ -237,7 +246,6 @@ class DonasiBencanaController extends Controller
      */
     private function savePlaceholderImage($donasiId)
     {
-        // Copy placeholder ke storage jika belum ada
         $placeholderSource = public_path($this->placeholderPath);
         $placeholderDest = 'uploads/donasi_bencana/placeholder.jpg';
 
@@ -288,12 +296,10 @@ class DonasiBencanaController extends Controller
      */
     private function getPlaceholderUrl()
     {
-        // Cek apakah placeholder ada di storage
         if (Storage::disk('public')->exists('uploads/donasi_bencana/placeholder.jpg')) {
             return Storage::url('uploads/donasi_bencana/placeholder.jpg');
         }
 
-        // Fallback ke public path
         return asset($this->placeholderPath);
     }
 
@@ -344,4 +350,10 @@ class DonasiBencanaController extends Controller
 
         return response()->file($path);
     }
+   public function byKejadian(KejadianBencana $kejadian)
+{
+    $kejadian->load('donasi');
+    return view('pages.donasi.by-kejadian', compact('kejadian'));
+}
+
 }

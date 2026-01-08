@@ -2,410 +2,527 @@
 @section('title', 'Data Donasi Bencana')
 
 @section('content')
-{{-- <div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4>Data Donasi Bencana</h4>
-                    <a href="{{ route('donasi.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Tambah Donasi
-                    </a>
-                </div>
-                <div class="card-body">
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show">
-                            <i class="fas fa-check-circle"></i> {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    @endif
-
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Donatur</th>
-                                    <th>Kejadian Bencana</th>
-                                    <th>Jenis</th>
-                                    <th>Nilai</th>
-                                    <th>Tanggal</th>
-                                    <th style="width: 180px;">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($donasi as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration + ($donasi->currentPage() - 1) * $donasi->perPage() }}</td>
-                                        <td><strong>{{ $item->donatur_nama }}</strong></td>
-                                        <td>
-                                            <strong>{{ $item->kejadian->jenis_bencana ?? '-' }}</strong><br>
-                                            <small class="text-muted">{{ $item->kejadian->lokasi_text ?? '' }}</small>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-{{ $item->jenis == 'uang' ? 'success' : 'info' }}">
-                                                {{ ucfirst($item->jenis) }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            @if ($item->jenis == 'uang')
-                                                <strong class="text-success">Rp {{ number_format($item->nilai, 0, ',', '.') }}</strong>
-                                            @else
-                                                <strong class="text-info">{{ number_format($item->nilai, 0) }} barang</strong>
-                                            @endif
-                                        </td>
-                                        <td>{{ $item->created_at->format('d/m/Y') }}</td>
-                                        <td>
-                                            <div class="btn-group" role="group">
-                                                <a href="{{ route('donasi.show', $item->donasi_id) }}"
-                                                    class="btn btn-info btn-sm" title="Detail">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="{{ route('donasi.edit', $item->donasi_id) }}"
-                                                    class="btn btn-warning btn-sm" title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <form action="{{ route('donasi.destroy', $item->donasi_id) }}"
-                                                    method="POST" class="d-inline"
-                                                    onsubmit="return confirm('Yakin ingin menghapus donasi dari {{ $item->donatur_nama }}?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="7" class="text-center py-4">
-                                            <div class="text-muted">
-                                                <i class="fas fa-box-open fa-2x mb-3"></i>
-                                                <h5>Belum ada data donasi</h5>
-                                                <p>Mulai dengan menambahkan data donasi baru</p>
-                                                <a href="{{ route('donasi.create') }}" class="btn btn-primary">
-                                                    <i class="fas fa-plus"></i> Tambah Donasi Pertama
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-
-                    @if($donasi->hasPages())
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <div class="text-muted">
-                            Menampilkan {{ $donasi->firstItem() }} - {{ $donasi->lastItem() }} dari {{ $donasi->total() }} data
-                        </div>
-                        <div>
-                            {{ $donasi->links() }}
-                        </div>
-                    </div>
-                    @endif
-                </div>
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <div class="page-header">
+            <div class="header-text">
+                <h1><i class="fas fa-hand-holding-heart"></i> Data Donasi Bencana</h1>
+                <p>Kelola donasi berdasarkan kejadian bencana</p>
             </div>
         </div>
-    </div>
-</div> --}}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">
-                      Data Donasi Bencana
-                    </h4>
-                    <a href="{{ route('donasi.create') }}" class="btn btn-primary btn-sm">
-                        <i class="fas fa-plus me-1"></i> Tambah Donasi
-                    </a>
-                </div>
-                <div class="card-body">
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
-                            <i class="fas fa-check-circle me-2"></i>
-                            <div>{{ session('success') }}</div>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
 
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th width="60">No</th>
-                                    <th>Donatur</th>
-                                    <th>Kejadian Bencana</th>
-                                    <th width="100">Jenis</th>
-                                    <th width="150">Jumlah</th>
-                                    <th width="120">Tanggal</th>
-                                    <th width="180" class="text-center">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($donasi as $item)
-                                    <tr>
-                                        <td class="text-center">{{ $loop->iteration + ($donasi->currentPage() - 1) * $donasi->perPage() }}</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar-sm bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px;">
-                                                    <i class="fas fa-user text-primary fs-6"></i>
-                                                </div>
-                                                <div>
-                                                    <strong class="d-block">{{ $item->donatur_nama }}</strong>
-                                                    <small class="text-muted">{{ $item->donatur_telepon ?? '-' }}</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <strong class="d-block">{{ $item->kejadian->jenis_bencana ?? '-' }}</strong>
-                                            <small class="text-muted text-truncate d-block" style="max-width: 200px;">
-                                                <i class="fas fa-map-marker-alt me-1"></i>
-                                                {{ $item->kejadian->lokasi_text ?? 'Lokasi tidak tersedia' }}
-                                            </small>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-{{ $item->jenis == 'uang' ? 'success' : 'info' }} p-2 w-100">
-                                                <i class="fas fa-{{ $item->jenis == 'uang' ? 'money-bill-wave' : 'box' }} me-1"></i>
-                                                {{ ucfirst($item->jenis) }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            @if ($item->jenis == 'uang')
-                                                <div class="text-success fw-bold">
-                                                    <i class="fas fa-money-bill-wave me-1"></i>
-                                                    Rp {{ number_format($item->nilai, 0, ',', '.') }}
-                                                </div>
-                                            @else
-                                                <div class="text-info fw-bold">
-                                                    <i class="fas fa-boxes me-1"></i>
-                                                    {{ number_format($item->nilai, 0) }} barang
-                                                </div>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-light text-dark border">
-                                                <i class="fas fa-calendar me-1"></i>
-                                                {{ $item->created_at->format('d/m/Y') }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex justify-content-center gap-2">
-                                                <a href="{{ route('donasi.show', $item->donasi_id) }}"
-                                                    class="btn btn-info btn-sm px-3"
-                                                    title="Detail" data-bs-toggle="tooltip">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="{{ route('donasi.edit', $item->donasi_id) }}"
-                                                    class="btn btn-warning btn-sm px-3"
-                                                    title="Edit" data-bs-toggle="tooltip">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <form action="{{ route('donasi.destroy', $item->donasi_id) }}"
-                                                    method="POST" class="d-inline"
-                                                    onsubmit="return confirm('Yakin ingin menghapus donasi dari {{ $item->donatur_nama }}?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm px-3"
-                                                        title="Hapus" data-bs-toggle="tooltip">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="7" class="text-center py-5">
-                                            <div class="empty-state">
-                                                <div class="empty-state-icon mb-3">
-                                                    <i class="fas fa-hand-holding-heart fa-3x text-muted"></i>
-                                                </div>
-                                                <h5 class="text-muted mb-2">Belum ada data donasi</h5>
-                                                <p class="text-muted mb-4">Mulai dengan menambahkan data donasi baru</p>
-                                                <a href="{{ route('donasi.create') }}" class="btn btn-primary">
-                                                    <i class="fas fa-plus me-2"></i> Tambah Donasi Pertama
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+        <!-- Search and Filter Section -->
+        <div class="filter-section">
+            <form action="{{ route('donasi.index') }}" method="GET" class="filter-form">
+                <div class="form-row">
+                    <!-- Search Input -->
+                    <div class="form-group">
+                        <label for="search">Pencarian</label>
+                        <input type="text" id="search" name="search" value="{{ request('search') }}"
+                            placeholder="Cari nama bencana, lokasi, atau donatur...">
                     </div>
 
-                    <!-- Pagination -->
-                    @if($donasi->hasPages())
-                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4 pt-3 border-top">
-                            <div class="mb-3 mb-md-0">
-                                <p class="text-muted mb-0">
-                                    Menampilkan
-                                    <span class="fw-bold">{{ $donasi->firstItem() }}</span>
-                                    sampai
-                                    <span class="fw-bold">{{ $donasi->lastItem() }}</span>
-                                    dari
-                                    <span class="fw-bold">{{ $donasi->total() }}</span>
-                                    data donasi
-                                </p>
+                    <!-- Filter Jenis Bencana -->
+                    <div class="form-group">
+                        <label for="jenis_bencana">Jenis Bencana</label>
+                        <select id="jenis_bencana" name="jenis_bencana">
+                            <option value="">Semua Bencana</option>
+                            @foreach ($jenisBencanaList as $jenisBencana)
+                                <option value="{{ $jenisBencana }}"
+                                    {{ request('jenis_bencana') == $jenisBencana ? 'selected' : '' }}>
+                                    {{ $jenisBencana }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="form-group">
+                        <button type="submit" class="btn-filter">
+                            <i class="fas fa-search"></i> Terapkan
+                        </button>
+                        <a href="{{ route('donasi.index') }}" class="btn-reset">
+                            <i class="fas fa-redo"></i> Reset
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Info hasil pencarian -->
+        @if (request()->has('search') && request('search') != '')
+            <div class="search-info">
+                <p><i class="fas fa-info-circle"></i> Menampilkan hasil pencarian untuk:
+                    <strong>"{{ request('search') }}"</strong>
+                </p>
+            </div>
+        @endif
+
+        <!-- Info filter aktif -->
+        @if (request()->has('jenis_bencana') && request('jenis_bencana') != '')
+            <div class="filter-info">
+                <p><i class="fas fa-filter"></i> Filter aktif:
+                    <span class="filter-tag">Jenis Bencana: {{ request('jenis_bencana') }}</span>
+                </p>
+            </div>
+        @endif
+
+        @if ($kejadianList->count() > 0)
+            <div class="kejadian-list-container">
+                @foreach ($kejadianList as $kejadian)
+                    <div class="bencana-card">
+                        <div class="bencana-card-inner">
+                            <!-- Kolom 1: Gambar -->
+                            <div class="bencana-image">
+                                @php
+                                    // Ambil gambar pertama dari media kejadian
+                                    $image = null;
+                                    if ($kejadian->media->count() > 0) {
+                                        $image = $kejadian->media->first()->file_name;
+                                    }
+                                @endphp
+
+                                @if ($image)
+                                    <img src="{{ asset('storage/uploads/kejadian_bencana/' . $image) }}"
+                                        alt="{{ $kejadian->jenis_bencana }}" class="bencana-img">
+                                @else
+                                    <div class="bencana-img-placeholder">
+                                        <i class="fas fa-hand-holding-heart"></i>
+                                    </div>
+                                @endif
                             </div>
 
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination pagination-sm mb-0">
-                                    {{-- Previous Page Link --}}
-                                    @if ($donasi->onFirstPage())
-                                        <li class="page-item disabled">
-                                            <span class="page-link">
-                                                <i class="fas fa-chevron-left"></i>
-                                            </span>
-                                        </li>
-                                    @else
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $donasi->previousPageUrl() }}" aria-label="Previous">
-                                                <i class="fas fa-chevron-left"></i>
-                                            </a>
-                                        </li>
-                                    @endif
+                            <!-- Kolom 2: Info Bencana -->
+                            <div class="bencana-info">
+                                <h3>
+                                    <a href="{{ route('kejadian.show', $kejadian->kejadian_id) }}" class="bencana-title">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        {{ $kejadian->jenis_bencana }}
+                                    </a>
+                                </h3>
+                                <div class="bencana-details">
+                                    <p><i class="fas fa-map-marker-alt"></i> <strong>Lokasi:</strong>
+                                        {{ $kejadian->lokasi_text }}</p>
+                                    <p><i class="fas fa-calendar"></i> <strong>Tanggal:</strong>
+                                        {{ date('d M Y', strtotime($kejadian->tanggal)) }}</p>
+                                    <p><i class="fas fa-users"></i> <strong>Total Donatur:</strong>
+                                        {{ $kejadian->donasi_count }}</p>
+                                    <p><i class="fas fa-info-circle"></i> <strong>Status:</strong>
+                                        <span
+                                            class="status-badge status-{{ strtolower(str_replace(' ', '-', $kejadian->status_kejadian)) }}">
+                                            {{ ucfirst($kejadian->status_kejadian) }}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
 
-                                    {{-- Pagination Elements --}}
-                                    @php
-                                        $current = $donasi->currentPage();
-                                        $last = $donasi->lastPage();
-                                        $start = max($current - 2, 1);
-                                        $end = min($current + 2, $last);
-                                    @endphp
+                            <!-- Kolom 3: Statistik Donasi & Aksi -->
+                            <div class="bencana-actions">
+                                <div class="donasi-count-section">
+                                    <div class="donasi-count">
+                                        <span class="count-number">{{ $kejadian->donasi_count }}</span>
+                                        <span class="count-label">Total Donasi</span>
+                                    </div>
+                                    <div class="donasi-stats">
+                                        <div class="stat-item uang">
+                                            <span class="stat-number">Rp
+                                                {{ number_format($kejadian->total_donasi_uang, 0, ',', '.') }}</span>
+                                            <span class="stat-label">Donasi Uang</span>
+                                        </div>
+                                        <div class="stat-item barang">
+                                            <span
+                                                class="stat-number">{{ number_format($kejadian->total_donasi_barang, 0) }}</span>
+                                            <span class="stat-label">Donasi Barang</span>
+                                        </div>
+                                    </div>
+                                    <a href="{{ route('donasi.show', $kejadian->kejadian_id) }}" class="btn-show-donasi">
+                                        <i class="fas fa-list"></i> Lihat Detail
+                                    </a>
 
-                                    {{-- First Page Link --}}
-                                    @if ($start > 1)
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $donasi->url(1) }}">1</a>
-                                        </li>
-                                        @if ($start > 2)
-                                            <li class="page-item disabled">
-                                                <span class="page-link">...</span>
-                                            </li>
-                                        @endif
-                                    @endif
+                                    <div class="action-buttons">
+                                        <a href="{{ route('donasi.create') }}?kejadian_id={{ $kejadian->kejadian_id }}"
+                                            class="btn-add-donasi">
+                                            <i class="fas fa-plus"></i> Tambah Donasi
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
 
-                                    {{-- Page Number Links --}}
-                                    @for ($i = $start; $i <= $end; $i++)
-                                        @if ($i == $current)
-                                            <li class="page-item active" aria-current="page">
-                                                <span class="page-link">{{ $i }}</span>
-                                            </li>
-                                        @else
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $donasi->url($i) }}">{{ $i }}</a>
-                                            </li>
-                                        @endif
-                                    @endfor
+                            <!-- Detail Donasi (hidden by default) -->
+                            <div class="donasi-detail-section" id="donasi-detail-{{ $kejadian->kejadian_id }}"
+                                style="display: none;">
+                                <div class="donasi-detail-header">
+                                    <h4><i class="fas fa-hand-holding-heart"></i> Daftar Donasi</h4>
+                                </div>
 
-                                    {{-- Last Page Link --}}
-                                    @if ($end < $last)
-                                        @if ($end < $last - 1)
-                                            <li class="page-item disabled">
-                                                <span class="page-link">...</span>
-                                            </li>
-                                        @endif
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $donasi->url($last) }}">{{ $last }}</a>
-                                        </li>
-                                    @endif
-
-                                    {{-- Next Page Link --}}
-                                    @if ($donasi->hasMorePages())
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $donasi->nextPageUrl() }}" aria-label="Next">
-                                                <i class="fas fa-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                    @else
-                                        <li class="page-item disabled">
-                                            <span class="page-link">
-                                                <i class="fas fa-chevron-right"></i>
-                                            </span>
-                                        </li>
-                                    @endif
-                                </ul>
-                            </nav>
+                                @if ($kejadian->donasi->count() > 0)
+                                    <div class="donasi-list">
+                                        @foreach ($kejadian->donasi as $donasi)
+                                            <div class="donasi-item">
+                                                <div class="donasi-info">
+                                                    <h5>{{ $donasi->donatur_nama }}</h5>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <p><i class="fas fa-gift"></i> <strong>Jenis:</strong>
+                                                                <span
+                                                                    class="badge bg-{{ $donasi->jenis == 'uang' ? 'success' : 'info' }}">
+                                                                    {{ ucfirst($donasi->jenis) }}
+                                                                </span>
+                                                            </p>
+                                                            <p><i class="fas fa-money-bill-wave"></i>
+                                                                <strong>Nilai:</strong>
+                                                                @if ($donasi->jenis == 'uang')
+                                                                    Rp {{ number_format($donasi->nilai, 0, ',', '.') }}
+                                                                @else
+                                                                    {{ number_format($donasi->nilai, 0) }} barang
+                                                                @endif
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p><i class="fas fa-calendar"></i> <strong>Tanggal:</strong>
+                                                                {{ $donasi->created_at->format('d M Y') }}</p>
+                                                            <p><i class="fas fa-phone"></i> <strong>Kontak:</strong>
+                                                                {{ $donasi->donatur_telepon ?? '-' }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="donasi-item-actions">
+                                                    <a href="{{ route('donasi.show', $donasi->donasi_id) }}"
+                                                        class="btn-detail-small">
+                                                        <i class="fas fa-eye"></i> Detail
+                                                    </a>
+                                                    <a href="{{ route('donasi.edit', $donasi->donasi_id) }}"
+                                                        class="btn-edit-small">
+                                                        <i class="fas fa-edit"></i> Edit
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <div class="empty-donasi">
+                                        <p><i class="fas fa-info-circle"></i> Belum ada donasi untuk bencana ini.</p>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-                    @endif
-                </div>
+                @endforeach
             </div>
-        </div>
+
+            <!-- Pagination -->
+            @if ($kejadianList->hasPages())
+                <div class="bottom-pagination">
+                    <div class="pagination-simple">
+                        @if (!$kejadianList->onFirstPage())
+                            <a href="{{ $kejadianList->previousPageUrl() }}" class="btn-prev">
+                                <i class="fas fa-arrow-left"></i> Previous
+                            </a>
+                        @endif
+
+                        @if ($kejadianList->hasMorePages())
+                            <a href="{{ $kejadianList->nextPageUrl() }}" class="btn-next">
+                                Next <i class="fas fa-arrow-right"></i>
+                            </a>
+                        @endif
+                    </div>
+
+                    <div class="data-info">
+                        <p>Menampilkan <strong>{{ $kejadianList->count() }}</strong> dari
+                            <strong>{{ $kejadianList->total() }}</strong> bencana
+                        </p>
+                    </div>
+                </div>
+            @endif
+        @else
+            <div class="empty-state">
+                <i class="fas fa-hand-holding-heart"></i>
+                <h3>Belum Ada Data Bencana dengan Donasi</h3>
+                <p>
+                    @if (request()->has('search') || request()->has('jenis_bencana'))
+                        Tidak ditemukan data bencana dengan filter yang dipilih.
+                        <a href="{{ route('donasi.index') }}">Tampilkan semua data</a>
+                    @else
+                        Belum ada data bencana yang memiliki donasi.
+                    @endif
+                </p>
+            </div>
+        @endif
     </div>
-</div>
 @endsection
 
 @push('styles')
-<style>
-    .table th {
-        font-weight: 600;
-        color: #495057;
-        background-color: #f8f9fa;
-        border-bottom: 2px solid #dee2e6;
-    }
+    <style>
+        /* ===== DONASI CARD STYLES ===== */
+        .donasi-stats-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
 
-    .table > tbody > tr:hover {
-        background-color: rgba(0, 123, 255, 0.05);
-    }
+        .donasi-stat {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+        }
 
-    .avatar-sm {
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+        .stat-item {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(86, 166, 90, 0.2);
+        }
 
-    .badge {
-        font-size: 0.8em;
-        font-weight: 500;
-    }
+        .stat-number {
+            display: block;
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 3px;
+        }
 
-    .empty-state {
-        padding: 3rem 1rem;
-    }
+        .stat-label {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
 
-    .empty-state-icon {
-        opacity: 0.5;
-    }
+        .btn-show-donasi {
+            background: var(--info);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            width: 100%;
+            height: 36px;
+            min-height: 36px;
+        }
 
-    .page-link {
-        color: #495057;
-        border: 1px solid #dee2e6;
-    }
+        .btn-show-donasi:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(41, 128, 185, 0.3);
+        }
 
-    .page-link:hover {
-        color: #0d6efd;
-        background-color: #e9ecef;
-        border-color: #dee2e6;
-    }
+        .btn-add-donasi {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 9px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s;
+            width: 100%;
+            height: 36px;
+            min-height: 36px;
+            font-size: 0.85rem;
+        }
 
-    .page-item.active .page-link {
-        background-color: #0d6efd;
-        border-color: #0d6efd;
-        color: white;
-    }
+        .btn-add-donasi:hover {
+            background: linear-gradient(135deg, #229954, #27ae60);
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+        }
 
-    .page-item.disabled .page-link {
-        color: #6c757d;
-        background-color: #fff;
-        border-color: #dee2e6;
-    }
-</style>
+        /* Detail Donasi Section */
+        .donasi-detail-section {
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            padding: 20px 25px;
+        }
+
+        .donasi-detail-header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .donasi-detail-header h4 {
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .donasi-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .donasi-item {
+            background: white;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .donasi-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .donasi-info {
+            flex: 1;
+        }
+
+        .donasi-info h5 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .donasi-info p {
+            margin: 3px 0;
+            color: #555;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            line-height: 1.4;
+        }
+
+        .donasi-info .badge {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+        }
+
+        .empty-donasi {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px dashed #ddd;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .donasi-stat {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .stat-item {
+                padding: 10px;
+            }
+
+            .stat-number {
+                font-size: 0.9rem;
+            }
+
+            .donasi-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .donasi-item-actions {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stat-number {
+                font-size: 0.85rem;
+            }
+
+            .stat-label {
+                font-size: 0.7rem;
+            }
+
+            .donasi-info .row {
+                flex-direction: column;
+            }
+        }
+
+        /* ===== DONASI SPECIFIC STYLES ===== */
+        .bencana-img-placeholder .fa-hand-holding-heart {
+            color: #27ae60;
+        }
+
+        /* Status badges khusus donasi */
+        .status-aktif {
+            background: #ffeaea;
+            color: var(--danger);
+        }
+
+        .status-dalam-penanganan {
+            background: #fef5e7;
+            color: var(--warning);
+        }
+
+        .status-selesai {
+            background: #eafaf1;
+            color: #27ae60;
+        }
+
+        /* Tombol khusus donasi */
+        .btn-add-donasi {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+        }
+
+        .btn-add-donasi:hover {
+            background: linear-gradient(135deg, #229954, #27ae60);
+        }
+
+        /* Badge untuk jenis donasi */
+        .badge-donasi-uang {
+            background: #27ae60;
+            color: white;
+        }
+
+        .badge-donasi-barang {
+            background: #3498db;
+            color: white;
+        }
+    </style>
 @endpush
 
 @push('scripts')
-<script>
-    // Initialize tooltips
-    document.addEventListener('DOMContentLoaded', function() {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-    });
-</script>
-@endpush
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.btn-show-donasi').forEach(button => {
+                button.addEventListener('click', function() {
+                    const kejadianId = this.getAttribute('data-kejadian-id');
+                    const detailSection = document.getElementById('donasi-detail-' + kejadianId);
 
+                    if (detailSection.style.display === 'none') {
+                        detailSection.style.display = 'block';
+                        this.innerHTML = '<i class="fas fa-chevron-up"></i> Sembunyikan';
+                    } else {
+                        detailSection.style.display = 'none';
+                        this.innerHTML = '<i class="fas fa-list"></i> Lihat Detail';
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
