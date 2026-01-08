@@ -41,7 +41,10 @@
         }
 
         /* ===== FIX DROPDOWN ISSUE ===== */
-        header, .navbar, .nav-links, .dropdown {
+        header,
+        .navbar,
+        .nav-links,
+        .dropdown {
             overflow: visible !important;
         }
 
@@ -1287,6 +1290,38 @@
                 min-width: auto;
             }
         }
+
+        /* ===== FIX BUTTON SIZE CONSISTENT ===== */
+        .card-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .card-actions>a,
+        .card-actions .action-buttons>a,
+        .card-actions .action-buttons button {
+            width: 100%;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 6px;
+        }
+
+        /* hilangkan flex bawaan action-buttons */
+        .action-buttons {
+            display: contents;
+        }
+
+        .delete-form {
+            margin: 0;
+        }
+        
     </style>
 </head>
+
 </html>

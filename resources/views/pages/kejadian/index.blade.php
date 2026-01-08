@@ -2,17 +2,15 @@
 @section('content')
     <!-- MAIN CONTENT -->
     <div class="container">
-        <div class="page-header">
-            <div class="header-content">
-                <div class="header-text">
-                    <h1><i class="fas fa-exclamation-triangle"></i> Data Kejadian Bencana</h1>
-                    <p>Informasi terbaru tentang kejadian bencana yang sedang ditangani</p>
-                </div>
-                <a href="{{ route('kejadian.create') }}" class="btn-add">
-                    <i class="fas fa-plus"></i> Tambah Kejadian
-                </a>
-            </div>
+    <div class="page-header">
+        <div class="header-text">
+            <h1><i class="fas fa-exclamation-triangle"></i> Data Kejadian Bencana </h1>
+            <p>Informasi terbaru tentang kejadian bencana yang sedang ditangani</p>
         </div>
+        <a href="{{ route('kejadian.create') }}" class="btn-add">
+            <i class="fas fa-plus"></i> Tambah Kejadian
+        </a>
+    </div>
 
         <!-- Search and Filter Section -->
         <div class="filter-section">
@@ -124,7 +122,7 @@
 
                     <div class="card-actions">
                         <a href="{{ route('kejadian.show', $item->kejadian_id) }}" class="btn-detail">
-                            <i class="fas fa-eye"></i> Lihat Detail
+                            <i class="fas fa-eye"></i>  Detail
                         </a>
                         <div class="action-buttons">
                             <a href="{{ route('kejadian.edit', $item->kejadian_id) }}" class="btn-edit">

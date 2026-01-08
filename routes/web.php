@@ -33,7 +33,7 @@ Route::get('/tentang', [AboutController::class, 'index'])->name('about');
 Route::get('/developer', [DeveloperController::class, 'show'])->name('developer.show');
 
 // ===== ROUTE LOGOUT =====
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
