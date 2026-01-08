@@ -1225,11 +1225,11 @@
                     }
 
                     // Change slide every 5 seconds
-                    setTimeout(showSlides, 5000);
+                    setTimeout(showSlides, 2000);
                 }
 
                 // Start slideshow after 5 seconds
-                setTimeout(showSlides, 5000);
+                setTimeout(showSlides, 1000);
 
                 // Manual navigation function
                 window.currentSlide = function(n) {

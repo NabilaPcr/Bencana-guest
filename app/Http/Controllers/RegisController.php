@@ -28,7 +28,7 @@ class RegisController extends Controller
         'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
-        'role' => 'warga', // Set default role sebagai warga
+        'role' => 'warga'
     ]);
 
     Auth::login($user);
