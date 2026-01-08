@@ -1,44 +1,49 @@
     {{-- START JS  --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        {{-- END JS  --}}
 
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let slideIndex = 0;
+                const slides = document.querySelectorAll(".mySlides");
+                const dots = document.querySelectorAll(".dot");
+                let interval;
 
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
+                function showSlide(index) {
+                    slides.forEach((slide, i) => {
+                        slide.classList.remove("active");
+                        dots[i].classList.remove("active");
                     });
-                }
-            });
-        });
 
-        // Navbar active state update on scroll
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('.section');
-            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+                    slideIndex = index;
+                    if (slideIndex >= slides.length) slideIndex = 0;
+                    if (slideIndex < 0) slideIndex = slides.length - 1;
 
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 100)) {
-                    current = section.getAttribute('id');
+                    slides[slideIndex].classList.add("active");
+                    dots[slideIndex].classList.add("active");
                 }
-            });
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
+                function nextSlide() {
+                    showSlide(slideIndex + 1);
                 }
+
+                function startAutoSlide() {
+                    interval = setInterval(nextSlide, 5000);
+                }
+
+                function resetAutoSlide() {
+                    clearInterval(interval);
+                    startAutoSlide();
+                }
+
+                // Init
+                showSlide(0);
+                startAutoSlide();
+
+                // Dot navigation
+                window.currentSlide = function(n) {
+                    showSlide(n - 1);
+                    resetAutoSlide();
+                };
             });
-        });
-    </script>
-    {{-- END JS  --}}
+        </script>
