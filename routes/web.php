@@ -20,6 +20,25 @@ Route::get('/', function () {
     return view('guest.dashboard');
 });
 
+Route::get('/{angka}', function($angka = ' ')
+{
+    if ($angka %2==0) {
+        return view('pages.genap', ['angka' => $angka, 'adalah' => 'Bilangan Genap']);
+    } else{
+        return view('pages.ganjil', ['angka' => $angka, 'adalah' => 'Bilangan Ganjil']);
+}
+});
+
+Route::get('/{angka}', function($angka = ' ')
+{
+    if ($angka >= 2008) {
+        return view ('guest.dashboard');
+    } else{
+        return view('pages.umur', ['Halaman ini untuk ' => $angka, ' tahun keatas' => '']);
+}
+});
+
+
 // Halaman LOGIN - HARUS TANPA MIDDLEWARE
 Route::get('/auth', [AuthController::class, 'index'])->name('auth.index');
 Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
@@ -121,5 +140,8 @@ Route::middleware(['checkislogin'])->group(function () {
             Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
             Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
         });
+
+
     });
+
  //});
